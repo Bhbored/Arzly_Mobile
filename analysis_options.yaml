@@ -1,0 +1,14 @@
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  
+  
+  rules:
+      
+analyzer:
+  errors:
+    file_names: ignore
+    invalid_annotation_target: ignore
+
+
