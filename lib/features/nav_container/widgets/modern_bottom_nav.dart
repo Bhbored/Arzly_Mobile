@@ -1,0 +1,161 @@
+import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/features/nav_container/widgets/nav_button.dart';
+import 'package:flutter/material.dart';
+
+class ModernBottomNav extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+
+  const ModernBottomNav({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(
+          context.paddingMedium,
+          0,
+          context.paddingMedium,
+          context.paddingMedium,
+        ),
+        child: SizedBox(
+          height: 100,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              // Main Navigation Bar
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.95),
+                  borderRadius: BorderRadius.circular(context.borderRadiusLarge + 8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
+                      blurRadius: 32,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: NavButton(
+                        icon: Icons.home_outlined,
+                        activeIcon: Icons.home,
+                        label: 'Home',
+                        isActive: currentIndex == 0,
+                        onTap: () => onTap(0),
+                      ),
+                    ),
+                    Expanded(
+                      child: NavButton(
+                        icon: Icons.search,
+                        activeIcon: Icons.search,
+                        label: 'Search',
+                        isActive: currentIndex == 1,
+                        onTap: () => onTap(1),
+                      ),
+                    ),
+                    
+                    // Center Placeholder for Alignment
+                    Expanded(
+                      child: IgnorePointer(
+                        child: Opacity(
+                          opacity: 0,
+                          child: NavButton(
+                            icon: Icons.add,
+                            activeIcon: Icons.add,
+                            label: 'POST',
+                            isActive: currentIndex == 2,
+                            onTap: () {},
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Expanded(
+                      child: NavButton(
+                        icon: Icons.chat_bubble_outline,
+                        activeIcon: Icons.chat_bubble,
+                        label: 'Inbox',
+                        isActive: currentIndex == 3,
+                        onTap: () => onTap(3),
+                      ),
+                    ),
+                    Expanded(
+                      child: NavButton(
+                        icon: Icons.person_outline,
+                        activeIcon: Icons.person,
+                        label: 'Profile',
+                        isActive: currentIndex == 4,
+                        onTap: () => onTap(4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Raised Center "Post" Circle + Perfectly Aligned Label
+              Positioned(
+                bottom: 0,
+                child: GestureDetector(
+                  onTap: () => onTap(2),
+                  behavior: HitTestBehavior.opaque,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                              blurRadius: 16,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.surface,
+                            width: 4,
+                          ),
+                        ),
+                        child: Icon(
+                          currentIndex == 2 ? Icons.add_circle : Icons.add_circle_outline,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          size: 32,
+                        ),
+                      ),
+                      // This mimics the NavButton internal spacing exactly
+                      SizedBox(height: context.spaceSmall / 2),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: context.paddingSmall),
+                        child: Text(
+                          'POST',
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                color: currentIndex == 2
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.onSurfaceVariant,
+                                fontWeight: currentIndex == 2 ? FontWeight.bold : FontWeight.normal,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

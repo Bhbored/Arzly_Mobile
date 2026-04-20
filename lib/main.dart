@@ -1,5 +1,5 @@
 import 'package:arzly/core/themes/theme_selector.dart';
-import 'package:arzly/features/auth/login/login_page.dart';
+import 'package:arzly/features/nav_container/nav_container.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeSelector.lightTheme,
-      home: LoginPage(),
+      home: NavContainer(),
     );
   }
 }
