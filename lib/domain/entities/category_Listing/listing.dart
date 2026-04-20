@@ -1,5 +1,5 @@
 import 'package:arzly/domain/entities/category_Listing/category.dart';
-import 'package:arzly/shared/enums/listing_status.dart';
+import 'package:arzly/core/enums/listing_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'listing.freezed.dart';

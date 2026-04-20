@@ -1,6 +1,6 @@
 import 'package:arzly/domain/entities/delivery_Preferences/delivery_location.dart';
 import 'package:arzly/domain/entities/delivery_Preferences/user_preferences.dart';
-import 'package:arzly/shared/enums/auth_method.dart';
+import 'package:arzly/core/enums/auth_method.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_user.g.dart';

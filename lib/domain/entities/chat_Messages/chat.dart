@@ -1,4 +1,4 @@
-import 'package:arzly/shared/enums/chat_role.dart';
+import 'package:arzly/core/enums/chat_role.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat.g.dart';
