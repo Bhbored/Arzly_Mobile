@@ -5,12 +5,13 @@ extension AppSizes on BuildContext {
   double get screenHeight => MediaQuery.of(this).size.height;
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
   EdgeInsets get viewPadding => MediaQuery.of(this).viewPadding;
-  
+
   bool get isSmallScreen => screenWidth < 600;
   bool get isMediumScreen => screenWidth >= 600 && screenWidth < 1200;
   bool get isLargeScreen => screenWidth >= 1200;
 
-  double get bottomPadding => viewPadding.bottom > 0 ? viewPadding.bottom : 16.0;
+  double get bottomPadding =>
+      viewPadding.bottom > 0 ? viewPadding.bottom : 16.0;
   double get topPadding => viewPadding.top > 0 ? viewPadding.top : 16.0;
 
   // Dynamic Spacing Helpers

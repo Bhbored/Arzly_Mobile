@@ -11,33 +11,30 @@ part of 'chat_message.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$ChatMessage {
 
- String get id; String get senderId; String get text; DateTime get sentAt; bool get isRead;
+ String get id; String get chatId; String get senderId; String get receiverId; String get text; DateTime get sentAt; bool get isRead; DateTime? get readAt;
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
 $ChatMessageCopyWith<ChatMessage> get copyWith => _$ChatMessageCopyWithImpl<ChatMessage>(this as ChatMessage, _$identity);
 
-  /// Serializes this ChatMessage to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.text, text) || other.text == text)&&(identical(other.sentAt, sentAt) || other.sentAt == sentAt)&&(identical(other.isRead, isRead) || other.isRead == isRead));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.text, text) || other.text == text)&&(identical(other.sentAt, sentAt) || other.sentAt == sentAt)&&(identical(other.isRead, isRead) || other.isRead == isRead)&&(identical(other.readAt, readAt) || other.readAt == readAt));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,text,sentAt,isRead);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,receiverId,text,sentAt,isRead,readAt);
 
 @override
 String toString() {
-  return 'ChatMessage(id: $id, senderId: $senderId, text: $text, sentAt: $sentAt, isRead: $isRead)';
+  return 'ChatMessage(id: $id, chatId: $chatId, senderId: $senderId, receiverId: $receiverId, text: $text, sentAt: $sentAt, isRead: $isRead, readAt: $readAt)';
 }
 
 
@@ -48,7 +45,7 @@ abstract mixin class $ChatMessageCopyWith<$Res>  {
   factory $ChatMessageCopyWith(ChatMessage value, $Res Function(ChatMessage) _then) = _$ChatMessageCopyWithImpl;
 @useResult
 $Res call({
- String id, String senderId, String text, DateTime sentAt, bool isRead
+ String id, String chatId, String senderId, String receiverId, String text, DateTime sentAt, bool isRead, DateTime? readAt
 });
 
 
@@ -65,14 +62,17 @@ class _$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? senderId = null,Object? text = null,Object? sentAt = null,Object? isRead = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? receiverId = null,Object? text = null,Object? sentAt = null,Object? isRead = null,Object? readAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
+as String,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
 as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,sentAt: null == sentAt ? _self.sentAt : sentAt // ignore: cast_nullable_to_non_nullable
 as DateTime,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,readAt: freezed == readAt ? _self.readAt : readAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -154,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String senderId,  String text,  DateTime sentAt,  bool isRead)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  String receiverId,  String text,  DateTime sentAt,  bool isRead,  DateTime? readAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.receiverId,_that.text,_that.sentAt,_that.isRead,_that.readAt);case _:
   return orElse();
 
 }
@@ -175,10 +175,10 @@ return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);ca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String senderId,  String text,  DateTime sentAt,  bool isRead)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  String receiverId,  String text,  DateTime sentAt,  bool isRead,  DateTime? readAt)  $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage():
-return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);}
+return $default(_that.id,_that.chatId,_that.senderId,_that.receiverId,_that.text,_that.sentAt,_that.isRead,_that.readAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +192,10 @@ return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String senderId,  String text,  DateTime sentAt,  bool isRead)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  String senderId,  String receiverId,  String text,  DateTime sentAt,  bool isRead,  DateTime? readAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatMessage() when $default != null:
-return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.receiverId,_that.text,_that.sentAt,_that.isRead,_that.readAt);case _:
   return null;
 
 }
@@ -204,17 +204,20 @@ return $default(_that.id,_that.senderId,_that.text,_that.sentAt,_that.isRead);ca
 }
 
 /// @nodoc
-@JsonSerializable()
+
 
 class _ChatMessage implements ChatMessage {
-  const _ChatMessage({required this.id, required this.senderId, required this.text, required this.sentAt, required this.isRead});
-  factory _ChatMessage.fromJson(Map<String, dynamic> json) => _$ChatMessageFromJson(json);
+  const _ChatMessage({required this.id, required this.chatId, required this.senderId, required this.receiverId, required this.text, required this.sentAt, required this.isRead, this.readAt});
+  
 
 @override final  String id;
+@override final  String chatId;
 @override final  String senderId;
+@override final  String receiverId;
 @override final  String text;
 @override final  DateTime sentAt;
 @override final  bool isRead;
+@override final  DateTime? readAt;
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
@@ -222,23 +225,20 @@ class _ChatMessage implements ChatMessage {
 @pragma('vm:prefer-inline')
 _$ChatMessageCopyWith<_ChatMessage> get copyWith => __$ChatMessageCopyWithImpl<_ChatMessage>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$ChatMessageToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.text, text) || other.text == text)&&(identical(other.sentAt, sentAt) || other.sentAt == sentAt)&&(identical(other.isRead, isRead) || other.isRead == isRead));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.receiverId, receiverId) || other.receiverId == receiverId)&&(identical(other.text, text) || other.text == text)&&(identical(other.sentAt, sentAt) || other.sentAt == sentAt)&&(identical(other.isRead, isRead) || other.isRead == isRead)&&(identical(other.readAt, readAt) || other.readAt == readAt));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,text,sentAt,isRead);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,receiverId,text,sentAt,isRead,readAt);
 
 @override
 String toString() {
-  return 'ChatMessage(id: $id, senderId: $senderId, text: $text, sentAt: $sentAt, isRead: $isRead)';
+  return 'ChatMessage(id: $id, chatId: $chatId, senderId: $senderId, receiverId: $receiverId, text: $text, sentAt: $sentAt, isRead: $isRead, readAt: $readAt)';
 }
 
 
@@ -249,7 +249,7 @@ abstract mixin class _$ChatMessageCopyWith<$Res> implements $ChatMessageCopyWith
   factory _$ChatMessageCopyWith(_ChatMessage value, $Res Function(_ChatMessage) _then) = __$ChatMessageCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String senderId, String text, DateTime sentAt, bool isRead
+ String id, String chatId, String senderId, String receiverId, String text, DateTime sentAt, bool isRead, DateTime? readAt
 });
 
 
@@ -266,14 +266,17 @@ class __$ChatMessageCopyWithImpl<$Res>
 
 /// Create a copy of ChatMessage
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? senderId = null,Object? text = null,Object? sentAt = null,Object? isRead = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? receiverId = null,Object? text = null,Object? sentAt = null,Object? isRead = null,Object? readAt = freezed,}) {
   return _then(_ChatMessage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
 as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
+as String,receiverId: null == receiverId ? _self.receiverId : receiverId // ignore: cast_nullable_to_non_nullable
 as String,text: null == text ? _self.text : text // ignore: cast_nullable_to_non_nullable
 as String,sentAt: null == sentAt ? _self.sentAt : sentAt // ignore: cast_nullable_to_non_nullable
 as DateTime,isRead: null == isRead ? _self.isRead : isRead // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,readAt: freezed == readAt ? _self.readAt : readAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
