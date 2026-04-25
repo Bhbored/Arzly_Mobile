@@ -20,7 +20,6 @@ _ListingUpdateRequest _$ListingUpdateRequestFromJson(
       .toList(),
   categoryId: json['CategoryId'] as String,
   subcategoryId: json['SubcategoryId'] as String,
-  subcategoryOptionsId: json['SubcategoryOptionsId'] as String?,
   pickupLocationId: json['PickupLocationId'] as String,
 );
 
@@ -36,7 +35,6 @@ Map<String, dynamic> _$ListingUpdateRequestToJson(
   'ImagesUrl': instance.imagesUrl,
   'CategoryId': instance.categoryId,
   'SubcategoryId': instance.subcategoryId,
-  'SubcategoryOptionsId': instance.subcategoryOptionsId,
   'PickupLocationId': instance.pickupLocationId,
 };
 

@@ -1,5 +1,5 @@
-import 'package:arzly/core/enums/activity_action_type.dart';
-import 'package:arzly/core/enums/activity_target_type.dart';
+import 'package:arzly/core/enums/activity/activity_action_type.dart';
+import 'package:arzly/core/enums/activity/activity_target_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_activity_log_add_request.freezed.dart';

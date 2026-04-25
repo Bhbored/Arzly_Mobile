@@ -1,5 +1,5 @@
-import 'package:arzly/core/enums/language_code.dart';
-import 'package:arzly/core/enums/theme_mode.dart';
+import 'package:arzly/core/enums/preference/language_code.dart';
+import 'package:arzly/core/enums/preference/theme_mode.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_preference_update_request.freezed.dart';

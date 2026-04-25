@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ListingUpdateRequest {
 
-@JsonKey(name: 'Id') String get id;@JsonKey(name: 'Title') String get title;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Price') double get price;@JsonKey(name: 'Status') ListingStatus get status;@JsonKey(name: 'PrimaryImageUrl') String? get primaryImageUrl;@JsonKey(name: 'ImagesUrl') List<String>? get imagesUrl;@JsonKey(name: 'CategoryId') String get categoryId;@JsonKey(name: 'SubcategoryId') String get subcategoryId;@JsonKey(name: 'SubcategoryOptionsId') String? get subcategoryOptionsId;@JsonKey(name: 'PickupLocationId') String get pickupLocationId;
+@JsonKey(name: 'Id') String get id;@JsonKey(name: 'Title') String get title;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Price') double get price;@JsonKey(name: 'Status') ListingStatus get status;@JsonKey(name: 'PrimaryImageUrl') String? get primaryImageUrl;@JsonKey(name: 'ImagesUrl') List<String>? get imagesUrl;@JsonKey(name: 'CategoryId') String get categoryId;@JsonKey(name: 'SubcategoryId') String get subcategoryId;@JsonKey(name: 'PickupLocationId') String get pickupLocationId;
 /// Create a copy of ListingUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ListingUpdateRequestCopyWith<ListingUpdateRequest> get copyWith => _$ListingUpd
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListingUpdateRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other.imagesUrl, imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.subcategoryOptionsId, subcategoryOptionsId) || other.subcategoryOptionsId == subcategoryOptionsId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListingUpdateRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other.imagesUrl, imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(imagesUrl),categoryId,subcategoryId,subcategoryOptionsId,pickupLocationId);
+int get hashCode => Object.hash(runtimeType,id,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(imagesUrl),categoryId,subcategoryId,pickupLocationId);
 
 @override
 String toString() {
-  return 'ListingUpdateRequest(id: $id, title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, subcategoryOptionsId: $subcategoryOptionsId, pickupLocationId: $pickupLocationId)';
+  return 'ListingUpdateRequest(id: $id, title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ListingUpdateRequestCopyWith<$Res>  {
   factory $ListingUpdateRequestCopyWith(ListingUpdateRequest value, $Res Function(ListingUpdateRequest) _then) = _$ListingUpdateRequestCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'Id') String id,@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'SubcategoryOptionsId') String? subcategoryOptionsId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
+@JsonKey(name: 'Id') String id,@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
 });
 
 
@@ -65,7 +65,7 @@ class _$ListingUpdateRequestCopyWithImpl<$Res>
 
 /// Create a copy of ListingUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? subcategoryOptionsId = freezed,Object? pickupLocationId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -76,8 +76,7 @@ as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImag
 as String?,imagesUrl: freezed == imagesUrl ? _self.imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
 as List<String>?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,subcategoryId: null == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
-as String,subcategoryOptionsId: freezed == subcategoryOptionsId ? _self.subcategoryOptionsId : subcategoryOptionsId // ignore: cast_nullable_to_non_nullable
-as String?,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
+as String,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -160,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'SubcategoryOptionsId')  String? subcategoryOptionsId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListingUpdateRequest() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.subcategoryOptionsId,_that.pickupLocationId);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);case _:
   return orElse();
 
 }
@@ -181,10 +180,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'SubcategoryOptionsId')  String? subcategoryOptionsId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)  $default,) {final _that = this;
 switch (_that) {
 case _ListingUpdateRequest():
-return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.subcategoryOptionsId,_that.pickupLocationId);}
+return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -198,10 +197,10 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'SubcategoryOptionsId')  String? subcategoryOptionsId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,) {final _that = this;
 switch (_that) {
 case _ListingUpdateRequest() when $default != null:
-return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.subcategoryOptionsId,_that.pickupLocationId);case _:
+return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);case _:
   return null;
 
 }
@@ -213,7 +212,7 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 @JsonSerializable()
 
 class _ListingUpdateRequest implements ListingUpdateRequest {
-  const _ListingUpdateRequest({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'Title') required this.title, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Price') required this.price, @JsonKey(name: 'Status') required this.status, @JsonKey(name: 'PrimaryImageUrl') this.primaryImageUrl, @JsonKey(name: 'ImagesUrl') final  List<String>? imagesUrl, @JsonKey(name: 'CategoryId') required this.categoryId, @JsonKey(name: 'SubcategoryId') required this.subcategoryId, @JsonKey(name: 'SubcategoryOptionsId') this.subcategoryOptionsId, @JsonKey(name: 'PickupLocationId') required this.pickupLocationId}): _imagesUrl = imagesUrl;
+  const _ListingUpdateRequest({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'Title') required this.title, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Price') required this.price, @JsonKey(name: 'Status') required this.status, @JsonKey(name: 'PrimaryImageUrl') this.primaryImageUrl, @JsonKey(name: 'ImagesUrl') final  List<String>? imagesUrl, @JsonKey(name: 'CategoryId') required this.categoryId, @JsonKey(name: 'SubcategoryId') required this.subcategoryId, @JsonKey(name: 'PickupLocationId') required this.pickupLocationId}): _imagesUrl = imagesUrl;
   factory _ListingUpdateRequest.fromJson(Map<String, dynamic> json) => _$ListingUpdateRequestFromJson(json);
 
 @override@JsonKey(name: 'Id') final  String id;
@@ -233,7 +232,6 @@ class _ListingUpdateRequest implements ListingUpdateRequest {
 
 @override@JsonKey(name: 'CategoryId') final  String categoryId;
 @override@JsonKey(name: 'SubcategoryId') final  String subcategoryId;
-@override@JsonKey(name: 'SubcategoryOptionsId') final  String? subcategoryOptionsId;
 @override@JsonKey(name: 'PickupLocationId') final  String pickupLocationId;
 
 /// Create a copy of ListingUpdateRequest
@@ -249,16 +247,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListingUpdateRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other._imagesUrl, _imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.subcategoryOptionsId, subcategoryOptionsId) || other.subcategoryOptionsId == subcategoryOptionsId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListingUpdateRequest&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other._imagesUrl, _imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(_imagesUrl),categoryId,subcategoryId,subcategoryOptionsId,pickupLocationId);
+int get hashCode => Object.hash(runtimeType,id,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(_imagesUrl),categoryId,subcategoryId,pickupLocationId);
 
 @override
 String toString() {
-  return 'ListingUpdateRequest(id: $id, title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, subcategoryOptionsId: $subcategoryOptionsId, pickupLocationId: $pickupLocationId)';
+  return 'ListingUpdateRequest(id: $id, title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId)';
 }
 
 
@@ -269,7 +267,7 @@ abstract mixin class _$ListingUpdateRequestCopyWith<$Res> implements $ListingUpd
   factory _$ListingUpdateRequestCopyWith(_ListingUpdateRequest value, $Res Function(_ListingUpdateRequest) _then) = __$ListingUpdateRequestCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'Id') String id,@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'SubcategoryOptionsId') String? subcategoryOptionsId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
+@JsonKey(name: 'Id') String id,@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
 });
 
 
@@ -286,7 +284,7 @@ class __$ListingUpdateRequestCopyWithImpl<$Res>
 
 /// Create a copy of ListingUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? subcategoryOptionsId = freezed,Object? pickupLocationId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,}) {
   return _then(_ListingUpdateRequest(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -297,8 +295,7 @@ as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImag
 as String?,imagesUrl: freezed == imagesUrl ? _self._imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
 as List<String>?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,subcategoryId: null == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
-as String,subcategoryOptionsId: freezed == subcategoryOptionsId ? _self.subcategoryOptionsId : subcategoryOptionsId // ignore: cast_nullable_to_non_nullable
-as String?,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
+as String,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

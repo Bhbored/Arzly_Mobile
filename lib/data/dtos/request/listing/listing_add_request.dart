@@ -1,4 +1,4 @@
-import 'package:arzly/core/enums/listing_status.dart';
+import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'listing_add_request.freezed.dart';
@@ -16,7 +16,6 @@ sealed class ListingAddRequest with _$ListingAddRequest {
     @JsonKey(name: 'OwnerId') required String ownerId,
     @JsonKey(name: 'CategoryId') required String categoryId,
     @JsonKey(name: 'SubcategoryId') required String subcategoryId,
-    @JsonKey(name: 'SubcategoryOptionsId') String? subcategoryOptionsId,
     @JsonKey(name: 'PickupLocationId') required String pickupLocationId,
   }) = _ListingAddRequest;
 

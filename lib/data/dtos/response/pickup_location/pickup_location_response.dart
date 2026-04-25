@@ -1,4 +1,4 @@
-import 'package:arzly/core/enums/location_label.dart';
+import 'package:arzly/core/enums/listing/location_label.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'pickup_location_response.freezed.dart';

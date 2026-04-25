@@ -1,4 +1,4 @@
-import 'package:arzly/core/enums/ticket_priority.dart';
+import 'package:arzly/core/enums/ticket/ticket_priority.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'ticket_add_request.freezed.dart';

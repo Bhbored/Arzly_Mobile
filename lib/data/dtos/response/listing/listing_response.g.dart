@@ -24,7 +24,6 @@ _ListingResponse _$ListingResponseFromJson(Map<String, dynamic> json) =>
       ownerId: json['OwnerId'] as String,
       categoryId: json['CategoryId'] as String,
       subcategoryId: json['SubcategoryId'] as String,
-      subcategoryOptionsId: json['SubcategoryOptionsId'] as String?,
       pickupLocationId: json['PickupLocationId'] as String,
     );
 
@@ -42,7 +41,6 @@ Map<String, dynamic> _$ListingResponseToJson(_ListingResponse instance) =>
       'OwnerId': instance.ownerId,
       'CategoryId': instance.categoryId,
       'SubcategoryId': instance.subcategoryId,
-      'SubcategoryOptionsId': instance.subcategoryOptionsId,
       'PickupLocationId': instance.pickupLocationId,
     };
 

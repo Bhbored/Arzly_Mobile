@@ -1,4 +1,4 @@
-import 'package:arzly/core/enums/listing_status.dart';
+import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listing.freezed.dart';
 
@@ -17,7 +17,6 @@ sealed class Listing with _$Listing {
     required String ownerId,
     required String categoryId,
     required String subcategoryId,
-    String? subcategoryOptionsId,
     required String pickupLocationId,
   }) = _Listing;
 }

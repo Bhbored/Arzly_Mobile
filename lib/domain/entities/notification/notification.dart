@@ -1,5 +1,5 @@
-import 'package:arzly/core/enums/notification_action_type.dart';
-import 'package:arzly/core/enums/notification_source.dart';
+import 'package:arzly/core/enums/notification/notification_action_type.dart';
+import 'package:arzly/core/enums/notification/notification_source.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'notification.freezed.dart';
 

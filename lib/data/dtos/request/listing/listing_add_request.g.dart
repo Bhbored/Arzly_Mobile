@@ -19,7 +19,6 @@ _ListingAddRequest _$ListingAddRequestFromJson(Map<String, dynamic> json) =>
       ownerId: json['OwnerId'] as String,
       categoryId: json['CategoryId'] as String,
       subcategoryId: json['SubcategoryId'] as String,
-      subcategoryOptionsId: json['SubcategoryOptionsId'] as String?,
       pickupLocationId: json['PickupLocationId'] as String,
     );
 
@@ -34,7 +33,6 @@ Map<String, dynamic> _$ListingAddRequestToJson(_ListingAddRequest instance) =>
       'OwnerId': instance.ownerId,
       'CategoryId': instance.categoryId,
       'SubcategoryId': instance.subcategoryId,
-      'SubcategoryOptionsId': instance.subcategoryOptionsId,
       'PickupLocationId': instance.pickupLocationId,
     };
 
