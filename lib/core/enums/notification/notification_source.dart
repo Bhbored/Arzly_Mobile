@@ -4,10 +4,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum NotificationSource {
   @JsonValue('System')
   system,
-  @JsonValue('Message')
-  message,
   @JsonValue('Listing')
   listing,
-  @JsonValue('Admin')
-  admin,
+  @JsonValue('Chat')
+  chat,
+  @JsonValue('Ticket')
+  ticket,
+  @JsonValue('Promotion')
+  promotion,
 }

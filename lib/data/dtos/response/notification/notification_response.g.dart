@@ -52,9 +52,10 @@ Map<String, dynamic> _$NotificationResponseToJson(
 
 const _$NotificationSourceEnumMap = {
   NotificationSource.system: 'System',
-  NotificationSource.message: 'Message',
   NotificationSource.listing: 'Listing',
-  NotificationSource.admin: 'Admin',
+  NotificationSource.chat: 'Chat',
+  NotificationSource.ticket: 'Ticket',
+  NotificationSource.promotion: 'Promotion',
 };
 
 const _$NotificationActionTypeEnumMap = {

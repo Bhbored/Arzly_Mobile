@@ -13,7 +13,6 @@ _ListingUpdateRequest _$ListingUpdateRequestFromJson(
   title: json['Title'] as String,
   description: json['Description'] as String,
   price: (json['Price'] as num).toDouble(),
-  status: $enumDecode(_$ListingStatusEnumMap, json['Status']),
   primaryImageUrl: json['PrimaryImageUrl'] as String?,
   imagesUrl: (json['ImagesUrl'] as List<dynamic>?)
       ?.map((e) => e as String)
@@ -21,6 +20,11 @@ _ListingUpdateRequest _$ListingUpdateRequestFromJson(
   categoryId: json['CategoryId'] as String,
   subcategoryId: json['SubcategoryId'] as String,
   pickupLocationId: json['PickupLocationId'] as String,
+  name: json['Name'] as String,
+  phoneNumber: json['PhoneNumber'] as String,
+  isPriceNegotiable: json['IsPriceNegotiable'] as bool? ?? false,
+  contactMethod: $enumDecode(_$ContactMethodEnumMap, json['ContactMethod']),
+  listingDetails: json['ListingDetails'],
 );
 
 Map<String, dynamic> _$ListingUpdateRequestToJson(
@@ -30,18 +34,20 @@ Map<String, dynamic> _$ListingUpdateRequestToJson(
   'Title': instance.title,
   'Description': instance.description,
   'Price': instance.price,
-  'Status': _$ListingStatusEnumMap[instance.status]!,
   'PrimaryImageUrl': instance.primaryImageUrl,
   'ImagesUrl': instance.imagesUrl,
   'CategoryId': instance.categoryId,
   'SubcategoryId': instance.subcategoryId,
   'PickupLocationId': instance.pickupLocationId,
+  'Name': instance.name,
+  'PhoneNumber': instance.phoneNumber,
+  'IsPriceNegotiable': instance.isPriceNegotiable,
+  'ContactMethod': _$ContactMethodEnumMap[instance.contactMethod]!,
+  'ListingDetails': instance.listingDetails,
 };
 
-const _$ListingStatusEnumMap = {
-  ListingStatus.pending: 'Pending',
-  ListingStatus.approved: 'Approved',
-  ListingStatus.rejected: 'Rejected',
-  ListingStatus.sold: 'Sold',
-  ListingStatus.archived: 'Archived',
+const _$ContactMethodEnumMap = {
+  ContactMethod.phoneNumber: 'PhoneNumber',
+  ContactMethod.inAppChat: 'InAppChat',
+  ContactMethod.both: 'Both',
 };

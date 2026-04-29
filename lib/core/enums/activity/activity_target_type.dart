@@ -24,4 +24,6 @@ enum ActivityTargetType {
   searchQuery,
   @JsonValue('UserPreference')
   userPreference,
+  @JsonValue('Notification')
+  notification,
 }

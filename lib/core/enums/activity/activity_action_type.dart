@@ -10,14 +10,14 @@ enum ActivityActionType {
   register,
   @JsonValue('PasswordChanged')
   passwordChanged,
-
+  @JsonValue('PasswordReset')
+  passwordReset,
   @JsonValue('ProfileUpdated')
   profileUpdated,
   @JsonValue('ProfilePictureUpdated')
   profilePictureUpdated,
   @JsonValue('AccountDeleted')
   accountDeleted,
-
   @JsonValue('ListingCreated')
   listingCreated,
   @JsonValue('ListingUpdated')
@@ -28,12 +28,10 @@ enum ActivityActionType {
   listingViewed,
   @JsonValue('ListingShared')
   listingShared,
-
   @JsonValue('ListingSaved')
   listingSaved,
   @JsonValue('ListingUnsaved')
   listingUnsaved,
-
   @JsonValue('ChatStarted')
   chatStarted,
   @JsonValue('MessageSent')
@@ -42,12 +40,26 @@ enum ActivityActionType {
   messageRead,
   @JsonValue('ChatArchived')
   chatArchived,
-
   @JsonValue('ReportSubmitted')
   reportSubmitted,
-
+  @JsonValue('ReportResolved')
+  reportResolved,
+  @JsonValue('ReportDismissed')
+  reportDismissed,
   @JsonValue('TicketCreated')
   ticketCreated,
   @JsonValue('TicketMessageSent')
   ticketMessageSent,
+  @JsonValue('TicketClosed')
+  ticketClosed,
+  @JsonValue('TicketReopened')
+  ticketReopened,
+  @JsonValue('UserBanned')
+  userBanned,
+  @JsonValue('UserUnbanned')
+  userUnbanned,
+  @JsonValue('ListingFlagged')
+  listingFlagged,
+  @JsonValue('ListingUnflagged')
+  listingUnflagged,
 }

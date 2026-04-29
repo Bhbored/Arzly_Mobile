@@ -43,6 +43,7 @@ const _$ActivityActionTypeEnumMap = {
   ActivityActionType.logout: 'Logout',
   ActivityActionType.register: 'Register',
   ActivityActionType.passwordChanged: 'PasswordChanged',
+  ActivityActionType.passwordReset: 'PasswordReset',
   ActivityActionType.profileUpdated: 'ProfileUpdated',
   ActivityActionType.profilePictureUpdated: 'ProfilePictureUpdated',
   ActivityActionType.accountDeleted: 'AccountDeleted',
@@ -58,8 +59,16 @@ const _$ActivityActionTypeEnumMap = {
   ActivityActionType.messageRead: 'MessageRead',
   ActivityActionType.chatArchived: 'ChatArchived',
   ActivityActionType.reportSubmitted: 'ReportSubmitted',
+  ActivityActionType.reportResolved: 'ReportResolved',
+  ActivityActionType.reportDismissed: 'ReportDismissed',
   ActivityActionType.ticketCreated: 'TicketCreated',
   ActivityActionType.ticketMessageSent: 'TicketMessageSent',
+  ActivityActionType.ticketClosed: 'TicketClosed',
+  ActivityActionType.ticketReopened: 'TicketReopened',
+  ActivityActionType.userBanned: 'UserBanned',
+  ActivityActionType.userUnbanned: 'UserUnbanned',
+  ActivityActionType.listingFlagged: 'ListingFlagged',
+  ActivityActionType.listingUnflagged: 'ListingUnflagged',
 };
 
 const _$ActivityTargetTypeEnumMap = {
@@ -74,4 +83,5 @@ const _$ActivityTargetTypeEnumMap = {
   ActivityTargetType.savedListing: 'SavedListing',
   ActivityTargetType.searchQuery: 'SearchQuery',
   ActivityTargetType.userPreference: 'UserPreference',
+  ActivityTargetType.notification: 'Notification',
 };

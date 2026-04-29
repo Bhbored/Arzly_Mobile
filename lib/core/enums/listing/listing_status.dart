@@ -4,12 +4,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 enum ListingStatus {
   @JsonValue('Pending')
   pending,
-  @JsonValue('Approved')
-  approved,
-  @JsonValue('Rejected')
-  rejected,
+  @JsonValue('Active')
+  active,
   @JsonValue('Sold')
   sold,
-  @JsonValue('Archived')
-  archived,
+  @JsonValue('Expired')
+  expired,
+  @JsonValue('Rejected')
+  rejected,
+  @JsonValue('Deleted')
+  deleted,
 }

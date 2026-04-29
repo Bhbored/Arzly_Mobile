@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ListingAddRequest {
 
-@JsonKey(name: 'Title') String get title;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Price') double get price;@JsonKey(name: 'Status') ListingStatus get status;@JsonKey(name: 'PrimaryImageUrl') String? get primaryImageUrl;@JsonKey(name: 'ImagesUrl') List<String>? get imagesUrl;@JsonKey(name: 'OwnerId') String get ownerId;@JsonKey(name: 'CategoryId') String get categoryId;@JsonKey(name: 'SubcategoryId') String get subcategoryId;@JsonKey(name: 'PickupLocationId') String get pickupLocationId;
+@JsonKey(name: 'Title') String get title;@JsonKey(name: 'Description') String get description;@JsonKey(name: 'Price') double get price;@JsonKey(name: 'PrimaryImageUrl') String? get primaryImageUrl;@JsonKey(name: 'ImagesUrl') List<String>? get imagesUrl;@JsonKey(name: 'CategoryId') String get categoryId;@JsonKey(name: 'SubcategoryId') String get subcategoryId;@JsonKey(name: 'PickupLocationId') String get pickupLocationId;@JsonKey(name: 'Name') String get name;@JsonKey(name: 'PhoneNumber') String get phoneNumber;@JsonKey(name: 'IsPriceNegotiable') bool get isPriceNegotiable;@JsonKey(name: 'ContactMethod') ContactMethod get contactMethod;@JsonKey(name: 'ListingDetails') dynamic get listingDetails;
 /// Create a copy of ListingAddRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ListingAddRequestCopyWith<ListingAddRequest> get copyWith => _$ListingAddReques
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListingAddRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other.imagesUrl, imagesUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ListingAddRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other.imagesUrl, imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId)&&(identical(other.name, name) || other.name == name)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.isPriceNegotiable, isPriceNegotiable) || other.isPriceNegotiable == isPriceNegotiable)&&(identical(other.contactMethod, contactMethod) || other.contactMethod == contactMethod)&&const DeepCollectionEquality().equals(other.listingDetails, listingDetails));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(imagesUrl),ownerId,categoryId,subcategoryId,pickupLocationId);
+int get hashCode => Object.hash(runtimeType,title,description,price,primaryImageUrl,const DeepCollectionEquality().hash(imagesUrl),categoryId,subcategoryId,pickupLocationId,name,phoneNumber,isPriceNegotiable,contactMethod,const DeepCollectionEquality().hash(listingDetails));
 
 @override
 String toString() {
-  return 'ListingAddRequest(title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, ownerId: $ownerId, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId)';
+  return 'ListingAddRequest(title: $title, description: $description, price: $price, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId, name: $name, phoneNumber: $phoneNumber, isPriceNegotiable: $isPriceNegotiable, contactMethod: $contactMethod, listingDetails: $listingDetails)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ListingAddRequestCopyWith<$Res>  {
   factory $ListingAddRequestCopyWith(ListingAddRequest value, $Res Function(ListingAddRequest) _then) = _$ListingAddRequestCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'OwnerId') String ownerId,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
+@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId,@JsonKey(name: 'Name') String name,@JsonKey(name: 'PhoneNumber') String phoneNumber,@JsonKey(name: 'IsPriceNegotiable') bool isPriceNegotiable,@JsonKey(name: 'ContactMethod') ContactMethod contactMethod,@JsonKey(name: 'ListingDetails') dynamic listingDetails
 });
 
 
@@ -65,19 +65,22 @@ class _$ListingAddRequestCopyWithImpl<$Res>
 
 /// Create a copy of ListingAddRequest
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? description = null,Object? price = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? contactMethod = null,Object? listingDetails = freezed,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
+as double,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
 as String?,imagesUrl: freezed == imagesUrl ? _self.imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
-as List<String>?,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
-as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as List<String>?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,subcategoryId: null == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
 as String,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String,isPriceNegotiable: null == isPriceNegotiable ? _self.isPriceNegotiable : isPriceNegotiable // ignore: cast_nullable_to_non_nullable
+as bool,contactMethod: null == contactMethod ? _self.contactMethod : contactMethod // ignore: cast_nullable_to_non_nullable
+as ContactMethod,listingDetails: freezed == listingDetails ? _self.listingDetails : listingDetails // ignore: cast_nullable_to_non_nullable
+as dynamic,
   ));
 }
 
@@ -159,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'OwnerId')  String ownerId, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId, @JsonKey(name: 'Name')  String name, @JsonKey(name: 'PhoneNumber')  String phoneNumber, @JsonKey(name: 'IsPriceNegotiable')  bool isPriceNegotiable, @JsonKey(name: 'ContactMethod')  ContactMethod contactMethod, @JsonKey(name: 'ListingDetails')  dynamic listingDetails)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ListingAddRequest() when $default != null:
-return $default(_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);case _:
+return $default(_that.title,_that.description,_that.price,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.contactMethod,_that.listingDetails);case _:
   return orElse();
 
 }
@@ -180,10 +183,10 @@ return $default(_that.title,_that.description,_that.price,_that.status,_that.pri
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'OwnerId')  String ownerId, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId, @JsonKey(name: 'Name')  String name, @JsonKey(name: 'PhoneNumber')  String phoneNumber, @JsonKey(name: 'IsPriceNegotiable')  bool isPriceNegotiable, @JsonKey(name: 'ContactMethod')  ContactMethod contactMethod, @JsonKey(name: 'ListingDetails')  dynamic listingDetails)  $default,) {final _that = this;
 switch (_that) {
 case _ListingAddRequest():
-return $default(_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);}
+return $default(_that.title,_that.description,_that.price,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.contactMethod,_that.listingDetails);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -197,10 +200,10 @@ return $default(_that.title,_that.description,_that.price,_that.status,_that.pri
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'Status')  ListingStatus status, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'OwnerId')  String ownerId, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Title')  String title, @JsonKey(name: 'Description')  String description, @JsonKey(name: 'Price')  double price, @JsonKey(name: 'PrimaryImageUrl')  String? primaryImageUrl, @JsonKey(name: 'ImagesUrl')  List<String>? imagesUrl, @JsonKey(name: 'CategoryId')  String categoryId, @JsonKey(name: 'SubcategoryId')  String subcategoryId, @JsonKey(name: 'PickupLocationId')  String pickupLocationId, @JsonKey(name: 'Name')  String name, @JsonKey(name: 'PhoneNumber')  String phoneNumber, @JsonKey(name: 'IsPriceNegotiable')  bool isPriceNegotiable, @JsonKey(name: 'ContactMethod')  ContactMethod contactMethod, @JsonKey(name: 'ListingDetails')  dynamic listingDetails)?  $default,) {final _that = this;
 switch (_that) {
 case _ListingAddRequest() when $default != null:
-return $default(_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId);case _:
+return $default(_that.title,_that.description,_that.price,_that.primaryImageUrl,_that.imagesUrl,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.contactMethod,_that.listingDetails);case _:
   return null;
 
 }
@@ -212,13 +215,12 @@ return $default(_that.title,_that.description,_that.price,_that.status,_that.pri
 @JsonSerializable()
 
 class _ListingAddRequest implements ListingAddRequest {
-  const _ListingAddRequest({@JsonKey(name: 'Title') required this.title, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Price') required this.price, @JsonKey(name: 'Status') required this.status, @JsonKey(name: 'PrimaryImageUrl') this.primaryImageUrl, @JsonKey(name: 'ImagesUrl') final  List<String>? imagesUrl, @JsonKey(name: 'OwnerId') required this.ownerId, @JsonKey(name: 'CategoryId') required this.categoryId, @JsonKey(name: 'SubcategoryId') required this.subcategoryId, @JsonKey(name: 'PickupLocationId') required this.pickupLocationId}): _imagesUrl = imagesUrl;
+  const _ListingAddRequest({@JsonKey(name: 'Title') required this.title, @JsonKey(name: 'Description') required this.description, @JsonKey(name: 'Price') required this.price, @JsonKey(name: 'PrimaryImageUrl') this.primaryImageUrl, @JsonKey(name: 'ImagesUrl') final  List<String>? imagesUrl, @JsonKey(name: 'CategoryId') required this.categoryId, @JsonKey(name: 'SubcategoryId') required this.subcategoryId, @JsonKey(name: 'PickupLocationId') required this.pickupLocationId, @JsonKey(name: 'Name') required this.name, @JsonKey(name: 'PhoneNumber') required this.phoneNumber, @JsonKey(name: 'IsPriceNegotiable') this.isPriceNegotiable = false, @JsonKey(name: 'ContactMethod') required this.contactMethod, @JsonKey(name: 'ListingDetails') this.listingDetails}): _imagesUrl = imagesUrl;
   factory _ListingAddRequest.fromJson(Map<String, dynamic> json) => _$ListingAddRequestFromJson(json);
 
 @override@JsonKey(name: 'Title') final  String title;
 @override@JsonKey(name: 'Description') final  String description;
 @override@JsonKey(name: 'Price') final  double price;
-@override@JsonKey(name: 'Status') final  ListingStatus status;
 @override@JsonKey(name: 'PrimaryImageUrl') final  String? primaryImageUrl;
  final  List<String>? _imagesUrl;
 @override@JsonKey(name: 'ImagesUrl') List<String>? get imagesUrl {
@@ -229,10 +231,14 @@ class _ListingAddRequest implements ListingAddRequest {
   return EqualUnmodifiableListView(value);
 }
 
-@override@JsonKey(name: 'OwnerId') final  String ownerId;
 @override@JsonKey(name: 'CategoryId') final  String categoryId;
 @override@JsonKey(name: 'SubcategoryId') final  String subcategoryId;
 @override@JsonKey(name: 'PickupLocationId') final  String pickupLocationId;
+@override@JsonKey(name: 'Name') final  String name;
+@override@JsonKey(name: 'PhoneNumber') final  String phoneNumber;
+@override@JsonKey(name: 'IsPriceNegotiable') final  bool isPriceNegotiable;
+@override@JsonKey(name: 'ContactMethod') final  ContactMethod contactMethod;
+@override@JsonKey(name: 'ListingDetails') final  dynamic listingDetails;
 
 /// Create a copy of ListingAddRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -247,16 +253,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListingAddRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.status, status) || other.status == status)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other._imagesUrl, _imagesUrl)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ListingAddRequest&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.price, price) || other.price == price)&&(identical(other.primaryImageUrl, primaryImageUrl) || other.primaryImageUrl == primaryImageUrl)&&const DeepCollectionEquality().equals(other._imagesUrl, _imagesUrl)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.subcategoryId, subcategoryId) || other.subcategoryId == subcategoryId)&&(identical(other.pickupLocationId, pickupLocationId) || other.pickupLocationId == pickupLocationId)&&(identical(other.name, name) || other.name == name)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.isPriceNegotiable, isPriceNegotiable) || other.isPriceNegotiable == isPriceNegotiable)&&(identical(other.contactMethod, contactMethod) || other.contactMethod == contactMethod)&&const DeepCollectionEquality().equals(other.listingDetails, listingDetails));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,description,price,status,primaryImageUrl,const DeepCollectionEquality().hash(_imagesUrl),ownerId,categoryId,subcategoryId,pickupLocationId);
+int get hashCode => Object.hash(runtimeType,title,description,price,primaryImageUrl,const DeepCollectionEquality().hash(_imagesUrl),categoryId,subcategoryId,pickupLocationId,name,phoneNumber,isPriceNegotiable,contactMethod,const DeepCollectionEquality().hash(listingDetails));
 
 @override
 String toString() {
-  return 'ListingAddRequest(title: $title, description: $description, price: $price, status: $status, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, ownerId: $ownerId, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId)';
+  return 'ListingAddRequest(title: $title, description: $description, price: $price, primaryImageUrl: $primaryImageUrl, imagesUrl: $imagesUrl, categoryId: $categoryId, subcategoryId: $subcategoryId, pickupLocationId: $pickupLocationId, name: $name, phoneNumber: $phoneNumber, isPriceNegotiable: $isPriceNegotiable, contactMethod: $contactMethod, listingDetails: $listingDetails)';
 }
 
 
@@ -267,7 +273,7 @@ abstract mixin class _$ListingAddRequestCopyWith<$Res> implements $ListingAddReq
   factory _$ListingAddRequestCopyWith(_ListingAddRequest value, $Res Function(_ListingAddRequest) _then) = __$ListingAddRequestCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'Status') ListingStatus status,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'OwnerId') String ownerId,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId
+@JsonKey(name: 'Title') String title,@JsonKey(name: 'Description') String description,@JsonKey(name: 'Price') double price,@JsonKey(name: 'PrimaryImageUrl') String? primaryImageUrl,@JsonKey(name: 'ImagesUrl') List<String>? imagesUrl,@JsonKey(name: 'CategoryId') String categoryId,@JsonKey(name: 'SubcategoryId') String subcategoryId,@JsonKey(name: 'PickupLocationId') String pickupLocationId,@JsonKey(name: 'Name') String name,@JsonKey(name: 'PhoneNumber') String phoneNumber,@JsonKey(name: 'IsPriceNegotiable') bool isPriceNegotiable,@JsonKey(name: 'ContactMethod') ContactMethod contactMethod,@JsonKey(name: 'ListingDetails') dynamic listingDetails
 });
 
 
@@ -284,19 +290,22 @@ class __$ListingAddRequestCopyWithImpl<$Res>
 
 /// Create a copy of ListingAddRequest
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? description = null,Object? price = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? contactMethod = null,Object? listingDetails = freezed,}) {
   return _then(_ListingAddRequest(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
-as double,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
-as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
+as double,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
 as String?,imagesUrl: freezed == imagesUrl ? _self._imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
-as List<String>?,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
-as String,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as List<String>?,categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
 as String,subcategoryId: null == subcategoryId ? _self.subcategoryId : subcategoryId // ignore: cast_nullable_to_non_nullable
 as String,pickupLocationId: null == pickupLocationId ? _self.pickupLocationId : pickupLocationId // ignore: cast_nullable_to_non_nullable
-as String,
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
+as String,isPriceNegotiable: null == isPriceNegotiable ? _self.isPriceNegotiable : isPriceNegotiable // ignore: cast_nullable_to_non_nullable
+as bool,contactMethod: null == contactMethod ? _self.contactMethod : contactMethod // ignore: cast_nullable_to_non_nullable
+as ContactMethod,listingDetails: freezed == listingDetails ? _self.listingDetails : listingDetails // ignore: cast_nullable_to_non_nullable
+as dynamic,
   ));
 }
 
