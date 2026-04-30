@@ -1,5 +1,4 @@
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
-import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'listing_update_request.freezed.dart';

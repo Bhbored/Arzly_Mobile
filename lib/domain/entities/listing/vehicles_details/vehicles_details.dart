@@ -1,3 +1,4 @@
+import 'package:arzly/core/enums/listing_owned/motors/motorcycle_type.dart';
 import 'package:arzly/core/enums/vehicles_details/accessory_type.dart';
 import 'package:arzly/core/enums/vehicles_details/boat_type.dart';
 import 'package:arzly/core/enums/vehicles_details/car_brand.dart';
@@ -28,6 +29,7 @@ sealed class VehiclesDetails with _$VehiclesDetails {
     int? numberOfDoors,
     TransmissionType? transmissionType,
     List<CarFeature>? carFeatures,
+    MotorcycleType? motorcycleType,
     AccessoryType? accessoryType,
     VehicleType? vehicleType,
     PlateDigits? numberOfDigits,

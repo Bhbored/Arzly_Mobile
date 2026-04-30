@@ -28,6 +28,10 @@ _VehiclesDetails _$VehiclesDetailsFromJson(
   carFeatures: (json['carFeatures'] as List<dynamic>?)
       ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
       .toList(),
+  motorcycleType: $enumDecodeNullable(
+    _$MotorcycleTypeEnumMap,
+    json['motorcycleType'],
+  ),
   accessoryType: $enumDecodeNullable(
     _$AccessoryTypeEnumMap,
     json['accessoryType'],
@@ -56,6 +60,7 @@ Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
       'carFeatures': instance.carFeatures
           ?.map((e) => _$CarFeatureEnumMap[e]!)
           .toList(),
+      'motorcycleType': _$MotorcycleTypeEnumMap[instance.motorcycleType],
       'accessoryType': _$AccessoryTypeEnumMap[instance.accessoryType],
       'vehicleType': _$VehicleTypeEnumMap[instance.vehicleType],
       'numberOfDigits': _$PlateDigitsEnumMap[instance.numberOfDigits],
@@ -193,6 +198,13 @@ const _$CarFeatureEnumMap = {
   CarFeature.ecoMode: 'EcoMode',
   CarFeature.fourWheelDrive: 'FourWheelDrive',
   CarFeature.diffLock: 'DiffLock',
+};
+
+const _$MotorcycleTypeEnumMap = {
+  MotorcycleType.atv: 'ATV',
+  MotorcycleType.motorcycle: 'Motorcycle',
+  MotorcycleType.buggy: 'Buggy',
+  MotorcycleType.other: 'other',
 };
 
 const _$AccessoryTypeEnumMap = {
