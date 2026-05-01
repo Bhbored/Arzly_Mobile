@@ -41,6 +41,9 @@ _ListingResponse _$ListingResponseFromJson(Map<String, dynamic> json) =>
       promotionEndDate: json['PromotionEndDate'] == null
           ? null
           : DateTime.parse(json['PromotionEndDate'] as String),
+      pickupLocation: PickupLocationResponse.fromJson(
+        json['PickupLocation'] as Map<String, dynamic>,
+      ),
     );
 
 Map<String, dynamic> _$ListingResponseToJson(_ListingResponse instance) =>
@@ -67,6 +70,7 @@ Map<String, dynamic> _$ListingResponseToJson(_ListingResponse instance) =>
       'PromotionType': _$PromotionTypeEnumMap[instance.promotionType],
       'PromotionStartDate': instance.promotionStartDate?.toIso8601String(),
       'PromotionEndDate': instance.promotionEndDate?.toIso8601String(),
+      'PickupLocation': instance.pickupLocation,
     };
 
 const _$ListingStatusEnumMap = {

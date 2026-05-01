@@ -1,6 +1,7 @@
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
 import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:arzly/core/enums/listing/promotion_type.dart';
+import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listing.freezed.dart';
 
@@ -28,6 +29,7 @@ sealed class Listing with _$Listing {
     required String categoryId,
     required String subcategoryId,
     required String pickupLocationId,
+    required PickupLocation pickupLocation,
     dynamic listingDetails,
   }) = _Listing;
 }

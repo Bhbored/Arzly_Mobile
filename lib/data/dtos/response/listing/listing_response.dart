@@ -1,6 +1,7 @@
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
 import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:arzly/core/enums/listing/promotion_type.dart';
+import 'package:arzly/data/dtos/response/pickup_location/pickup_location_response.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 part 'listing_response.g.dart';
 part 'listing_response.freezed.dart';
@@ -30,6 +31,8 @@ sealed class ListingResponse with _$ListingResponse {
     @JsonKey(name: 'PromotionType') PromotionType? promotionType,
     @JsonKey(name: 'PromotionStartDate') DateTime? promotionStartDate,
     @JsonKey(name: 'PromotionEndDate') DateTime? promotionEndDate,
+    @JsonKey(name: 'PickupLocation')
+    required PickupLocationResponse pickupLocation,
   }) = _ListingResponse;
 
   factory ListingResponse.fromJson(Map<String, dynamic> json) =>

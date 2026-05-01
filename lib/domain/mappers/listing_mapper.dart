@@ -2,6 +2,7 @@ import 'package:arzly/data/dtos/request/listing/listing_add_request.dart';
 import 'package:arzly/data/dtos/request/listing/listing_update_request.dart';
 import 'package:arzly/data/dtos/response/listing/listing_response.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
+import 'package:arzly/domain/mappers/pickup_location_mapper.dart';
 
 extension ListingResponseMapper on ListingResponse {
   Listing toEntity() => Listing(
@@ -27,6 +28,7 @@ extension ListingResponseMapper on ListingResponse {
     subcategoryId: subcategoryId,
     pickupLocationId: pickupLocationId,
     listingDetails: listingDetails,
+    pickupLocation: pickupLocation.toEntity(),
   );
 }
 
