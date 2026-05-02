@@ -1,10 +1,12 @@
 import 'package:arzly/core/themes/theme_selector.dart';
-import 'package:arzly/features/auth/login/login_page.dart';
 import 'package:arzly/features/nav_container/nav_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  //later user the package package_info_plus to add to sharedpreferences the data needed
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
