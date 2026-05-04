@@ -5,6 +5,8 @@ import 'package:arzly/core/network/dio_instances/listing_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
 import 'package:arzly/core/utils/http_method.dart';
+import 'package:arzly/data/dtos/request/listing/listing_add_request.dart';
+import 'package:arzly/data/dtos/request/listing/listing_update_request.dart';
 import 'package:arzly/data/dtos/response/listing/listing_response.dart';
 import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,8 +14,9 @@ part 'listing_repo.g.dart';
 
 @riverpod
 class ListingRepo extends _$ListingRepo {
-  DioClient get client => ref.watch(litingCLientProvider);
-  ApiExecutor get _executor => ref.watch(executorProvider(client.dio));
+  //mokcing firebaseid for now
+  DioClient get _client => ref.watch(litingCLientProvider);
+  ApiExecutor get _executor => ref.watch(executorProvider(_client.dio));
 
   final _logger = Logger();
   @override
@@ -24,7 +27,11 @@ class ListingRepo extends _$ListingRepo {
 
   Future<List<ListingResponse>> fetchAll() async {
     final response = await _executor.execute(
-      ApiRequest(path: '', method: HttpMethod.get),
+      ApiRequest(
+        path: '/indexed',
+        method: HttpMethod.get,
+        headers: {'pageSize': 3, 'currentPage': 0},
+      ),
     );
 
     return response.when(
@@ -58,8 +65,9 @@ class ListingRepo extends _$ListingRepo {
   }) async {
     final response = await _executor.execute(
       ApiRequest(
-        path: '/filter',
+        path: '/search',
         method: HttpMethod.get,
+        headers: {'pageSize': 10, 'currentPage': 0},
         queryParams: {'searchBy': searchBy, 'searchString': searchString},
       ),
     );
@@ -116,12 +124,18 @@ class ListingRepo extends _$ListingRepo {
     );
   }
 
-  Future<List<ListingResponse>> getByUserId(String userId) async {
+  Future<List<ListingResponse>> getByUserId() async {
+    final userId = 'firebase-uid-123';
     final response = await _executor.execute(
       ApiRequest(
         path: '/user-listings',
         method: HttpMethod.get,
-        headers: {'userId': userId},
+
+        headers: {
+          'firebaseId': userId,
+          'pageSize': 10,
+          'currentPage': 0,
+        }, //currently mock firebaseid
       ),
     );
 
@@ -145,6 +159,64 @@ class ListingRepo extends _$ListingRepo {
       },
       failure: (error, statusCode) {
         _logger.e('Failed to fetch user listings: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
+
+  Future<void> addListing(ListingAddRequest addRequest) async {
+    final userId = 'firebase-uid-123';
+    final response = await _executor.execute(
+      ApiRequest(
+        path: '/create',
+        method: HttpMethod.post,
+        data: addRequest.toJson(),
+        headers: {'firebaseId': userId}, //currently mock firebaseid
+      ),
+    );
+
+    response.when(
+      success: (data, statusCode, meta) {
+        _logger.i('Listing created with response: $data');
+      },
+      failure: (error, statusCode) {
+        _logger.e('Failed to create listing: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
+
+  Future<ListingResponse> updateListing(
+    ListingUpdateRequest updateRequest,
+  ) async {
+    final userId = 'firebase-uid-123';
+    final response = await _executor.execute(
+      ApiRequest(
+        path: '/Update',
+        method: HttpMethod.put,
+        data: updateRequest.toJson(),
+        headers: {'firebaseId': userId}, //currently mock firebaseid
+      ),
+    );
+
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          final raw = data as dynamic;
+          final updatedListing = ListingResponse.fromJson(raw);
+          _logger.i('Updated ${updatedListing.title} Successfully');
+          return updatedListing;
+        } catch (e) {
+          _logger.e('Parse error: $e');
+          throw ApiException(
+            userMessage: ApiErrors.badResponse,
+            error: 'Failed to parse listing data',
+            originalError: e,
+          );
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e('Failed to create listing: ${error.userMessage}');
         throw error;
       },
     );

@@ -33,7 +33,7 @@ final class ListingRepoProvider
   ListingRepo create() => ListingRepo();
 }
 
-String _$listingRepoHash() => r'78a2f8bbfa1207b998c24ab0cbc67ee22ad51abf';
+String _$listingRepoHash() => r'2eb193595f71c7be408f2b27d3d4ead145f1d4ce';
 
 abstract class _$ListingRepo extends $AsyncNotifier<List<ListingResponse>> {
   FutureOr<List<ListingResponse>> build();

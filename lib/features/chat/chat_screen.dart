@@ -1,4 +1,4 @@
-import 'package:arzly/data/repositories/listing_repo.dart';
+import 'package:arzly/data/repositories/listing/listing_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

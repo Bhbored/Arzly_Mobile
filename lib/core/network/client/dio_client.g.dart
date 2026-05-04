@@ -66,7 +66,7 @@ final class BaseClientProvider
   }
 }
 
-String _$baseClientHash() => r'350182245eb9f2d93ebc42d35b8142044fda43b9';
+String _$baseClientHash() => r'3d4fcf938b6c07dda1c1ccc3d0d309f8596b5154';
 
 final class BaseClientFamily extends $Family
     with $FunctionalFamilyOverride<DioClient, String> {

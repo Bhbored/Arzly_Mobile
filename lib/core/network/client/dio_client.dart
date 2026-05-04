@@ -7,8 +7,15 @@ part 'dio_client.g.dart';
 
 @Riverpod(keepAlive: true)
 DioClient baseClient(Ref ref, String path) {
+  final listingConfig = DioConfig(baseUrl: 'http://10.0.2.2:5215/arzly/$path');
   return DioClient(
-    config: DioConfig(baseUrl: 'http://10.0.2.2:5215/arzly/$path'),
+    config: listingConfig.copyWith(
+      baseUrl: 'http://10.0.2.2:5215/arzly/$path',
+      headers: {
+        'Accept': listingConfig.acceptHeader,
+        'X-Client-Version': listingConfig.clientVersion,
+      },
+    ),
   );
 }
 
@@ -25,11 +32,7 @@ class DioClient {
         sendTimeout: config.sendTimeout,
         contentType: config.contentType,
         responseType: config.responseType,
-        headers: {
-          'Accept': config.acceptHeader,
-          'X-API-Key': config.apiKey,
-          'X-Client-Version': config.clientVersion,
-        },
+        headers: config.headers,
       ),
     );
 
