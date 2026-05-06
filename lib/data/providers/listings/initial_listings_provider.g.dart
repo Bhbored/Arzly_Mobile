@@ -24,7 +24,7 @@ final class InitialListingsProviderProvider
         argument: null,
         retry: noProviderRetry,
         name: r'initialListingsProviderProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -38,7 +38,7 @@ final class InitialListingsProviderProvider
 }
 
 String _$initialListingsProviderHash() =>
-    r'329d17b41d4779d382e79acbc0b3d89eba725a9a';
+    r'3bedfbc842d47a8ed2593a32d6e06a51f898e53c';
 
 abstract class _$InitialListingsProvider
     extends $AsyncNotifier<Map<String, List<Listing>>> {

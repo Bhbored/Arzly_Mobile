@@ -7,7 +7,7 @@ part 'initial_listings_provider.g.dart';
 
 Duration? noProviderRetry(int _, Object _) => null;
 
-@Riverpod(retry: noProviderRetry)
+@Riverpod(retry: noProviderRetry, keepAlive: true)
 class InitialListingsProvider extends _$InitialListingsProvider {
   ListingRepo get _listingRepo => ref.read(listingRepoProvider.notifier);
   @override
