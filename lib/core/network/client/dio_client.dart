@@ -37,7 +37,7 @@ class DioClient {
     );
 
     // dio.interceptors.add(AuthInterceptor());
-    dio.interceptors.add(RetryInterceptor(dio: dio, maxRetries: 3));
+    dio.interceptors.add(RetryInterceptor(dio: dio, maxRetries: 2));
 
     if (config.enableLogging) {
       dio.interceptors.add(

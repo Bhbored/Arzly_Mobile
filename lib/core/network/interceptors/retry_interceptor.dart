@@ -6,7 +6,7 @@ class RetryInterceptor extends Interceptor {
   final int maxRetries;
   final logger = Logger();
 
-  RetryInterceptor({required this.dio, this.maxRetries = 3});
+  RetryInterceptor({required this.dio, this.maxRetries = 2});
 
   @override
   Future<void> onError(

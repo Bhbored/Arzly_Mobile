@@ -21,7 +21,7 @@ final class ExecutorProvider
   }) : super(
          retry: null,
          name: r'executorProvider',
-         isAutoDispose: true,
+         isAutoDispose: false,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
@@ -66,7 +66,7 @@ final class ExecutorProvider
   }
 }
 
-String _$executorHash() => r'9930ccab47ff681876d32ae6fde8d6d728b3299f';
+String _$executorHash() => r'a12f3d678792658a2277385deb09e347e3747f15';
 
 final class ExecutorFamily extends $Family
     with $FunctionalFamilyOverride<ApiExecutor, Dio> {
@@ -76,7 +76,7 @@ final class ExecutorFamily extends $Family
         name: r'executorProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
-        isAutoDispose: true,
+        isAutoDispose: false,
       );
 
   ExecutorProvider call(Dio instance) =>

@@ -1,34 +1,28 @@
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/core/utils/time_ago_helper.dart';
+import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ListingCard extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-  final String status;
-  final String category;
-  final String location;
-  final String price;
+  final Listing listing;
 
-  const ListingCard({
-    super.key,
-    required this.title,
-    required this.imageUrl,
-    required this.status,
-    required this.category,
-    required this.location,
-    required this.price,
-  });
+  const ListingCard({super.key, required this.listing});
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl =
+        listing.primaryImageUrl ??
+        (listing.imagesUrl.isNotEmpty ? listing.imagesUrl.first : null);
+
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(context.borderRadiusLarge),
+        borderRadius: BorderRadius.circular(context.borderRadiusMedium),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
+            blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
@@ -37,15 +31,22 @@ class ListingCard extends StatelessWidget {
       child: Column(
         children: [
           AspectRatio(
-            aspectRatio: 16 / 9,
+            aspectRatio: 4 / 3,
             child: Stack(
               children: [
-                Image.network(
-                  imageUrl,
-                  width: double.infinity,
-                  height: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                if (imageUrl != null)
+                  FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: imageUrl,
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                    fadeInDuration: const Duration(milliseconds: 250),
+                    imageErrorBuilder: (_, __, ___) =>
+                        _buildImageFallback(context),
+                  )
+                else
+                  _buildImageFallback(context),
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
@@ -62,100 +63,65 @@ class ListingCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 16,
-                  right: 16,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: status == 'Approved'
-                          ? Theme.of(context).colorScheme.secondaryContainer
-                          : Theme.of(context).colorScheme.errorContainer,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          status == 'Approved' ? Icons.check_circle : Icons.pending,
-                          size: 14,
-                          color: status == 'Approved'
-                              ? Theme.of(context).colorScheme.onSecondaryContainer
-                              : Theme.of(context).colorScheme.onErrorContainer,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          status.toUpperCase(),
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                                color: status == 'Approved'
-                                    ? Theme.of(context).colorScheme.onSecondaryContainer
-                                    : Theme.of(context).colorScheme.onErrorContainer,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 16,
-                  left: 16,
-                  right: 16,
+                  bottom: 10,
+                  left: 10,
+                  right: 10,
                   child: Text(
-                    title,
+                    listing.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(context.paddingMedium),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            padding: EdgeInsets.all(context.paddingSmall),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      category,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          size: 16,
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          location,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
                 Text(
-                  price,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  listing.isPriceNegotiable
+                      ? 'Trade'
+                      : '\$${listing.price.toStringAsFixed(listing.price.truncateToDouble() == listing.price ? 0 : 2)}',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: context.spaceSmall),
+                Text(
+                  TimeAgoHelper.format(listing.createdAt),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildImageFallback(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Theme.of(context).colorScheme.surfaceContainerLow,
+            Theme.of(context).colorScheme.surfaceContainerHighest,
+          ],
+        ),
+      ),
+      child: const Center(child: Icon(Icons.image_not_supported_outlined)),
     );
   }
 }

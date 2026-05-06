@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'listing_repo.dart';
+part of 'category_repo.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,33 +9,33 @@ part of 'listing_repo.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(ListingRepo)
-final listingRepoProvider = ListingRepoProvider._();
+@ProviderFor(CategoryRepo)
+final categoryRepoProvider = CategoryRepoProvider._();
 
-final class ListingRepoProvider
-    extends $AsyncNotifierProvider<ListingRepo, void> {
-  ListingRepoProvider._()
+final class CategoryRepoProvider
+    extends $AsyncNotifierProvider<CategoryRepo, void> {
+  CategoryRepoProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'listingRepoProvider',
+        name: r'categoryRepoProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$listingRepoHash();
+  String debugGetCreateSourceHash() => _$categoryRepoHash();
 
   @$internal
   @override
-  ListingRepo create() => ListingRepo();
+  CategoryRepo create() => CategoryRepo();
 }
 
-String _$listingRepoHash() => r'ccdc245eba0b6eb34724742122bcd2cf46768f1d';
+String _$categoryRepoHash() => r'02d53d2e9bd5e3f4c9e7c014070af42fbe495600';
 
-abstract class _$ListingRepo extends $AsyncNotifier<void> {
+abstract class _$CategoryRepo extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override

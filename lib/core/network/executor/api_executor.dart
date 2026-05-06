@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'api_executor.g.dart';
 
-@Riverpod(keepAlive: false)
+@Riverpod(keepAlive: true)
 ApiExecutor executor(Ref ref, Dio instance) {
   return ApiExecutor(instance);
 }
