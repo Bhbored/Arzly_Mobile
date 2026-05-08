@@ -1,6 +1,8 @@
 import 'package:arzly/core/exceptions/api_exception.dart';
+import 'package:arzly/data/providers/category_provider.dart';
 import 'package:arzly/data/providers/listings/initial_listings_provider.dart';
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/features/home/widgets/category_grid_slider.dart';
 import 'package:arzly/features/home/widgets/category_listing_row.dart';
 import 'package:arzly/features/home/widgets/home_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final initialListings = ref.watch(initialListingsProviderProvider);
+    final categories = ref.watch(categoryDataProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: const HomeAppBar(),
@@ -31,7 +34,20 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: context.spaceLarge),
+            SizedBox(height: context.spaceMedium),
+            categories.when(
+              data: (data) => CategoryGridSlider(categories: data),
+              error: (error, stackTrace) {
+                final message = error is ApiException
+                    ? error.userMessage
+                    : error.toString();
+                return Center(child: Text(message));
+              },
+              loading: () => SizedBox(
+                height: context.screenHeight * 0.24,
+                child: const Center(child: CircularProgressIndicator()),
+              ),
+            ),
             initialListings.when(
               data: (data) => Column(
                 children: data.entries

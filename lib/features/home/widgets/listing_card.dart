@@ -3,7 +3,9 @@ import 'package:arzly/core/utils/real_estate_display_helper.dart';
 import 'package:arzly/core/utils/time_ago_helper.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:arzly/domain/entities/listing/real_estate_details/real_estate_details.dart';
+import 'package:arzly/domain/entities/listing/vehicles_details/vehicles_details.dart';
 import 'package:arzly/features/home/widgets/card_stats/real_estate_info_row.dart';
+import 'package:arzly/features/home/widgets/card_stats/vehicles_info_row.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -20,6 +22,9 @@ class ListingCard extends StatelessWidget {
     final isFavorite = _isFavorite(listing);
     final realEstateDetails = listing.listingDetails is RealEstateDetails
         ? listing.listingDetails as RealEstateDetails
+        : null;
+    final vehiclesDetails = listing.listingDetails is VehiclesDetails
+        ? listing.listingDetails as VehiclesDetails
         : null;
 
     return Container(
@@ -153,6 +158,14 @@ class ListingCard extends StatelessWidget {
                           RealEstateDisplayHelper.areaInSquareMeters(
                             realEstateDetails.size,
                           ),
+                    ),
+                    SizedBox(height: context.spaceSmall),
+                  ],
+                  if (vehiclesDetails?.year != null &&
+                      vehiclesDetails?.kilometers != null) ...[
+                    VehiclesInfoRow(
+                      year: vehiclesDetails!.year!,
+                      kilometers: vehiclesDetails.kilometers!,
                     ),
                     SizedBox(height: context.spaceSmall),
                   ],

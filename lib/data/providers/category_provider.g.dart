@@ -18,9 +18,9 @@ final class CategoryDataProvider
     : super(
         from: null,
         argument: null,
-        retry: null,
+        retry: noProviderRetry,
         name: r'categoryDataProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -33,7 +33,7 @@ final class CategoryDataProvider
   CategoryData create() => CategoryData();
 }
 
-String _$categoryDataHash() => r'4990d163eae184c842dbf333052c2e4788b87dc3';
+String _$categoryDataHash() => r'a5f9c470b24dafab166c823f618ba6f26388ec70';
 
 abstract class _$CategoryData extends $AsyncNotifier<List<Category>> {
   FutureOr<List<Category>> build();
