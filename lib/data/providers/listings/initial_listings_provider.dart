@@ -9,15 +9,17 @@ Duration? noProviderRetry(int _, Object _) => null;
 
 @Riverpod(retry: noProviderRetry, keepAlive: true)
 class InitialListingsProvider extends _$InitialListingsProvider {
-  ListingRepo get _listingRepo => ref.read(listingRepoProvider.notifier);
+  ListingRepo get _listingRepo => ref.read(listingRepoProvider);
   @override
   FutureOr<Map<String, List<Listing>>> build() async {
     return _loadInitialListings();
   }
 
   Future<void> fetchInitialListings() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(_loadInitialListings);
+    if (ref.mounted) {
+      state = const AsyncValue.loading();
+      state = await AsyncValue.guard(_loadInitialListings);
+    }
   }
 
   Future<Map<String, List<Listing>>> _loadInitialListings() async {

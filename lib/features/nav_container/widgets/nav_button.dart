@@ -30,8 +30,8 @@ class NavButton extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                width: context.screenWidth * 0.11,
-                height: context.screenWidth * 0.11,
+                width: context.screenWidth * 0.12,
+                height: context.screenWidth * 0.12,
                 decoration: BoxDecoration(
                   color: isActive
                       ? Theme.of(context).colorScheme.secondaryContainer
@@ -40,6 +40,7 @@ class NavButton extends StatelessWidget {
                 ),
                 child: Icon(
                   isActive ? activeIcon : icon,
+                  size: 24,
                   color: isActive
                       ? Theme.of(context).colorScheme.primary
                       : Theme.of(context).colorScheme.onSurfaceVariant,
@@ -49,6 +50,7 @@ class NavButton extends StatelessWidget {
               Text(
                 label,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontSize: 12,
                       color: isActive
                           ? Theme.of(context).colorScheme.primary
                           : Theme.of(context).colorScheme.onSurfaceVariant,

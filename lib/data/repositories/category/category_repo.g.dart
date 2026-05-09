@@ -9,11 +9,12 @@ part of 'category_repo.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(CategoryRepo)
+@ProviderFor(categoryRepo)
 final categoryRepoProvider = CategoryRepoProvider._();
 
 final class CategoryRepoProvider
-    extends $AsyncNotifierProvider<CategoryRepo, void> {
+    extends $FunctionalProvider<CategoryRepo, CategoryRepo, CategoryRepo>
+    with $Provider<CategoryRepo> {
   CategoryRepoProvider._()
     : super(
         from: null,
@@ -30,25 +31,21 @@ final class CategoryRepoProvider
 
   @$internal
   @override
-  CategoryRepo create() => CategoryRepo();
-}
+  $ProviderElement<CategoryRepo> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
 
-String _$categoryRepoHash() => r'02d53d2e9bd5e3f4c9e7c014070af42fbe495600';
-
-abstract class _$CategoryRepo extends $AsyncNotifier<void> {
-  FutureOr<void> build();
-  @$mustCallSuper
   @override
-  void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<void>, void>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<AsyncValue<void>, void>,
-              AsyncValue<void>,
-              Object?,
-              Object?
-            >;
-    element.handleCreate(ref, build);
+  CategoryRepo create(Ref ref) {
+    return categoryRepo(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(CategoryRepo value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<CategoryRepo>(value),
+    );
   }
 }
+
+String _$categoryRepoHash() => r'ee268c47eb0f37f7a0f3c332bddc7376cfda75d8';

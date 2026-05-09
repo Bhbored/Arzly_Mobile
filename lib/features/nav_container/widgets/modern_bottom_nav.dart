@@ -56,9 +56,9 @@ class ModernBottomNav extends StatelessWidget {
                 ),
                 Expanded(
                   child: NavButton(
-                    icon: Icons.search,
-                    activeIcon: Icons.search,
-                    label: 'Search',
+                    icon: Icons.chat_bubble_outline_rounded,
+                    activeIcon: Icons.chat_bubble_rounded,
+                    label: 'Chats',
                     isActive: currentIndex == 1,
                     onTap: () => onTap(1),
                   ),
@@ -70,9 +70,9 @@ class ModernBottomNav extends StatelessWidget {
                     child: Opacity(
                       opacity: 0,
                       child: NavButton(
-                        icon: Icons.add,
-                        activeIcon: Icons.add,
-                        label: 'POST',
+                        icon: Icons.add_circle_outline_rounded,
+                        activeIcon: Icons.add_circle_rounded,
+                        label: 'Sell',
                         isActive: currentIndex == 2,
                         onTap: () {},
                       ),
@@ -82,9 +82,9 @@ class ModernBottomNav extends StatelessWidget {
 
                 Expanded(
                   child: NavButton(
-                    icon: Icons.chat_bubble_outline,
-                    activeIcon: Icons.chat_bubble,
-                    label: 'Inbox',
+                    icon: Icons.inventory_2_outlined,
+                    activeIcon: Icons.inventory_2,
+                    label: 'My Posts',
                     isActive: currentIndex == 3,
                     onTap: () => onTap(3),
                   ),
@@ -133,18 +133,19 @@ class ModernBottomNav extends StatelessWidget {
                     ),
                     child: Icon(
                       currentIndex == 2
-                          ? Icons.add_circle
-                          : Icons.add_circle_outline,
+                          ? Icons.sell_rounded
+                          : Icons.sell_outlined,
                       color: Theme.of(context).colorScheme.onPrimary,
-                      size: 32,
+                      size: 34,
                     ),
                   ),
                   SizedBox(height: context.spaceSmall / 2),
                   Padding(
                     padding: EdgeInsets.only(bottom: context.paddingSmall),
                     child: Text(
-                      'POST',
+                      'Sell',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        fontSize: 12,
                         color: currentIndex == 2
                             ? Theme.of(context).colorScheme.primary
                             : Theme.of(context).colorScheme.onSurfaceVariant,

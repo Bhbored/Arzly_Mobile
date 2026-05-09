@@ -37,7 +37,8 @@ class CategoryListAvatar extends StatelessWidget {
                       image: imageUrl,
                       fit: BoxFit.contain,
                       fadeInDuration: const Duration(milliseconds: 250),
-                      imageErrorBuilder: (_, __, ___) => _fallbackIcon(context),
+                      imageErrorBuilder: (_, error, stackTrace) =>
+                          _fallbackIcon(context),
                     ),
                   )
                 : _fallbackIcon(context),

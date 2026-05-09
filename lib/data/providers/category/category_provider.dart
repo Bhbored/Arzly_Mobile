@@ -9,15 +9,17 @@ Duration? noProviderRetry(int _, Object _) => null;
 
 @Riverpod(retry: noProviderRetry, keepAlive: true)
 class CategoryData extends _$CategoryData {
-  CategoryRepo get _categoryRepo => ref.read(categoryRepoProvider.notifier);
+  CategoryRepo get _categoryRepo => ref.read(categoryRepoProvider);
   @override
   FutureOr<List<Category>> build() async {
     return _loadCategories();
   }
 
   Future<void> fetchCategories() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(_loadCategories);
+    if (ref.mounted) {
+      state = const AsyncValue.loading();
+      state = await AsyncValue.guard(_loadCategories);
+    }
   }
 
   Future<List<Category>> _loadCategories() async {

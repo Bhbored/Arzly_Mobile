@@ -1,6 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/features/categories/widgets/category_list_avatar.dart';
+import 'package:arzly/features/subcategory/subcategory_screen.dart';
 import 'package:flutter/material.dart';
 
 class AllCategoriesScreen extends StatelessWidget {
@@ -12,6 +13,16 @@ class AllCategoriesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final pageColor = colors.surfaceContainerLowest;
+
+    void _onCategoryPressed(Category category) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SubcategoryScreen(category: category),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: pageColor,
       appBar: AppBar(
@@ -25,9 +36,7 @@ class AllCategoriesScreen extends StatelessWidget {
         titleSpacing: 0,
         title: Text(
           'All Categories',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w700,
             color: colors.onSurface,
           ),
@@ -58,9 +67,9 @@ class AllCategoriesScreen extends StatelessWidget {
                   leading: CategoryListAvatar(category: category),
                   title: Text(
                     category.name,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   trailing: Icon(
                     Icons.chevron_right_rounded,
@@ -74,6 +83,4 @@ class AllCategoriesScreen extends StatelessWidget {
       ),
     );
   }
-
-  void _onCategoryPressed(Category category) {}
 }

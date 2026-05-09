@@ -38,20 +38,23 @@ class SettingsTile extends StatelessWidget {
                   child: Text(
                     title,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: fg,
-                      fontWeight: FontWeight.w600,
-                    ),
+                          color: fg,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
                 ),
-                if (trailing != null) trailing!,
+                switch (trailing) {
+                  Widget trailingWidget => trailingWidget,
+                  null => const SizedBox.shrink(),
+                },
                 if (trailing != null && trailingText != null)
                   const SizedBox(width: 8),
                 if (trailingText != null)
                   Text(
                     trailingText!,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: colors.onSurfaceVariant,
-                    ),
+                          color: colors.onSurfaceVariant,
+                        ),
                   ),
               ],
             ),

@@ -1,7 +1,6 @@
 import 'package:arzly/core/constants/api_errors.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/core/network/client/dio_client.dart';
-import 'package:arzly/core/network/dio_instances/category_dio_instance.dart';
+import 'package:arzly/core/network/dio_instances/category/category_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
 import 'package:arzly/core/utils/http_method.dart';
@@ -11,18 +10,19 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'category_repo.g.dart';
 
 @Riverpod(keepAlive: true)
-class CategoryRepo extends _$CategoryRepo {
-  DioClient get _client => ref.watch(categoryClientProvider);
-  ApiExecutor get _executor => ref.watch(executorProvider(_client.dio));
+CategoryRepo categoryRepo(Ref ref) {
+  final client = ref.read(categoryClientProvider);
+  final executor = ref.read(executorProvider(client.dio));
+  return CategoryRepo(executor: executor);
+}
 
+class CategoryRepo {
+  final ApiExecutor executor;
   final _logger = Logger();
-  @override
-  FutureOr<void> build() async {
-    return;
-  }
 
+  CategoryRepo({required this.executor});
   Future<List<CategoryResponse>> fetchAll() async {
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(path: '', method: HttpMethod.get),
     );
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'listing_dio_instance.dart';
+part of 'pickup_location_dio_instance.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,25 +9,25 @@ part of 'listing_dio_instance.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(litingCLient)
-final litingCLientProvider = LitingCLientProvider._();
+@ProviderFor(pickupLocationClient)
+final pickupLocationClientProvider = PickupLocationClientProvider._();
 
-final class LitingCLientProvider
+final class PickupLocationClientProvider
     extends $FunctionalProvider<DioClient, DioClient, DioClient>
     with $Provider<DioClient> {
-  LitingCLientProvider._()
+  PickupLocationClientProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'litingCLientProvider',
+        name: r'pickupLocationClientProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$litingCLientHash();
+  String debugGetCreateSourceHash() => _$pickupLocationClientHash();
 
   @$internal
   @override
@@ -36,7 +36,7 @@ final class LitingCLientProvider
 
   @override
   DioClient create(Ref ref) {
-    return litingCLient(ref);
+    return pickupLocationClient(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -48,4 +48,5 @@ final class LitingCLientProvider
   }
 }
 
-String _$litingCLientHash() => r'78959b76f388072987f8bd5db73802d59fbd775b';
+String _$pickupLocationClientHash() =>
+    r'fc8b1bd084595e464ec1f8a783d07352dfb96bf0';

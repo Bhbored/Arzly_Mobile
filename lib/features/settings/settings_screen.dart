@@ -1,69 +1,193 @@
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/features/settings/widgets/settings_profile_section.dart';
-import 'package:arzly/features/settings/widgets/settings_stats_row.dart';
-import 'package:arzly/features/settings/widgets/settings_tile.dart';
+import 'package:arzly/data/providers/language/language_provider.dart';
+import 'package:arzly/data/providers/theme/theme_provider.dart';
+import 'package:arzly/features/settings/sub_screens/language_selector_screen.dart';
+import 'package:arzly/features/settings/sub_screens/saved_locations_screen.dart';
+import 'package:arzly/features/settings/sub_screens/theme_selector_screen.dart';
+import 'package:arzly/features/settings/widgets/shared/settings_descriptive_tile.dart';
+import 'package:arzly/features/settings/widgets/shared/settings_screen_header.dart';
+import 'package:arzly/features/settings/widgets/shared/settings_section_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  static String _themeTrailingLabel(ThemeMode mode) => switch (mode) {
+    ThemeMode.light => 'Light',
+    ThemeMode.dark => 'Dark',
+    ThemeMode.system => 'System',
+  };
+  void _onEditProfile() {}
+
+  void _navigateToThemeScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ThemeSelectorScreen()),
+    );
+  }
+
+  void _navigateToLanguageScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LanguageSelectorScreen()),
+    );
+  }
+
+  void _navigateToSavedLocations() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const SavedLocationsScreen()),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final themeMode = ref.watch(themeModeProvider);
+    final languageLabel = ref.watch(languageProvider);
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       backgroundColor: colors.surface,
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(
           context.paddingMedium,
-          context.spaceMedium,
+          context.paddingExtraLarge + context.spaceMedium,
           context.paddingMedium,
           context.bottomPadding + 24,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(child: SettingsProfileSection()),
+            SettingsScreenHeader(onEditPressed: _onEditProfile),
             SizedBox(height: context.spaceLarge),
-            const SettingsStatsRow(),
-            SizedBox(height: context.spaceMedium),
-            _SectionCard(
+            SettingsSectionCard(
               child: Column(
-                children: const [
-                  SettingsTile(
-                    icon: Icons.notifications_outlined,
-                    title: 'Notifications',
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SettingsDescriptiveTile(
+                    icon: Icons.favorite_outline_rounded,
+                    title: 'Saved Listings & Searches',
+                    subtitle: 'Liked listings and saved searches.',
+                    onTap: () {},
                   ),
-                  SettingsTile(
-                    icon: Icons.language_rounded,
-                    title: 'Language',
-                    trailingText: 'English',
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
                   ),
-                  SettingsTile(
-                    icon: Icons.palette_outlined,
-                    title: 'Theme',
-                    trailingText: 'System',
+                  SettingsDescriptiveTile(
+                    icon: Icons.visibility_outlined,
+                    title: 'Public Profile',
+                    subtitle: 'Manage profile visibility.',
+                    onTap: () {},
                   ),
-                  SettingsTile(
-                    icon: Icons.lock_outline_rounded,
-                    title: 'Privacy',
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
                   ),
-                  SettingsTile(icon: Icons.help_outline_rounded, title: 'Help'),
+                  SettingsDescriptiveTile(
+                    icon: Icons.work_outline_rounded,
+                    title: 'Job Hunting Profile',
+                    subtitle: 'Skills and availability for employers.',
+                    onTap: () {},
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                  SettingsDescriptiveTile(
+                    icon: Icons.location_on_outlined,
+                    title: 'Saved Locations',
+                    subtitle: 'Areas for meetups and search filters.',
+                    onTap: _navigateToSavedLocations,
+                  ),
                 ],
+              ),
+            ),
+            SizedBox(height: context.spaceMedium),
+            Text(
+              'Settings',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: colors.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
               ),
             ),
             SizedBox(height: context.spaceSmall),
-            _SectionCard(
+            SettingsSectionCard(
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SettingsTile(
+                  SettingsDescriptiveTile(
+                    icon: Icons.help_outline_rounded,
+                    title: 'Help & Support',
+                    subtitle: 'FAQs and guides.',
+                    onTap: () {},
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                  SettingsDescriptiveTile(
+                    icon: Icons.headset_mic_outlined,
+                    title: 'Customer Support',
+                    subtitle: 'Contact the Arzly team.',
+                    onTap: () {},
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                  SettingsDescriptiveTile(
+                    icon: Icons.language_rounded,
+                    title: 'Language',
+                    subtitle: 'App display language.',
+                    trailingText: languageLabel,
+                    onTap: _navigateToLanguageScreen,
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                  SettingsDescriptiveTile(
+                    icon: Icons.palette_outlined,
+                    title: 'Theme',
+                    subtitle: 'Light, dark, or follow the system.',
+                    trailingText: _themeTrailingLabel(themeMode),
+                    onTap: _navigateToThemeScreen,
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    indent: 56,
+                    color: colors.outlineVariant.withValues(alpha: 0.5),
+                  ),
+                  SettingsDescriptiveTile(
                     icon: Icons.logout_rounded,
                     title: 'Logout',
+                    subtitle: 'Sign out on this device.',
+                    showChevron: false,
                     isDanger: true,
+                    onTap: () {},
                   ),
                 ],
               ),
             ),
-            SizedBox(height: context.spaceLarge),
+            SizedBox(height: context.spaceMedium),
             Center(
               child: Column(
                 children: [
@@ -90,24 +214,6 @@ class SettingsScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SectionCard extends StatelessWidget {
-  final Widget child;
-
-  const _SectionCard({required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerLowest,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: child,
     );
   }
 }

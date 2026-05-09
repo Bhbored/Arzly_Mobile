@@ -52,7 +52,7 @@ class ListingCard extends StatelessWidget {
                     height: double.infinity,
                     fit: BoxFit.cover,
                     fadeInDuration: const Duration(milliseconds: 250),
-                    imageErrorBuilder: (_, __, ___) =>
+                    imageErrorBuilder: (_, error, stackTrace) =>
                         _buildImageFallback(context),
                   )
                 else

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:arzly/core/constants/api_errors.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/core/network/client/dio_client.dart';
-import 'package:arzly/core/network/dio_instances/listing_dio_instance.dart';
+import 'package:arzly/core/network/dio_instances/listing/listing_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
 import 'package:arzly/core/utils/http_method.dart';
@@ -24,26 +22,28 @@ import 'package:arzly/domain/entities/listing/sports_details/sports_details.dart
 import 'package:arzly/domain/entities/listing/vehicles_details/vehicles_details.dart';
 import 'package:logger/web.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 part 'listing_repo.g.dart';
 
 @Riverpod(keepAlive: true)
-class ListingRepo extends _$ListingRepo {
-  //mokcing firebaseid for now
-  DioClient get _client => ref.read(litingCLientProvider);
-  ApiExecutor get _executor => ref.read(executorProvider(_client.dio));
-  CategoryRepo get _categoryRepo => ref.read(categoryRepoProvider.notifier);
-  final _logger = Logger();
-  @override
-  FutureOr<void> build() async {
-    return;
-  }
+ListingRepo listingRepo(Ref ref) {
+  final client = ref.read(listingClientProvider);
+  final executor = ref.read(executorProvider(client.dio));
+  final categoryRepo = ref.read(categoryRepoProvider);
+  return ListingRepo(executor: executor, categoryRepo: categoryRepo);
+}
 
+class ListingRepo {
+  final ApiExecutor executor;
+  final CategoryRepo categoryRepo;
+  final _logger = Logger();
+  ListingRepo({required this.executor, required this.categoryRepo});
   //helpers
 
   Future<List<ListingResponse>> assignDetailsToListings(
     List<ListingResponse> listings,
   ) async {
-    final categories = await _categoryRepo.fetchAll();
+    final categories = await categoryRepo.fetchAll();
 
     Map<String, String> categoryNames = {};
     Map<String, List<ListingResponse>> listingsByCategory = {};
@@ -91,7 +91,7 @@ class ListingRepo extends _$ListingRepo {
   Future<ListingResponse> assignLDetailsToListing(
     ListingResponse listing,
   ) async {
-    final categories = await _categoryRepo.fetchAll();
+    final categories = await categoryRepo.fetchAll();
     final category = categories.firstWhere((c) => c.id == listing.categoryId);
 
     return listing.copyWith(
@@ -131,7 +131,7 @@ class ListingRepo extends _$ListingRepo {
       'Pets': [],
       'Services': [],
     };
-    final categories = await _categoryRepo.fetchAll();
+    final categories = await categoryRepo.fetchAll();
     final categoriesIds = categories.map((category) => category.id).toList();
     var listings = await fetchInitialListings(categoriesIds);
     listings = await assignDetailsToListings(listings);
@@ -144,7 +144,7 @@ class ListingRepo extends _$ListingRepo {
   }
 
   Future<List<ListingResponse>> fetchAll() async {
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/indexed',
         method: HttpMethod.get,
@@ -181,7 +181,7 @@ class ListingRepo extends _$ListingRepo {
     List<String> categoriesIds,
   ) async {
     final jsonCategories = jsonEncode(categoriesIds);
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/initial-listings',
         method: HttpMethod.get,
@@ -218,7 +218,7 @@ class ListingRepo extends _$ListingRepo {
     required String searchBy,
     required String searchString,
   }) async {
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/search',
         method: HttpMethod.get,
@@ -253,7 +253,7 @@ class ListingRepo extends _$ListingRepo {
   }
 
   Future<ListingResponse> getById(String id) async {
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(path: '/$id', method: HttpMethod.get),
     );
 
@@ -281,7 +281,7 @@ class ListingRepo extends _$ListingRepo {
 
   Future<List<ListingResponse>> getByUserId() async {
     final userId = 'firebase-uid-123';
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/user-listings',
         method: HttpMethod.get,
@@ -321,7 +321,7 @@ class ListingRepo extends _$ListingRepo {
 
   Future<void> addListing(ListingAddRequest addRequest) async {
     final userId = 'firebase-uid-123';
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/create',
         method: HttpMethod.post,
@@ -345,7 +345,7 @@ class ListingRepo extends _$ListingRepo {
     ListingUpdateRequest updateRequest,
   ) async {
     final userId = 'firebase-uid-123';
-    final response = await _executor.execute(
+    final response = await executor.execute(
       ApiRequest(
         path: '/Update',
         method: HttpMethod.put,

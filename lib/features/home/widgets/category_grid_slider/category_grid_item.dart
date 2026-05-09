@@ -45,7 +45,7 @@ class CategoryGridItem extends StatelessWidget {
                           image: imageUrl,
                           fit: BoxFit.contain,
                           fadeInDuration: const Duration(milliseconds: 250),
-                          imageErrorBuilder: (_, __, ___) =>
+                          imageErrorBuilder: (_, error, stackTrace) =>
                               _fallbackIcon(context),
                         ),
                       )

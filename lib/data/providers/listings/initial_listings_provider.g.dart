@@ -38,7 +38,7 @@ final class InitialListingsProviderProvider
 }
 
 String _$initialListingsProviderHash() =>
-    r'3bedfbc842d47a8ed2593a32d6e06a51f898e53c';
+    r'409b8d43211e074870f7897a1c7e3876c9489c47';
 
 abstract class _$InitialListingsProvider
     extends $AsyncNotifier<Map<String, List<Listing>>> {
