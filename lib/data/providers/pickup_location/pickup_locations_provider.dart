@@ -37,4 +37,9 @@ class PickupLocations extends _$PickupLocations {
     await _repo.updatePickupLocation(location.toUpdateRequest());
     await refresh();
   }
+
+  Future<void> delete(String id) async {
+    await _repo.deletePickupLocation(id);
+    await refresh();
+  }
 }

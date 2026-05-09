@@ -22,6 +22,9 @@ class AppColors {
   static const errorContainerLight = Color(0xFFFFDAD6);
   static const onErrorContainerLight = Color(0xFF93000A);
 
+  static const warningContainerLight = Color(0xFFFFEAC8);
+  static const onWarningContainerLight = Color(0xFF5C3700);
+
   static const surfaceLight = Color(0xFFF9F9F7);
   static const onSurfaceLight = Color(0xFF1A1C1B);
   static const surfaceVariantLight = Color(0xFFE2E3E1);
@@ -55,6 +58,9 @@ class AppColors {
   static const onErrorDark = Color(0xFF690005);
   static const errorContainerDark = Color(0xFF93000A);
   static const onErrorContainerDark = Color(0xFFFFDAD6);
+
+  static const warningContainerDark = Color(0xFF5C3D00);
+  static const onWarningContainerDark = Color(0xFFFFEAC8);
 
   static const surfaceDark = Color(0xFF111412);
   static const onSurfaceDark = Color(0xFFE2E3E1);

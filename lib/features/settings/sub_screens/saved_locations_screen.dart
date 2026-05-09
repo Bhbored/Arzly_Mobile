@@ -1,4 +1,5 @@
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/data/providers/pickup_location/pickup_locations_provider.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/saved_location_card.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/saved_locations_empty_view.dart';
@@ -64,25 +65,29 @@ class SavedLocationsScreen extends ConsumerWidget {
                 final loc = locations[index];
                 return SavedLocationCard(
                   location: loc,
-                  onTap: () =>
-                      openPickupLocationScreen(context, existing: loc),
+                  onTap: () => openPickupLocationScreen(context, existing: loc),
                 );
               },
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (err, _) => Center(
-            child: Padding(
-              padding: EdgeInsets.all(context.paddingMedium),
-              child: Text(
-                'Something went wrong',
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyLarge?.copyWith(color: colors.error),
-                textAlign: TextAlign.center,
+          error: (err, _) {
+            final message = err is ApiException
+                ? err.userMessage
+                : 'Something went wrong';
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.all(context.paddingMedium),
+                child: Text(
+                  message,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyLarge?.copyWith(color: colors.error),
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

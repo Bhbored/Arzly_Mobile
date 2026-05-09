@@ -6,6 +6,9 @@ import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_form_header.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_form_section_label.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_label_display.dart';
+import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_route_result.dart';
+import 'package:arzly/features/shared/snack_bar/app_snack_bar.dart';
+import 'package:arzly/features/shared/snack_bar/app_snack_bar_variant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -117,18 +120,10 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
         });
       } else {
         setState(() => _gpsLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.fromLTRB(
-              context.paddingMedium,
-              0,
-              context.paddingMedium,
-              context.bottomPadding + context.spaceSmall,
-            ),
-            showCloseIcon: true,
-            content: const Text('Could not get your location. Try again.'),
-          ),
+        AppSnackBar.show(
+          context,
+          message: 'Could not get your location. Try again.',
+          variant: AppSnackBarVariant.error,
         );
       }
     } catch (e) {
@@ -137,18 +132,10 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
       final msg = e is LocationGetterException
           ? e.message
           : 'Could not get your location. Try again.';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.fromLTRB(
-            context.paddingMedium,
-            0,
-            context.paddingMedium,
-            context.bottomPadding + context.spaceSmall,
-          ),
-          showCloseIcon: true,
-          content: Text(msg),
-        ),
+      AppSnackBar.show(
+        context,
+        message: msg,
+        variant: AppSnackBarVariant.error,
       );
     }
   }
@@ -173,26 +160,20 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
     try {
       await widget.onSubmit(location);
       if (mounted) {
-        Navigator.of(context).pop(true);
+        Navigator.of(context).pop(
+          widget.isEditing
+              ? PickupLocationRouteResult.updated
+              : PickupLocationRouteResult.saved,
+        );
       }
     } catch (_) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            margin: EdgeInsets.fromLTRB(
-              context.paddingMedium,
-              0,
-              context.paddingMedium,
-              context.bottomPadding + context.spaceSmall,
-            ),
-            showCloseIcon: true,
-            content: Text(
-              widget.isEditing
-                  ? 'Could not update location. Try again.'
-                  : 'Could not save location. Try again.',
-            ),
-          ),
+        AppSnackBar.show(
+          context,
+          message: widget.isEditing
+              ? 'Could not update location. Try again.'
+              : 'Could not save location. Try again.',
+          variant: AppSnackBarVariant.error,
         );
       }
     } finally {
@@ -364,7 +345,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
                       ),
                       onPressed: _isSubmitting
                           ? null
-                          : () => Navigator.of(context).pop(false),
+                          : () => Navigator.of(context).pop(),
                       child: Text(
                         'Cancel',
                         style: TextStyle(

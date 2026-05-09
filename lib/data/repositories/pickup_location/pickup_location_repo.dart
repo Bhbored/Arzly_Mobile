@@ -116,4 +116,35 @@ class PickupLocationRepo {
       },
     );
   }
+
+  Future<bool> deletePickupLocation(String id) async {
+    const userId = 'firebase-uid-123';
+    final response = await executor.execute(
+      ApiRequest(
+        path: '/delete/$id',
+        method: HttpMethod.delete,
+        headers: {'firebaseId': userId},
+      ),
+    );
+
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          _logger.i('Deleted pickup location $id');
+          return true;
+        } catch (e) {
+          _logger.e('Parse error: $e');
+          throw ApiException(
+            userMessage: ApiErrors.badResponse,
+            error: 'Failed to delete pickup location',
+            originalError: e,
+          );
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e('Failed to delete pickup location: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
 }

@@ -5,6 +5,7 @@ import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider.dart';
 import 'package:arzly/features/home/widgets/category_listing_row.dart';
 import 'package:arzly/features/home/widgets/home_app_bar.dart';
+import 'package:arzly/features/home/widgets/home_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,25 +29,24 @@ class _HomePageState extends ConsumerState<HomePage> {
     final categories = ref.watch(categoryDataProvider);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: const HomeAppBar(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(HomeAppBar.preferredHeight(context)),
+        child: const HomeAppBar(),
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: context.spaceSmall),
+            const HomeSearchBar(),
             SizedBox(height: context.spaceMedium),
             categories.when(
               data: (data) => CategoryGridSlider(categories: data),
               error: (error, stackTrace) {
-                final message = error is ApiException
-                    ? error.userMessage
-                    : error.toString();
-                return Center(child: Text(message));
+                return SizedBox.shrink();
               },
-              loading: () => SizedBox(
-                height: context.screenHeight * 0.24,
-                child: const Center(child: CircularProgressIndicator()),
-              ),
+              loading: () => SizedBox.shrink(),
             ),
             initialListings.when(
               data: (data) => Column(

@@ -15,48 +15,51 @@ class CategoryListingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              title,
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            Spacer(),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                'See all',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                  decoration: TextDecoration.underline,
+    return listings.isEmpty
+        ? const SizedBox.shrink()
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Spacer(),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'See all',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: context.spaceMedium),
+              SizedBox(
+                height: context.screenHeight * 0.28,
+                child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: listings.length,
+                  separatorBuilder: (_, _) =>
+                      SizedBox(width: context.paddingMedium),
+                  itemBuilder: (_, index) {
+                    return SizedBox(
+                      width: context.screenWidth * 0.62,
+                      child: ListingCard(listing: listings[index]),
+                    );
+                  },
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: context.spaceMedium),
-        SizedBox(
-          height: context.screenHeight * 0.28,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: listings.length,
-            separatorBuilder: (_, _) => SizedBox(width: context.paddingMedium),
-            itemBuilder: (_, index) {
-              return SizedBox(
-                width: context.screenWidth * 0.62,
-                child: ListingCard(listing: listings[index]),
-              );
-            },
-          ),
-        ),
-      ],
-    );
+            ],
+          );
   }
 }

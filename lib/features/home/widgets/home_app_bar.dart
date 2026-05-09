@@ -1,145 +1,83 @@
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/features/home/widgets/home_arzly_logo.dart';
 import 'package:flutter/material.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
+
+  static double preferredHeight(BuildContext context) {
+    const row = 40.0;
+    const verticalInset = 6.0;
+    return context.topPadding + verticalInset * 2 + row;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Container(
       padding: EdgeInsets.only(top: context.topPadding),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.8),
+        color: colors.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 10,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: context.paddingMedium,
-          vertical: context.spaceSmall,
+          vertical: 6,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const HomeArzlyLogo(),
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.paddingSmall,
-                    vertical: context.spaceSmall / 2,
+                IconButton(
+                  onPressed: () {},
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(
+                    minWidth: 40,
+                    minHeight: 40,
                   ),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.7),
-                    borderRadius: BorderRadius.circular(100),
+                  style: IconButton.styleFrom(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    visualDensity: VisualDensity.compact,
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 14,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      SizedBox(width: context.paddingSmall / 2),
-                      Text(
-                        'Beirut',
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context).colorScheme.secondary,
-                            ),
-                      ),
-                    ],
+                  icon: Icon(
+                    Icons.notifications_rounded,
+                    color: colors.primary,
+                    size: 24,
                   ),
                 ),
-                Stack(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.notifications_none,
-                        color: Theme.of(context).colorScheme.primary,
+                Positioned(
+                  right: 6,
+                  top: 6,
+                  child: Container(
+                    width: 9,
+                    height: 9,
+                    decoration: BoxDecoration(
+                      color: colors.error,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: colors.surface,
+                        width: 1.5,
                       ),
                     ),
-                    Positioned(
-                      right: 12,
-                      top: 12,
-                      child: Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.error,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.surface,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ],
-            ),
-            SizedBox(height: context.spaceSmall / 2),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(context.borderRadiusLarge),
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.18),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
-                    blurRadius: 14,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.search,
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurfaceVariant.withValues(alpha: 0.75),
-                  ),
-                  SizedBox(width: context.paddingSmall),
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        isDense: true,
-                        hintText: 'Search skills, items, or help...',
-                        hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                            ),
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: context.spaceSmall,
-                        ),
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(132);
 }
