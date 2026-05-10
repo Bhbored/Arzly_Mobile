@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 
 const int kCarKilometersMax = 9999999;
 
-String? validateCarKilometers(String? raw) {
+String? validateCarKilometers(String? raw, {bool requiredField = false}) {
   final s = raw?.trim() ?? '';
-  if (s.isEmpty) return null;
+  if (s.isEmpty) {
+    return requiredField ? 'Enter kilometers' : null;
+  }
   final n = int.tryParse(s);
   if (n == null) {
     return 'Use numbers only';
@@ -33,10 +35,12 @@ class CarsForSaleKilometersField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.pageBg,
+    this.requiredField = false,
   });
 
   final TextEditingController controller;
   final Color pageBg;
+  final bool requiredField;
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +55,13 @@ class CarsForSaleKilometersField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(7),
       ],
-      validator: validateCarKilometers,
+      validator: (v) => validateCarKilometers(v, requiredField: requiredField),
       decoration: carForSaleVersionFieldDecoration(
         context,
         pageBg,
         scheme,
         hintText: 'Enter kilometers e.g. 85,000',
-      ),
+      ).copyWith(isDense: true),
     );
   }
 }

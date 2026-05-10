@@ -1,5 +1,5 @@
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/core/enums/vehicles_details/vehicle_condition.dart';
+import 'package:arzly/core/enums/listing_owned/motors/vehicle_condition.dart';
 import 'package:flutter/material.dart';
 
 class VehicleConditionField extends StatelessWidget {
@@ -26,7 +26,7 @@ class VehicleConditionField extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(context.borderRadiusLarge),
             ),
-            label: Text(condition.shortLabel),
+            label: Text(condition.label),
             selected: value == condition,
             showCheckmark: false,
             visualDensity: VisualDensity.compact,

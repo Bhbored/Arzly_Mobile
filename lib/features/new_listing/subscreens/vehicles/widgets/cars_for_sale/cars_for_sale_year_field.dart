@@ -6,9 +6,15 @@ const int kCarYearMin = 1900;
 
 int carYearMaxInclusive() => DateTime.now().year + 1;
 
-String? validateCarYear(String? raw, int maxYear) {
+String? validateCarYear(
+  String? raw,
+  int maxYear, {
+  bool requiredField = false,
+}) {
   final s = raw?.trim() ?? '';
-  if (s.isEmpty) return null;
+  if (s.isEmpty) {
+    return requiredField ? 'Enter year' : null;
+  }
   final n = int.tryParse(s);
   if (n == null) {
     return 'Use numbers only';
@@ -36,10 +42,12 @@ class CarsForSaleYearField extends StatelessWidget {
     super.key,
     required this.controller,
     required this.pageBg,
+    this.requiredField = false,
   });
 
   final TextEditingController controller;
   final Color pageBg;
+  final bool requiredField;
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +63,14 @@ class CarsForSaleYearField extends StatelessWidget {
         FilteringTextInputFormatter.digitsOnly,
         LengthLimitingTextInputFormatter(4),
       ],
-      validator: (v) => validateCarYear(v, maxYear),
+      validator: (v) =>
+          validateCarYear(v, maxYear, requiredField: requiredField),
       decoration: carForSaleVersionFieldDecoration(
         context,
         pageBg,
         scheme,
-        hintText: 'enter year',
-      ),
+        hintText: 'Enter year e.g. 2026',
+      ).copyWith(isDense: true),
     );
   }
 }

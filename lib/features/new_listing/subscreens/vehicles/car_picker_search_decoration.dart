@@ -36,14 +36,13 @@ InputDecoration carPickerSearchDecoration(
   Color fillColor,
   ColorScheme scheme, {
   required String hintText,
-}) =>
-    carPickerFieldDecoration(
-      context,
-      fillColor,
-      scheme,
-      hintText: hintText,
-      prefixIcon: Icon(Icons.search_rounded, color: scheme.primary),
-    );
+}) => carPickerFieldDecoration(
+  context,
+  fillColor,
+  scheme,
+  hintText: hintText,
+  prefixIcon: Icon(Icons.search_rounded, color: scheme.primary),
+);
 
 InputDecoration carForSaleVersionFieldDecoration(
   BuildContext context,
@@ -51,21 +50,21 @@ InputDecoration carForSaleVersionFieldDecoration(
   ColorScheme scheme, {
   required String hintText,
 }) {
-  final radius = BorderRadius.circular(context.borderRadiusMedium);
+  final radius = BorderRadius.circular(5);
   final inactiveColor = scheme.brightness == Brightness.light
       ? Colors.black
       : scheme.outline;
   final idle = OutlineInputBorder(
     borderRadius: radius,
-    borderSide: BorderSide(color: inactiveColor, width: 1),
+    borderSide: BorderSide(color: inactiveColor, width: 2),
   );
   final focused = OutlineInputBorder(
     borderRadius: radius,
-    borderSide: BorderSide(color: scheme.primary, width: 1),
+    borderSide: BorderSide(color: scheme.primary, width: 2),
   );
   final errorOutline = OutlineInputBorder(
     borderRadius: radius,
-    borderSide: BorderSide(color: scheme.error, width: 1),
+    borderSide: BorderSide(color: scheme.error, width: 2),
   );
   return InputDecoration(
     hintText: hintText,
@@ -79,7 +78,7 @@ InputDecoration carForSaleVersionFieldDecoration(
     focusedErrorBorder: errorOutline,
     contentPadding: EdgeInsets.symmetric(
       horizontal: context.paddingMedium,
-      vertical: context.spaceMedium,
+      vertical: context.spaceSmall * 1.35,
     ),
   );
 }

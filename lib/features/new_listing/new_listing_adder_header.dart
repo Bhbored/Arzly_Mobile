@@ -2,6 +2,7 @@ import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/domain/entities/subcategory/sub_category.dart';
 import 'package:arzly/features/categories/widgets/category_list_avatar.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
 class NewListingAdderHeader extends StatelessWidget {
@@ -9,10 +10,15 @@ class NewListingAdderHeader extends StatelessWidget {
     super.key,
     required this.category,
     required this.subcategory,
+    this.carForSaleStepListenable,
+    this.carForSaleStepTotal = 2,
   });
 
   final Category category;
   final SubCategory subcategory;
+
+  final ValueListenable<int>? carForSaleStepListenable;
+  final int carForSaleStepTotal;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +61,39 @@ class NewListingAdderHeader extends StatelessWidget {
               ],
             ),
           ),
+          if (carForSaleStepListenable != null) ...[
+            SizedBox(width: context.paddingSmall),
+            ValueListenableBuilder<int>(
+              valueListenable: carForSaleStepListenable!,
+              builder: (context, step, _) {
+                final clamped = step.clamp(0, carForSaleStepTotal - 1);
+                final progress = (clamped + 1) / carForSaleStepTotal;
+                return SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        value: progress,
+                        strokeWidth: 3,
+                        backgroundColor:
+                            colors.surfaceContainerHighest.withValues(alpha: 0.6),
+                        color: colors.primary,
+                      ),
+                      Text(
+                        '${clamped + 1}/$carForSaleStepTotal',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: colors.onSurface,
+                            ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ],
       ),
     );

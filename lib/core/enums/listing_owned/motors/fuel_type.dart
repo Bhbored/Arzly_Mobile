@@ -19,3 +19,16 @@ enum FuelType {
   @JsonValue('Other')
   other,
 }
+
+extension FuelTypeDisplay on FuelType {
+  String get label => switch (this) {
+        FuelType.gasoline => 'Gasoline',
+        FuelType.diesel => 'Diesel',
+        FuelType.electric => 'Electric',
+        FuelType.hybrid => 'Hybrid',
+        FuelType.plugInHybrid => 'Plug-in hybrid',
+        FuelType.cNG => 'CNG',
+        FuelType.lPG => 'LPG',
+        FuelType.other => 'Other',
+      };
+}

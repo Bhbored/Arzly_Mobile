@@ -15,3 +15,14 @@ enum TransmissionType {
   @JsonValue('Other')
   other,
 }
+
+extension TransmissionTypeDisplay on TransmissionType {
+  String get label => switch (this) {
+        TransmissionType.automatic => 'Automatic',
+        TransmissionType.manual => 'Manual',
+        TransmissionType.cVT => 'CVT',
+        TransmissionType.semiAutomatic => 'Semi-automatic',
+        TransmissionType.dualClutch => 'Dual-clutch',
+        TransmissionType.other => 'Other',
+      };
+}

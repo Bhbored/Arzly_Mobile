@@ -15,11 +15,16 @@ import 'package:arzly/features/new_listing/subscreens/unknown_category/unknown_c
 import 'package:arzly/features/new_listing/subscreens/vehicles/vehicles_new_listing_subscreen.dart';
 import 'package:flutter/material.dart';
 
-Widget newListingCategorySubscreen(Category category, SubCategory subcategory) {
+Widget newListingCategorySubscreen(
+  Category category,
+  SubCategory subcategory, {
+  ValueNotifier<int>? carForSaleStepNotifier,
+}) {
   return switch (category.name.trim()) {
     BackendListingCatalog.vehicles => VehiclesNewListingSubscreen(
       category: category,
       subcategory: subcategory,
+      carForSaleStepNotifier: carForSaleStepNotifier,
     ),
     BackendListingCatalog.realEstate => RealEstateNewListingSubscreen(
       category: category,
