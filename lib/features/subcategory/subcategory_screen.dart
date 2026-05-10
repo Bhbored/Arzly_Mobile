@@ -2,12 +2,20 @@ import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/data/providers/subcategory/subcategory_provider.dart';
 import 'package:arzly/domain/entities/category/category.dart';
+import 'package:arzly/domain/entities/subcategory/sub_category.dart';
+import 'package:arzly/features/categories/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SubcategoryScreen extends ConsumerWidget {
   final Category category;
-  const SubcategoryScreen({super.key, required this.category});
+  final CategoryPickerMode mode;
+
+  const SubcategoryScreen({
+    super.key,
+    required this.category,
+    this.mode = CategoryPickerMode.read,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,35 +50,44 @@ class SubcategoryScreen extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(
-              onPressed: onBrowseAllPressed,
-              child: Text(
-                'Browse all in ${category.name}',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
+            if (mode == CategoryPickerMode.read)
+              TextButton(
+                onPressed: onBrowseAllPressed,
+                child: Text(
+                  'Browse all in ${category.name}',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
-            ),
             Expanded(
               child: subcategories.when(
-                data: (items) => ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (_, index) {
-                    final subcategory = items[index];
-                    return ListTile(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: context.paddingSmall,
-                      ),
-                      title: Text(subcategory.name),
-                      trailing: Icon(
-                        Icons.chevron_right_rounded,
-                        color: colors.onSurfaceVariant,
-                      ),
-                      onTap: () {},
-                    );
-                  },
-                ),
+                data: (items) {
+                  final ordered = _subcategoriesWithOtherLast(items);
+                  return ListView.builder(
+                    itemCount: ordered.length,
+                    itemBuilder: (_, index) {
+                      final subcategory = ordered[index];
+                      return ListTile(
+                        tileColor: colors.surfaceContainerLowest,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: context.paddingSmall,
+                        ),
+                        title: Text(subcategory.name),
+                        trailing: Icon(
+                          Icons.chevron_right_rounded,
+                          color: colors.onSurfaceVariant,
+                        ),
+                        onTap: () {
+                          if (mode == CategoryPickerMode.write) {
+                            Navigator.of(context).pop(subcategory);
+                          }
+                        },
+                      );
+                    },
+                  );
+                },
                 error: (error, stackTrace) {
                   final message = error is ApiException
                       ? error.userMessage
@@ -85,4 +102,15 @@ class SubcategoryScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+List<SubCategory> _subcategoriesWithOtherLast(List<SubCategory> items) {
+  final sorted = List<SubCategory>.from(items);
+  sorted.sort((a, b) {
+    final aOther = a.name.toLowerCase().contains('other');
+    final bOther = b.name.toLowerCase().contains('other');
+    if (aOther == bOther) return 0;
+    return aOther ? 1 : -1;
+  });
+  return sorted;
 }

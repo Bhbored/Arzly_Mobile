@@ -3,13 +3,13 @@ import 'package:arzly/features/nav_container/widgets/nav_button.dart';
 import 'package:flutter/material.dart';
 
 class ModernBottomNav extends StatelessWidget {
-  final int currentIndex;
-  final Function(int) onTap;
+  final int currentNavIndex;
+  final void Function(int navIndex) onNavTap;
 
   const ModernBottomNav({
     super.key,
-    required this.currentIndex,
-    required this.onTap,
+    required this.currentNavIndex,
+    required this.onNavTap,
   });
 
   @override
@@ -20,7 +20,6 @@ class ModernBottomNav extends StatelessWidget {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // Main Navigation Bar
           Container(
             width: double.infinity,
             height: context.screenHeight * 0.09,
@@ -50,8 +49,8 @@ class ModernBottomNav extends StatelessWidget {
                     icon: Icons.home_outlined,
                     activeIcon: Icons.home,
                     label: 'Home',
-                    isActive: currentIndex == 0,
-                    onTap: () => onTap(0),
+                    isActive: currentNavIndex == 0,
+                    onTap: () => onNavTap(0),
                   ),
                 ),
                 Expanded(
@@ -59,12 +58,10 @@ class ModernBottomNav extends StatelessWidget {
                     icon: Icons.chat_bubble_outline_rounded,
                     activeIcon: Icons.chat_bubble_rounded,
                     label: 'Chats',
-                    isActive: currentIndex == 1,
-                    onTap: () => onTap(1),
+                    isActive: currentNavIndex == 1,
+                    onTap: () => onNavTap(1),
                   ),
                 ),
-
-                // Center Placeholder for Alignment
                 Expanded(
                   child: IgnorePointer(
                     child: Opacity(
@@ -73,20 +70,19 @@ class ModernBottomNav extends StatelessWidget {
                         icon: Icons.add_circle_outline_rounded,
                         activeIcon: Icons.add_circle_rounded,
                         label: 'Sell',
-                        isActive: currentIndex == 2,
+                        isActive: false,
                         onTap: () {},
                       ),
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: NavButton(
                     icon: Icons.inventory_2_outlined,
                     activeIcon: Icons.inventory_2,
                     label: 'My Posts',
-                    isActive: currentIndex == 3,
-                    onTap: () => onTap(3),
+                    isActive: currentNavIndex == 3,
+                    onTap: () => onNavTap(3),
                   ),
                 ),
                 Expanded(
@@ -94,19 +90,17 @@ class ModernBottomNav extends StatelessWidget {
                     icon: Icons.person_outline,
                     activeIcon: Icons.person,
                     label: 'Profile',
-                    isActive: currentIndex == 4,
-                    onTap: () => onTap(4),
+                    isActive: currentNavIndex == 4,
+                    onTap: () => onNavTap(4),
                   ),
                 ),
               ],
             ),
           ),
-
-          // Raised Center "Post" Circle + Perfectly Aligned Label
           Positioned(
             bottom: 0,
             child: GestureDetector(
-              onTap: () => onTap(2),
+              onTap: () => onNavTap(2),
               behavior: HitTestBehavior.opaque,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -132,9 +126,7 @@ class ModernBottomNav extends StatelessWidget {
                       ),
                     ),
                     child: Icon(
-                      currentIndex == 2
-                          ? Icons.sell_rounded
-                          : Icons.sell_outlined,
+                      Icons.sell_rounded,
                       color: Theme.of(context).colorScheme.onPrimary,
                       size: 34,
                     ),
@@ -145,14 +137,12 @@ class ModernBottomNav extends StatelessWidget {
                     child: Text(
                       'Sell',
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        fontSize: 12,
-                        color: currentIndex == 2
-                            ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.onSurfaceVariant,
-                        fontWeight: currentIndex == 2
-                            ? FontWeight.bold
-                            : FontWeight.normal,
-                      ),
+                            fontSize: 12,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
+                            fontWeight: FontWeight.normal,
+                          ),
                     ),
                   ),
                 ],

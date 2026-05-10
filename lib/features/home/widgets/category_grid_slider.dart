@@ -1,6 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/features/categories/all_categories_screen.dart';
+import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider/category_grid_item.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider/category_grid_slider_header.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ class CategoryGridSlider extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AllCategoriesScreen(categories: categories),
+          builder: (context) => AllCategoriesScreen(
+            categories: categories,
+            mode: CategoryPickerMode.read,
+          ),
         ),
       );
     }

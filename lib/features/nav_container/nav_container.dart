@@ -14,7 +14,7 @@ class NavContainer extends StatefulWidget {
 }
 
 class _NavContainerState extends State<NavContainer> {
-  int currentIndex = 0;
+  int currentNavIndex = 0;
   late final PageController pageController;
 
   @override
@@ -29,9 +29,23 @@ class _NavContainerState extends State<NavContainer> {
     super.dispose();
   }
 
-  void _onItemTapped(int index) {
+  static int _pageIndexFromNavIndex(int navIndex) {
+    assert(navIndex != 2);
+    return navIndex < 2 ? navIndex : navIndex - 1;
+  }
+
+  static int _navIndexFromPageIndex(int pageIndex) {
+    return pageIndex < 2 ? pageIndex : pageIndex + 1;
+  }
+
+  void _onNavTap(int navIndex) {
+    if (navIndex == 2) {
+      Navigator.of(context).push(createNewListingRoute());
+      return;
+    }
+    final page = _pageIndexFromNavIndex(navIndex);
     pageController.animateToPage(
-      index,
+      page,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -45,23 +59,22 @@ class _NavContainerState extends State<NavContainer> {
       body: SizedBox.expand(
         child: PageView(
           controller: pageController,
-          onPageChanged: (index) {
+          onPageChanged: (pageIndex) {
             setState(() {
-              currentIndex = index;
+              currentNavIndex = _navIndexFromPageIndex(pageIndex);
             });
           },
           children: const <Widget>[
             HomePage(),
             ChatScreen(),
-            NewListingScreen(),
             UserListingsScreen(),
             SettingsScreen(),
           ],
         ),
       ),
       bottomNavigationBar: ModernBottomNav(
-        currentIndex: currentIndex,
-        onTap: _onItemTapped,
+        currentNavIndex: currentNavIndex,
+        onNavTap: _onNavTap,
       ),
     );
   }
