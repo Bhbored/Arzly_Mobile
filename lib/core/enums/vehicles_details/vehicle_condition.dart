@@ -7,3 +7,10 @@ enum VehicleCondition {
   @JsonValue('Used')
   used,
 }
+
+extension VehicleConditionUi on VehicleCondition {
+  String get shortLabel => switch (this) {
+        VehicleCondition.new_ => 'New',
+        VehicleCondition.used => 'Used',
+      };
+}

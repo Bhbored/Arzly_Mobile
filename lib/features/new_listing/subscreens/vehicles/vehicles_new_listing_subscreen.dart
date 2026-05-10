@@ -2,6 +2,7 @@ import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
 import 'package:arzly/core/enums/listing/location_label.dart';
 import 'package:arzly/core/enums/listing/listing_status.dart';
+import 'package:arzly/core/enums/vehicles_details/vehicle_condition.dart';
 import 'package:arzly/core/enums/vehicles_details/vehicle_type.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
@@ -12,6 +13,8 @@ import 'package:arzly/features/new_listing/shared/listing_images_section.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/car_brand_picker_page.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/car_model_picker_page.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/models/car_brand_selection.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_kilometers_field.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_year_field.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_listing_body.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/vehicles_subcategory_body.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +37,14 @@ class VehiclesNewListingSubscreen extends StatefulWidget {
 class VehiclesNewListingSubscreenState
     extends State<VehiclesNewListingSubscreen> {
   final List<String> _draftImageUrls = [];
+  final TextEditingController _carVersionController = TextEditingController();
+  final TextEditingController _kilometersController = TextEditingController();
+  final TextEditingController _yearController = TextEditingController();
+  final GlobalKey<FormState> _carsForSaleFormKey = GlobalKey<FormState>();
 
   CarBrandSelection? _selectedCarBrand;
   String? _selectedCarModel;
+  VehicleCondition? _carCondition;
 
   bool get _isCarsForSale =>
       widget.subcategory.name.trim() == VehiclesSubcategoryBody.carsForSale;
@@ -46,6 +54,14 @@ class VehiclesNewListingSubscreenState
   CarBrandSelection? get selectedCarBrand => _selectedCarBrand;
 
   String? get selectedCarModel => _selectedCarModel;
+
+  @override
+  void dispose() {
+    _carVersionController.dispose();
+    _kilometersController.dispose();
+    _yearController.dispose();
+    super.dispose();
+  }
 
   void setDraftImageUrls(List<String> urls) {
     setState(() {
@@ -59,15 +75,26 @@ class VehiclesNewListingSubscreenState
     final category = widget.category;
     final subcategory = widget.subcategory;
 
+    final versionText = _carVersionController.text.trim();
+    final kilometers = _carCondition == VehicleCondition.new_
+        ? null
+        : parseCarKilometers(_kilometersController.text);
+    final year = parseCarYear(_yearController.text);
     final vehiclesDetails = VehiclesDetails(
       carBrand: _selectedCarBrand?.name,
       carModel: _selectedCarModel,
+      version: versionText.isEmpty ? null : versionText,
+      condition: _carCondition,
+      year: year,
+      kilometers: kilometers,
       vehicleType: _isCarsForSale ? VehicleType.cars : null,
     );
 
     final title = [
       _selectedCarBrand?.name,
       _selectedCarModel,
+      if (versionText.isNotEmpty) versionText,
+      if (_carCondition != null) _carCondition!.shortLabel,
     ].whereType<String>().where((s) => s.isNotEmpty).join(' ');
 
     final primaryImageUrl = _draftImageUrls.isNotEmpty
@@ -113,6 +140,10 @@ class VehiclesNewListingSubscreenState
       setState(() {
         _selectedCarBrand = picked;
         _selectedCarModel = null;
+        _carVersionController.clear();
+        _kilometersController.clear();
+        _yearController.clear();
+        _carCondition = null;
       });
     }
   }
@@ -132,26 +163,39 @@ class VehiclesNewListingSubscreenState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SizedBox(height: context.spaceSmall),
-        ListingImagesSection(imageUrls: _draftImageUrls),
-        SizedBox(height: context.spaceSmall),
-        Expanded(
-          child: _isCarsForSale
+    return SingleChildScrollView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: context.spaceSmall),
+          ListingImagesSection(imageUrls: _draftImageUrls),
+          SizedBox(height: context.spaceSmall),
+          _isCarsForSale
               ? CarsForSaleListingBody(
+                  formKey: _carsForSaleFormKey,
                   selectedBrand: _selectedCarBrand,
                   onChooseBrand: _openCarBrandPicker,
                   selectedModel: _selectedCarModel,
                   onChooseModel: _openCarModelPicker,
+                  versionController: _carVersionController,
+                  kilometersController: _kilometersController,
+                  yearController: _yearController,
+                  selectedCondition: _carCondition,
+                  onConditionChanged: (v) => setState(() {
+                    _carCondition = v;
+                    if (v == VehicleCondition.new_) {
+                      _kilometersController.clear();
+                    }
+                  }),
                 )
               : VehiclesSubcategoryBody(
                   category: widget.category,
                   subcategory: widget.subcategory,
                 ),
-        ),
-      ],
+          SizedBox(height: context.spaceMedium),
+        ],
+      ),
     );
   }
 }
