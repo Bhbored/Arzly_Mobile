@@ -1,6 +1,7 @@
 import 'package:arzly/data/providers/category/category_provider.dart';
 import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/categories/widgets/all_categories_list.dart';
+import 'package:arzly/features/new_listing/new_listing_adder_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -57,10 +58,10 @@ class NewListingScreen extends ConsumerWidget {
           child: Text(
             'What are you selling?',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                  color: colors.onSurface,
-                  height: 1,
-                ),
+              fontWeight: FontWeight.w700,
+              color: colors.onSurface,
+              height: 1,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -71,7 +72,11 @@ class NewListingScreen extends ConsumerWidget {
           categories: categories,
           mode: CategoryPickerMode.write,
           itemBackgroundColor: pageBg,
-          onWritePick: (pick) => Navigator.of(context).pop(pick),
+          onWritePick: (pick) => Navigator.of(context).push<void>(
+            MaterialPageRoute<void>(
+              builder: (_) => NewListingAdderPage(pick: pick),
+            ),
+          ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('$error')),

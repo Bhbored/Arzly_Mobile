@@ -1,7 +1,6 @@
 import 'package:arzly/core/enums/listing_owned/motors/motorcycle_type.dart';
 import 'package:arzly/core/enums/vehicles_details/accessory_type.dart';
 import 'package:arzly/core/enums/vehicles_details/boat_type.dart';
-import 'package:arzly/core/enums/vehicles_details/car_brand.dart';
 import 'package:arzly/core/enums/vehicles_details/car_feature.dart';
 import 'package:arzly/core/enums/vehicles_details/fuel_type.dart';
 import 'package:arzly/core/enums/vehicles_details/plate_digits.dart';
@@ -18,17 +17,18 @@ part 'vehicles_details.g.dart';
 @freezed
 sealed class VehiclesDetails with _$VehiclesDetails {
   const factory VehiclesDetails({
-    String? listingId,
-    CarBrand? carBrand,
-    String? version,
+    @JsonKey(name: 'ListingId') String? listingId,
+    @JsonKey(name: 'CarBrand') String? carBrand,
+    @JsonKey(name: 'CarModel') String? carModel,
+    @JsonKey(name: 'Version') String? version,
     VehicleCondition? condition,
-    int? kilometers,
-    int? year,
+    @JsonKey(name: 'Kilometers') int? kilometers,
+    @JsonKey(name: 'Year') int? year,
     FuelType? fuelType,
     VehicleColor? vehicleColor,
-    int? numberOfDoors,
+    @JsonKey(name: 'NumberOfDoors') int? numberOfDoors,
     TransmissionType? transmissionType,
-    List<CarFeature>? carFeatures,
+    @JsonKey(name: 'CarFeatures') List<CarFeature>? carFeatures,
     MotorcycleType? motorcycleType,
     AccessoryType? accessoryType,
     VehicleType? vehicleType,

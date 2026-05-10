@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$VehiclesDetails {
 
- String? get listingId; CarBrand? get carBrand; String? get version; VehicleCondition? get condition; int? get kilometers; int? get year; FuelType? get fuelType; VehicleColor? get vehicleColor; int? get numberOfDoors; TransmissionType? get transmissionType; List<CarFeature>? get carFeatures; MotorcycleType? get motorcycleType; AccessoryType? get accessoryType; VehicleType? get vehicleType; PlateDigits? get numberOfDigits; TruckBrand? get truckBrand; BoatType? get boatType;
+@JsonKey(name: 'ListingId') String? get listingId;@JsonKey(name: 'CarBrand') String? get carBrand;@JsonKey(name: 'CarModel') String? get carModel;@JsonKey(name: 'Version') String? get version; VehicleCondition? get condition;@JsonKey(name: 'Kilometers') int? get kilometers;@JsonKey(name: 'Year') int? get year; FuelType? get fuelType; VehicleColor? get vehicleColor;@JsonKey(name: 'NumberOfDoors') int? get numberOfDoors; TransmissionType? get transmissionType;@JsonKey(name: 'CarFeatures') List<CarFeature>? get carFeatures; MotorcycleType? get motorcycleType; AccessoryType? get accessoryType; VehicleType? get vehicleType; PlateDigits? get numberOfDigits; TruckBrand? get truckBrand; BoatType? get boatType;
 /// Create a copy of VehiclesDetails
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $VehiclesDetailsCopyWith<VehiclesDetails> get copyWith => _$VehiclesDetailsCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is VehiclesDetails&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.carBrand, carBrand) || other.carBrand == carBrand)&&(identical(other.version, version) || other.version == version)&&(identical(other.condition, condition) || other.condition == condition)&&(identical(other.kilometers, kilometers) || other.kilometers == kilometers)&&(identical(other.year, year) || other.year == year)&&(identical(other.fuelType, fuelType) || other.fuelType == fuelType)&&(identical(other.vehicleColor, vehicleColor) || other.vehicleColor == vehicleColor)&&(identical(other.numberOfDoors, numberOfDoors) || other.numberOfDoors == numberOfDoors)&&(identical(other.transmissionType, transmissionType) || other.transmissionType == transmissionType)&&const DeepCollectionEquality().equals(other.carFeatures, carFeatures)&&(identical(other.motorcycleType, motorcycleType) || other.motorcycleType == motorcycleType)&&(identical(other.accessoryType, accessoryType) || other.accessoryType == accessoryType)&&(identical(other.vehicleType, vehicleType) || other.vehicleType == vehicleType)&&(identical(other.numberOfDigits, numberOfDigits) || other.numberOfDigits == numberOfDigits)&&(identical(other.truckBrand, truckBrand) || other.truckBrand == truckBrand)&&(identical(other.boatType, boatType) || other.boatType == boatType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is VehiclesDetails&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.carBrand, carBrand) || other.carBrand == carBrand)&&(identical(other.carModel, carModel) || other.carModel == carModel)&&(identical(other.version, version) || other.version == version)&&(identical(other.condition, condition) || other.condition == condition)&&(identical(other.kilometers, kilometers) || other.kilometers == kilometers)&&(identical(other.year, year) || other.year == year)&&(identical(other.fuelType, fuelType) || other.fuelType == fuelType)&&(identical(other.vehicleColor, vehicleColor) || other.vehicleColor == vehicleColor)&&(identical(other.numberOfDoors, numberOfDoors) || other.numberOfDoors == numberOfDoors)&&(identical(other.transmissionType, transmissionType) || other.transmissionType == transmissionType)&&const DeepCollectionEquality().equals(other.carFeatures, carFeatures)&&(identical(other.motorcycleType, motorcycleType) || other.motorcycleType == motorcycleType)&&(identical(other.accessoryType, accessoryType) || other.accessoryType == accessoryType)&&(identical(other.vehicleType, vehicleType) || other.vehicleType == vehicleType)&&(identical(other.numberOfDigits, numberOfDigits) || other.numberOfDigits == numberOfDigits)&&(identical(other.truckBrand, truckBrand) || other.truckBrand == truckBrand)&&(identical(other.boatType, boatType) || other.boatType == boatType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,listingId,carBrand,version,condition,kilometers,year,fuelType,vehicleColor,numberOfDoors,transmissionType,const DeepCollectionEquality().hash(carFeatures),motorcycleType,accessoryType,vehicleType,numberOfDigits,truckBrand,boatType);
+int get hashCode => Object.hash(runtimeType,listingId,carBrand,carModel,version,condition,kilometers,year,fuelType,vehicleColor,numberOfDoors,transmissionType,const DeepCollectionEquality().hash(carFeatures),motorcycleType,accessoryType,vehicleType,numberOfDigits,truckBrand,boatType);
 
 @override
 String toString() {
-  return 'VehiclesDetails(listingId: $listingId, carBrand: $carBrand, version: $version, condition: $condition, kilometers: $kilometers, year: $year, fuelType: $fuelType, vehicleColor: $vehicleColor, numberOfDoors: $numberOfDoors, transmissionType: $transmissionType, carFeatures: $carFeatures, motorcycleType: $motorcycleType, accessoryType: $accessoryType, vehicleType: $vehicleType, numberOfDigits: $numberOfDigits, truckBrand: $truckBrand, boatType: $boatType)';
+  return 'VehiclesDetails(listingId: $listingId, carBrand: $carBrand, carModel: $carModel, version: $version, condition: $condition, kilometers: $kilometers, year: $year, fuelType: $fuelType, vehicleColor: $vehicleColor, numberOfDoors: $numberOfDoors, transmissionType: $transmissionType, carFeatures: $carFeatures, motorcycleType: $motorcycleType, accessoryType: $accessoryType, vehicleType: $vehicleType, numberOfDigits: $numberOfDigits, truckBrand: $truckBrand, boatType: $boatType)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $VehiclesDetailsCopyWith<$Res>  {
   factory $VehiclesDetailsCopyWith(VehiclesDetails value, $Res Function(VehiclesDetails) _then) = _$VehiclesDetailsCopyWithImpl;
 @useResult
 $Res call({
- String? listingId, CarBrand? carBrand, String? version, VehicleCondition? condition, int? kilometers, int? year, FuelType? fuelType, VehicleColor? vehicleColor, int? numberOfDoors, TransmissionType? transmissionType, List<CarFeature>? carFeatures, MotorcycleType? motorcycleType, AccessoryType? accessoryType, VehicleType? vehicleType, PlateDigits? numberOfDigits, TruckBrand? truckBrand, BoatType? boatType
+@JsonKey(name: 'ListingId') String? listingId,@JsonKey(name: 'CarBrand') String? carBrand,@JsonKey(name: 'CarModel') String? carModel,@JsonKey(name: 'Version') String? version, VehicleCondition? condition,@JsonKey(name: 'Kilometers') int? kilometers,@JsonKey(name: 'Year') int? year, FuelType? fuelType, VehicleColor? vehicleColor,@JsonKey(name: 'NumberOfDoors') int? numberOfDoors, TransmissionType? transmissionType,@JsonKey(name: 'CarFeatures') List<CarFeature>? carFeatures, MotorcycleType? motorcycleType, AccessoryType? accessoryType, VehicleType? vehicleType, PlateDigits? numberOfDigits, TruckBrand? truckBrand, BoatType? boatType
 });
 
 
@@ -65,11 +65,12 @@ class _$VehiclesDetailsCopyWithImpl<$Res>
 
 /// Create a copy of VehiclesDetails
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? listingId = freezed,Object? carBrand = freezed,Object? version = freezed,Object? condition = freezed,Object? kilometers = freezed,Object? year = freezed,Object? fuelType = freezed,Object? vehicleColor = freezed,Object? numberOfDoors = freezed,Object? transmissionType = freezed,Object? carFeatures = freezed,Object? motorcycleType = freezed,Object? accessoryType = freezed,Object? vehicleType = freezed,Object? numberOfDigits = freezed,Object? truckBrand = freezed,Object? boatType = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? listingId = freezed,Object? carBrand = freezed,Object? carModel = freezed,Object? version = freezed,Object? condition = freezed,Object? kilometers = freezed,Object? year = freezed,Object? fuelType = freezed,Object? vehicleColor = freezed,Object? numberOfDoors = freezed,Object? transmissionType = freezed,Object? carFeatures = freezed,Object? motorcycleType = freezed,Object? accessoryType = freezed,Object? vehicleType = freezed,Object? numberOfDigits = freezed,Object? truckBrand = freezed,Object? boatType = freezed,}) {
   return _then(_self.copyWith(
 listingId: freezed == listingId ? _self.listingId : listingId // ignore: cast_nullable_to_non_nullable
 as String?,carBrand: freezed == carBrand ? _self.carBrand : carBrand // ignore: cast_nullable_to_non_nullable
-as CarBrand?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as String?,carModel: freezed == carModel ? _self.carModel : carModel // ignore: cast_nullable_to_non_nullable
+as String?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String?,condition: freezed == condition ? _self.condition : condition // ignore: cast_nullable_to_non_nullable
 as VehicleCondition?,kilometers: freezed == kilometers ? _self.kilometers : kilometers // ignore: cast_nullable_to_non_nullable
 as int?,year: freezed == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
@@ -166,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? listingId,  CarBrand? carBrand,  String? version,  VehicleCondition? condition,  int? kilometers,  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor,  int? numberOfDoors,  TransmissionType? transmissionType,  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'ListingId')  String? listingId, @JsonKey(name: 'CarBrand')  String? carBrand, @JsonKey(name: 'CarModel')  String? carModel, @JsonKey(name: 'Version')  String? version,  VehicleCondition? condition, @JsonKey(name: 'Kilometers')  int? kilometers, @JsonKey(name: 'Year')  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor, @JsonKey(name: 'NumberOfDoors')  int? numberOfDoors,  TransmissionType? transmissionType, @JsonKey(name: 'CarFeatures')  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _VehiclesDetails() when $default != null:
-return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);case _:
+return $default(_that.listingId,_that.carBrand,_that.carModel,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);case _:
   return orElse();
 
 }
@@ -187,10 +188,10 @@ return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? listingId,  CarBrand? carBrand,  String? version,  VehicleCondition? condition,  int? kilometers,  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor,  int? numberOfDoors,  TransmissionType? transmissionType,  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'ListingId')  String? listingId, @JsonKey(name: 'CarBrand')  String? carBrand, @JsonKey(name: 'CarModel')  String? carModel, @JsonKey(name: 'Version')  String? version,  VehicleCondition? condition, @JsonKey(name: 'Kilometers')  int? kilometers, @JsonKey(name: 'Year')  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor, @JsonKey(name: 'NumberOfDoors')  int? numberOfDoors,  TransmissionType? transmissionType, @JsonKey(name: 'CarFeatures')  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)  $default,) {final _that = this;
 switch (_that) {
 case _VehiclesDetails():
-return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);}
+return $default(_that.listingId,_that.carBrand,_that.carModel,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -204,10 +205,10 @@ return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_th
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? listingId,  CarBrand? carBrand,  String? version,  VehicleCondition? condition,  int? kilometers,  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor,  int? numberOfDoors,  TransmissionType? transmissionType,  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'ListingId')  String? listingId, @JsonKey(name: 'CarBrand')  String? carBrand, @JsonKey(name: 'CarModel')  String? carModel, @JsonKey(name: 'Version')  String? version,  VehicleCondition? condition, @JsonKey(name: 'Kilometers')  int? kilometers, @JsonKey(name: 'Year')  int? year,  FuelType? fuelType,  VehicleColor? vehicleColor, @JsonKey(name: 'NumberOfDoors')  int? numberOfDoors,  TransmissionType? transmissionType, @JsonKey(name: 'CarFeatures')  List<CarFeature>? carFeatures,  MotorcycleType? motorcycleType,  AccessoryType? accessoryType,  VehicleType? vehicleType,  PlateDigits? numberOfDigits,  TruckBrand? truckBrand,  BoatType? boatType)?  $default,) {final _that = this;
 switch (_that) {
 case _VehiclesDetails() when $default != null:
-return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);case _:
+return $default(_that.listingId,_that.carBrand,_that.carModel,_that.version,_that.condition,_that.kilometers,_that.year,_that.fuelType,_that.vehicleColor,_that.numberOfDoors,_that.transmissionType,_that.carFeatures,_that.motorcycleType,_that.accessoryType,_that.vehicleType,_that.numberOfDigits,_that.truckBrand,_that.boatType);case _:
   return null;
 
 }
@@ -219,21 +220,22 @@ return $default(_that.listingId,_that.carBrand,_that.version,_that.condition,_th
 @JsonSerializable()
 
 class _VehiclesDetails implements VehiclesDetails {
-  const _VehiclesDetails({this.listingId, this.carBrand, this.version, this.condition, this.kilometers, this.year, this.fuelType, this.vehicleColor, this.numberOfDoors, this.transmissionType, final  List<CarFeature>? carFeatures, this.motorcycleType, this.accessoryType, this.vehicleType, this.numberOfDigits, this.truckBrand, this.boatType}): _carFeatures = carFeatures;
+  const _VehiclesDetails({@JsonKey(name: 'ListingId') this.listingId, @JsonKey(name: 'CarBrand') this.carBrand, @JsonKey(name: 'CarModel') this.carModel, @JsonKey(name: 'Version') this.version, this.condition, @JsonKey(name: 'Kilometers') this.kilometers, @JsonKey(name: 'Year') this.year, this.fuelType, this.vehicleColor, @JsonKey(name: 'NumberOfDoors') this.numberOfDoors, this.transmissionType, @JsonKey(name: 'CarFeatures') final  List<CarFeature>? carFeatures, this.motorcycleType, this.accessoryType, this.vehicleType, this.numberOfDigits, this.truckBrand, this.boatType}): _carFeatures = carFeatures;
   factory _VehiclesDetails.fromJson(Map<String, dynamic> json) => _$VehiclesDetailsFromJson(json);
 
-@override final  String? listingId;
-@override final  CarBrand? carBrand;
-@override final  String? version;
+@override@JsonKey(name: 'ListingId') final  String? listingId;
+@override@JsonKey(name: 'CarBrand') final  String? carBrand;
+@override@JsonKey(name: 'CarModel') final  String? carModel;
+@override@JsonKey(name: 'Version') final  String? version;
 @override final  VehicleCondition? condition;
-@override final  int? kilometers;
-@override final  int? year;
+@override@JsonKey(name: 'Kilometers') final  int? kilometers;
+@override@JsonKey(name: 'Year') final  int? year;
 @override final  FuelType? fuelType;
 @override final  VehicleColor? vehicleColor;
-@override final  int? numberOfDoors;
+@override@JsonKey(name: 'NumberOfDoors') final  int? numberOfDoors;
 @override final  TransmissionType? transmissionType;
  final  List<CarFeature>? _carFeatures;
-@override List<CarFeature>? get carFeatures {
+@override@JsonKey(name: 'CarFeatures') List<CarFeature>? get carFeatures {
   final value = _carFeatures;
   if (value == null) return null;
   if (_carFeatures is EqualUnmodifiableListView) return _carFeatures;
@@ -261,16 +263,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VehiclesDetails&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.carBrand, carBrand) || other.carBrand == carBrand)&&(identical(other.version, version) || other.version == version)&&(identical(other.condition, condition) || other.condition == condition)&&(identical(other.kilometers, kilometers) || other.kilometers == kilometers)&&(identical(other.year, year) || other.year == year)&&(identical(other.fuelType, fuelType) || other.fuelType == fuelType)&&(identical(other.vehicleColor, vehicleColor) || other.vehicleColor == vehicleColor)&&(identical(other.numberOfDoors, numberOfDoors) || other.numberOfDoors == numberOfDoors)&&(identical(other.transmissionType, transmissionType) || other.transmissionType == transmissionType)&&const DeepCollectionEquality().equals(other._carFeatures, _carFeatures)&&(identical(other.motorcycleType, motorcycleType) || other.motorcycleType == motorcycleType)&&(identical(other.accessoryType, accessoryType) || other.accessoryType == accessoryType)&&(identical(other.vehicleType, vehicleType) || other.vehicleType == vehicleType)&&(identical(other.numberOfDigits, numberOfDigits) || other.numberOfDigits == numberOfDigits)&&(identical(other.truckBrand, truckBrand) || other.truckBrand == truckBrand)&&(identical(other.boatType, boatType) || other.boatType == boatType));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _VehiclesDetails&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.carBrand, carBrand) || other.carBrand == carBrand)&&(identical(other.carModel, carModel) || other.carModel == carModel)&&(identical(other.version, version) || other.version == version)&&(identical(other.condition, condition) || other.condition == condition)&&(identical(other.kilometers, kilometers) || other.kilometers == kilometers)&&(identical(other.year, year) || other.year == year)&&(identical(other.fuelType, fuelType) || other.fuelType == fuelType)&&(identical(other.vehicleColor, vehicleColor) || other.vehicleColor == vehicleColor)&&(identical(other.numberOfDoors, numberOfDoors) || other.numberOfDoors == numberOfDoors)&&(identical(other.transmissionType, transmissionType) || other.transmissionType == transmissionType)&&const DeepCollectionEquality().equals(other._carFeatures, _carFeatures)&&(identical(other.motorcycleType, motorcycleType) || other.motorcycleType == motorcycleType)&&(identical(other.accessoryType, accessoryType) || other.accessoryType == accessoryType)&&(identical(other.vehicleType, vehicleType) || other.vehicleType == vehicleType)&&(identical(other.numberOfDigits, numberOfDigits) || other.numberOfDigits == numberOfDigits)&&(identical(other.truckBrand, truckBrand) || other.truckBrand == truckBrand)&&(identical(other.boatType, boatType) || other.boatType == boatType));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,listingId,carBrand,version,condition,kilometers,year,fuelType,vehicleColor,numberOfDoors,transmissionType,const DeepCollectionEquality().hash(_carFeatures),motorcycleType,accessoryType,vehicleType,numberOfDigits,truckBrand,boatType);
+int get hashCode => Object.hash(runtimeType,listingId,carBrand,carModel,version,condition,kilometers,year,fuelType,vehicleColor,numberOfDoors,transmissionType,const DeepCollectionEquality().hash(_carFeatures),motorcycleType,accessoryType,vehicleType,numberOfDigits,truckBrand,boatType);
 
 @override
 String toString() {
-  return 'VehiclesDetails(listingId: $listingId, carBrand: $carBrand, version: $version, condition: $condition, kilometers: $kilometers, year: $year, fuelType: $fuelType, vehicleColor: $vehicleColor, numberOfDoors: $numberOfDoors, transmissionType: $transmissionType, carFeatures: $carFeatures, motorcycleType: $motorcycleType, accessoryType: $accessoryType, vehicleType: $vehicleType, numberOfDigits: $numberOfDigits, truckBrand: $truckBrand, boatType: $boatType)';
+  return 'VehiclesDetails(listingId: $listingId, carBrand: $carBrand, carModel: $carModel, version: $version, condition: $condition, kilometers: $kilometers, year: $year, fuelType: $fuelType, vehicleColor: $vehicleColor, numberOfDoors: $numberOfDoors, transmissionType: $transmissionType, carFeatures: $carFeatures, motorcycleType: $motorcycleType, accessoryType: $accessoryType, vehicleType: $vehicleType, numberOfDigits: $numberOfDigits, truckBrand: $truckBrand, boatType: $boatType)';
 }
 
 
@@ -281,7 +283,7 @@ abstract mixin class _$VehiclesDetailsCopyWith<$Res> implements $VehiclesDetails
   factory _$VehiclesDetailsCopyWith(_VehiclesDetails value, $Res Function(_VehiclesDetails) _then) = __$VehiclesDetailsCopyWithImpl;
 @override @useResult
 $Res call({
- String? listingId, CarBrand? carBrand, String? version, VehicleCondition? condition, int? kilometers, int? year, FuelType? fuelType, VehicleColor? vehicleColor, int? numberOfDoors, TransmissionType? transmissionType, List<CarFeature>? carFeatures, MotorcycleType? motorcycleType, AccessoryType? accessoryType, VehicleType? vehicleType, PlateDigits? numberOfDigits, TruckBrand? truckBrand, BoatType? boatType
+@JsonKey(name: 'ListingId') String? listingId,@JsonKey(name: 'CarBrand') String? carBrand,@JsonKey(name: 'CarModel') String? carModel,@JsonKey(name: 'Version') String? version, VehicleCondition? condition,@JsonKey(name: 'Kilometers') int? kilometers,@JsonKey(name: 'Year') int? year, FuelType? fuelType, VehicleColor? vehicleColor,@JsonKey(name: 'NumberOfDoors') int? numberOfDoors, TransmissionType? transmissionType,@JsonKey(name: 'CarFeatures') List<CarFeature>? carFeatures, MotorcycleType? motorcycleType, AccessoryType? accessoryType, VehicleType? vehicleType, PlateDigits? numberOfDigits, TruckBrand? truckBrand, BoatType? boatType
 });
 
 
@@ -298,11 +300,12 @@ class __$VehiclesDetailsCopyWithImpl<$Res>
 
 /// Create a copy of VehiclesDetails
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? listingId = freezed,Object? carBrand = freezed,Object? version = freezed,Object? condition = freezed,Object? kilometers = freezed,Object? year = freezed,Object? fuelType = freezed,Object? vehicleColor = freezed,Object? numberOfDoors = freezed,Object? transmissionType = freezed,Object? carFeatures = freezed,Object? motorcycleType = freezed,Object? accessoryType = freezed,Object? vehicleType = freezed,Object? numberOfDigits = freezed,Object? truckBrand = freezed,Object? boatType = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? listingId = freezed,Object? carBrand = freezed,Object? carModel = freezed,Object? version = freezed,Object? condition = freezed,Object? kilometers = freezed,Object? year = freezed,Object? fuelType = freezed,Object? vehicleColor = freezed,Object? numberOfDoors = freezed,Object? transmissionType = freezed,Object? carFeatures = freezed,Object? motorcycleType = freezed,Object? accessoryType = freezed,Object? vehicleType = freezed,Object? numberOfDigits = freezed,Object? truckBrand = freezed,Object? boatType = freezed,}) {
   return _then(_VehiclesDetails(
 listingId: freezed == listingId ? _self.listingId : listingId // ignore: cast_nullable_to_non_nullable
 as String?,carBrand: freezed == carBrand ? _self.carBrand : carBrand // ignore: cast_nullable_to_non_nullable
-as CarBrand?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
+as String?,carModel: freezed == carModel ? _self.carModel : carModel // ignore: cast_nullable_to_non_nullable
+as String?,version: freezed == version ? _self.version : version // ignore: cast_nullable_to_non_nullable
 as String?,condition: freezed == condition ? _self.condition : condition // ignore: cast_nullable_to_non_nullable
 as VehicleCondition?,kilometers: freezed == kilometers ? _self.kilometers : kilometers // ignore: cast_nullable_to_non_nullable
 as int?,year: freezed == year ? _self.year : year // ignore: cast_nullable_to_non_nullable

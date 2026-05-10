@@ -9,23 +9,24 @@ part of 'vehicles_details.dart';
 _VehiclesDetails _$VehiclesDetailsFromJson(
   Map<String, dynamic> json,
 ) => _VehiclesDetails(
-  listingId: json['listingId'] as String?,
-  carBrand: $enumDecodeNullable(_$CarBrandEnumMap, json['carBrand']),
-  version: json['version'] as String?,
+  listingId: json['ListingId'] as String?,
+  carBrand: json['CarBrand'] as String?,
+  carModel: json['CarModel'] as String?,
+  version: json['Version'] as String?,
   condition: $enumDecodeNullable(_$VehicleConditionEnumMap, json['condition']),
-  kilometers: (json['kilometers'] as num?)?.toInt(),
-  year: (json['year'] as num?)?.toInt(),
+  kilometers: (json['Kilometers'] as num?)?.toInt(),
+  year: (json['Year'] as num?)?.toInt(),
   fuelType: $enumDecodeNullable(_$FuelTypeEnumMap, json['fuelType']),
   vehicleColor: $enumDecodeNullable(
     _$VehicleColorEnumMap,
     json['vehicleColor'],
   ),
-  numberOfDoors: (json['numberOfDoors'] as num?)?.toInt(),
+  numberOfDoors: (json['NumberOfDoors'] as num?)?.toInt(),
   transmissionType: $enumDecodeNullable(
     _$TransmissionTypeEnumMap,
     json['transmissionType'],
   ),
-  carFeatures: (json['carFeatures'] as List<dynamic>?)
+  carFeatures: (json['CarFeatures'] as List<dynamic>?)
       ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
       .toList(),
   motorcycleType: $enumDecodeNullable(
@@ -47,17 +48,18 @@ _VehiclesDetails _$VehiclesDetailsFromJson(
 
 Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
     <String, dynamic>{
-      'listingId': instance.listingId,
-      'carBrand': _$CarBrandEnumMap[instance.carBrand],
-      'version': instance.version,
+      'ListingId': instance.listingId,
+      'CarBrand': instance.carBrand,
+      'CarModel': instance.carModel,
+      'Version': instance.version,
       'condition': _$VehicleConditionEnumMap[instance.condition],
-      'kilometers': instance.kilometers,
-      'year': instance.year,
+      'Kilometers': instance.kilometers,
+      'Year': instance.year,
       'fuelType': _$FuelTypeEnumMap[instance.fuelType],
       'vehicleColor': _$VehicleColorEnumMap[instance.vehicleColor],
-      'numberOfDoors': instance.numberOfDoors,
+      'NumberOfDoors': instance.numberOfDoors,
       'transmissionType': _$TransmissionTypeEnumMap[instance.transmissionType],
-      'carFeatures': instance.carFeatures
+      'CarFeatures': instance.carFeatures
           ?.map((e) => _$CarFeatureEnumMap[e]!)
           .toList(),
       'motorcycleType': _$MotorcycleTypeEnumMap[instance.motorcycleType],
@@ -67,43 +69,6 @@ Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
       'truckBrand': _$TruckBrandEnumMap[instance.truckBrand],
       'boatType': _$BoatTypeEnumMap[instance.boatType],
     };
-
-const _$CarBrandEnumMap = {
-  CarBrand.toyota: 'Toyota',
-  CarBrand.nissan: 'Nissan',
-  CarBrand.honda: 'Honda',
-  CarBrand.hyundai: 'Hyundai',
-  CarBrand.kia: 'Kia',
-  CarBrand.bMW: 'BMW',
-  CarBrand.mercedes: 'Mercedes',
-  CarBrand.audi: 'Audi',
-  CarBrand.volkswagen: 'Volkswagen',
-  CarBrand.ford: 'Ford',
-  CarBrand.chevrolet: 'Chevrolet',
-  CarBrand.gMC: 'GMC',
-  CarBrand.mitsubishi: 'Mitsubishi',
-  CarBrand.subaru: 'Subaru',
-  CarBrand.mazda: 'Mazda',
-  CarBrand.lexus: 'Lexus',
-  CarBrand.infiniti: 'Infiniti',
-  CarBrand.acura: 'Acura',
-  CarBrand.landRover: 'LandRover',
-  CarBrand.jaguar: 'Jaguar',
-  CarBrand.porsche: 'Porsche',
-  CarBrand.volvo: 'Volvo',
-  CarBrand.renault: 'Renault',
-  CarBrand.peugeot: 'Peugeot',
-  CarBrand.citroen: 'Citroen',
-  CarBrand.fiat: 'Fiat',
-  CarBrand.jeep: 'Jeep',
-  CarBrand.dodge: 'Dodge',
-  CarBrand.chrysler: 'Chrysler',
-  CarBrand.cadillac: 'Cadillac',
-  CarBrand.lincoln: 'Lincoln',
-  CarBrand.mini: 'Mini',
-  CarBrand.smart: 'Smart',
-  CarBrand.other: 'Other',
-};
 
 const _$VehicleConditionEnumMap = {
   VehicleCondition.new_: 'New',

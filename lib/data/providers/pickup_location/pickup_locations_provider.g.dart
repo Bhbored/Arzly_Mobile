@@ -33,7 +33,7 @@ final class PickupLocationsProvider
   PickupLocations create() => PickupLocations();
 }
 
-String _$pickupLocationsHash() => r'84023723a9732f38fd91405aed4d61ff49b07166';
+String _$pickupLocationsHash() => r'3946b3269e3e958beb2aa9eff6dd1726c3be4af5';
 
 abstract class _$PickupLocations extends $AsyncNotifier<List<PickupLocation>> {
   FutureOr<List<PickupLocation>> build();

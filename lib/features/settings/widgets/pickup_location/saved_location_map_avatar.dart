@@ -1,6 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class SavedLocationMapAvatar extends StatelessWidget {
   const SavedLocationMapAvatar({super.key, this.imageUrl});
@@ -38,14 +38,16 @@ class SavedLocationMapAvatar extends StatelessWidget {
         ),
         child: ClipOval(
           child: imageUrl != null && imageUrl!.isNotEmpty
-              ? FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: imageUrl!,
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl!,
                   width: diameter,
                   height: diameter,
                   fit: BoxFit.cover,
                   fadeInDuration: const Duration(milliseconds: 280),
-                  imageErrorBuilder: (_, _, _) => _fallback(context),
+                  placeholder: (context, url) => const ColoredBox(
+                    color: Colors.transparent,
+                  ),
+                  errorWidget: (context, url, error) => _fallback(context),
                 )
               : _fallback(context),
         ),

@@ -6,8 +6,8 @@ import 'package:arzly/domain/entities/listing/real_estate_details/real_estate_de
 import 'package:arzly/domain/entities/listing/vehicles_details/vehicles_details.dart';
 import 'package:arzly/features/home/widgets/card_stats/real_estate_info_row.dart';
 import 'package:arzly/features/home/widgets/card_stats/vehicles_info_row.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ListingCard extends StatelessWidget {
   final Listing listing;
@@ -45,15 +45,17 @@ class ListingCard extends StatelessWidget {
             child: Stack(
               children: [
                 if (imageUrl != null)
-                  FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: imageUrl,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                    fadeInDuration: const Duration(milliseconds: 250),
-                    imageErrorBuilder: (_, error, stackTrace) =>
-                        _buildImageFallback(context),
+                  Positioned.fill(
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      fadeInDuration: const Duration(milliseconds: 250),
+                      placeholder: (context, url) => const ColoredBox(
+                        color: Colors.transparent,
+                      ),
+                      errorWidget: (context, url, error) =>
+                          _buildImageFallback(context),
+                    ),
                   )
                 else
                   _buildImageFallback(context),

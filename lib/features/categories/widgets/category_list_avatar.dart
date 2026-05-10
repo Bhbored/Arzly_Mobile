@@ -1,6 +1,6 @@
 import 'package:arzly/domain/entities/category/category.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CategoryListAvatar extends StatelessWidget {
   final Category category;
@@ -32,12 +32,14 @@ class CategoryListAvatar extends StatelessWidget {
                       maxWidth: 50,
                       maxHeight: 50,
                     ),
-                    child: FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: imageUrl,
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
                       fit: BoxFit.contain,
                       fadeInDuration: const Duration(milliseconds: 250),
-                      imageErrorBuilder: (_, error, stackTrace) =>
+                      placeholder: (context, url) => const ColoredBox(
+                        color: Colors.transparent,
+                      ),
+                      errorWidget: (context, url, error) =>
                           _fallbackIcon(context),
                     ),
                   )
