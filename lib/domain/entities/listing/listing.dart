@@ -14,7 +14,7 @@ sealed class Listing with _$Listing {
     required double price,
     required ListingStatus status,
     String? primaryImageUrl,
-    @Default([]) List<String> imagesUrl,
+    List<String>? imagesUrl,
     required DateTime createdAt,
     DateTime? updatedAt,
     required String name,

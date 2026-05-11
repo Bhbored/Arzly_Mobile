@@ -27,4 +27,15 @@ extension AppSizes on BuildContext {
 
   double get borderRadiusMedium => 12.0;
   double get borderRadiusLarge => 24.0;
+
+  double carsForSaleDropdownMenuMaxHeight({
+    required int itemCount,
+    double itemHeight = kMinInteractiveDimension,
+  }) {
+    if (itemCount <= 0) return itemHeight;
+    final maxByScreen = screenHeight * 0.38;
+    final visibleRows = itemCount <= 6 ? itemCount : 7;
+    final preferredHeight = visibleRows * itemHeight;
+    return preferredHeight < maxByScreen ? preferredHeight : maxByScreen;
+  }
 }

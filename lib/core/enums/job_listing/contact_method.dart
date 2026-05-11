@@ -9,3 +9,11 @@ enum ContactMethod {
   @JsonValue('Both')
   both,
 }
+
+extension ContactMethodDisplay on ContactMethod {
+  String get label => switch (this) {
+    ContactMethod.phoneNumber => 'Phone',
+    ContactMethod.inAppChat => 'In-app chat',
+    ContactMethod.both => 'Both',
+  };
+}

@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Listing {
 
- String get id; String get title; String get description; double get price; ListingStatus get status; String? get primaryImageUrl; List<String> get imagesUrl; DateTime get createdAt; DateTime? get updatedAt; String get name; String get phoneNumber; bool get isPriceNegotiable; bool get isPromoted; PromotionType? get promotionType; DateTime? get promotionStartDate; DateTime? get promotionEndDate; ContactMethod get contactMethod; String get ownerId; String get categoryId; String get subcategoryId; String get pickupLocationId; PickupLocation get pickupLocation; dynamic get listingDetails;
+ String get id; String get title; String get description; double get price; ListingStatus get status; String? get primaryImageUrl; List<String>? get imagesUrl; DateTime get createdAt; DateTime? get updatedAt; String get name; String get phoneNumber; bool get isPriceNegotiable; bool get isPromoted; PromotionType? get promotionType; DateTime? get promotionStartDate; DateTime? get promotionEndDate; ContactMethod get contactMethod; String get ownerId; String get categoryId; String get subcategoryId; String get pickupLocationId; PickupLocation get pickupLocation; dynamic get listingDetails;
 /// Create a copy of Listing
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $ListingCopyWith<$Res>  {
   factory $ListingCopyWith(Listing value, $Res Function(Listing) _then) = _$ListingCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description, double price, ListingStatus status, String? primaryImageUrl, List<String> imagesUrl, DateTime createdAt, DateTime? updatedAt, String name, String phoneNumber, bool isPriceNegotiable, bool isPromoted, PromotionType? promotionType, DateTime? promotionStartDate, DateTime? promotionEndDate, ContactMethod contactMethod, String ownerId, String categoryId, String subcategoryId, String pickupLocationId, PickupLocation pickupLocation, dynamic listingDetails
+ String id, String title, String description, double price, ListingStatus status, String? primaryImageUrl, List<String>? imagesUrl, DateTime createdAt, DateTime? updatedAt, String name, String phoneNumber, bool isPriceNegotiable, bool isPromoted, PromotionType? promotionType, DateTime? promotionStartDate, DateTime? promotionEndDate, ContactMethod contactMethod, String ownerId, String categoryId, String subcategoryId, String pickupLocationId, PickupLocation pickupLocation, dynamic listingDetails
 });
 
 
@@ -62,7 +62,7 @@ class _$ListingCopyWithImpl<$Res>
 
 /// Create a copy of Listing
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = null,Object? createdAt = null,Object? updatedAt = freezed,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? isPromoted = null,Object? promotionType = freezed,Object? promotionStartDate = freezed,Object? promotionEndDate = freezed,Object? contactMethod = null,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? pickupLocation = null,Object? listingDetails = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? isPromoted = null,Object? promotionType = freezed,Object? promotionStartDate = freezed,Object? promotionEndDate = freezed,Object? contactMethod = null,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? pickupLocation = null,Object? listingDetails = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -70,8 +70,8 @@ as String,description: null == description ? _self.description : description // 
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
-as String?,imagesUrl: null == imagesUrl ? _self.imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,imagesUrl: freezed == imagesUrl ? _self.imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
@@ -178,7 +178,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String> imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String>? imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Listing() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.createdAt,_that.updatedAt,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.isPromoted,_that.promotionType,_that.promotionStartDate,_that.promotionEndDate,_that.contactMethod,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.pickupLocation,_that.listingDetails);case _:
@@ -199,7 +199,7 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String> imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String>? imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)  $default,) {final _that = this;
 switch (_that) {
 case _Listing():
 return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.createdAt,_that.updatedAt,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.isPromoted,_that.promotionType,_that.promotionStartDate,_that.promotionEndDate,_that.contactMethod,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.pickupLocation,_that.listingDetails);}
@@ -216,7 +216,7 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String> imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  double price,  ListingStatus status,  String? primaryImageUrl,  List<String>? imagesUrl,  DateTime createdAt,  DateTime? updatedAt,  String name,  String phoneNumber,  bool isPriceNegotiable,  bool isPromoted,  PromotionType? promotionType,  DateTime? promotionStartDate,  DateTime? promotionEndDate,  ContactMethod contactMethod,  String ownerId,  String categoryId,  String subcategoryId,  String pickupLocationId,  PickupLocation pickupLocation,  dynamic listingDetails)?  $default,) {final _that = this;
 switch (_that) {
 case _Listing() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.price,_that.status,_that.primaryImageUrl,_that.imagesUrl,_that.createdAt,_that.updatedAt,_that.name,_that.phoneNumber,_that.isPriceNegotiable,_that.isPromoted,_that.promotionType,_that.promotionStartDate,_that.promotionEndDate,_that.contactMethod,_that.ownerId,_that.categoryId,_that.subcategoryId,_that.pickupLocationId,_that.pickupLocation,_that.listingDetails);case _:
@@ -231,7 +231,7 @@ return $default(_that.id,_that.title,_that.description,_that.price,_that.status,
 
 
 class _Listing implements Listing {
-  const _Listing({required this.id, required this.title, required this.description, required this.price, required this.status, this.primaryImageUrl, final  List<String> imagesUrl = const [], required this.createdAt, this.updatedAt, required this.name, required this.phoneNumber, this.isPriceNegotiable = false, this.isPromoted = false, this.promotionType, this.promotionStartDate, this.promotionEndDate, required this.contactMethod, required this.ownerId, required this.categoryId, required this.subcategoryId, required this.pickupLocationId, required this.pickupLocation, this.listingDetails}): _imagesUrl = imagesUrl;
+  const _Listing({required this.id, required this.title, required this.description, required this.price, required this.status, this.primaryImageUrl, final  List<String>? imagesUrl, required this.createdAt, this.updatedAt, required this.name, required this.phoneNumber, this.isPriceNegotiable = false, this.isPromoted = false, this.promotionType, this.promotionStartDate, this.promotionEndDate, required this.contactMethod, required this.ownerId, required this.categoryId, required this.subcategoryId, required this.pickupLocationId, required this.pickupLocation, this.listingDetails}): _imagesUrl = imagesUrl;
   
 
 @override final  String id;
@@ -240,11 +240,13 @@ class _Listing implements Listing {
 @override final  double price;
 @override final  ListingStatus status;
 @override final  String? primaryImageUrl;
- final  List<String> _imagesUrl;
-@override@JsonKey() List<String> get imagesUrl {
+ final  List<String>? _imagesUrl;
+@override List<String>? get imagesUrl {
+  final value = _imagesUrl;
+  if (value == null) return null;
   if (_imagesUrl is EqualUnmodifiableListView) return _imagesUrl;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_imagesUrl);
+  return EqualUnmodifiableListView(value);
 }
 
 @override final  DateTime createdAt;
@@ -294,7 +296,7 @@ abstract mixin class _$ListingCopyWith<$Res> implements $ListingCopyWith<$Res> {
   factory _$ListingCopyWith(_Listing value, $Res Function(_Listing) _then) = __$ListingCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description, double price, ListingStatus status, String? primaryImageUrl, List<String> imagesUrl, DateTime createdAt, DateTime? updatedAt, String name, String phoneNumber, bool isPriceNegotiable, bool isPromoted, PromotionType? promotionType, DateTime? promotionStartDate, DateTime? promotionEndDate, ContactMethod contactMethod, String ownerId, String categoryId, String subcategoryId, String pickupLocationId, PickupLocation pickupLocation, dynamic listingDetails
+ String id, String title, String description, double price, ListingStatus status, String? primaryImageUrl, List<String>? imagesUrl, DateTime createdAt, DateTime? updatedAt, String name, String phoneNumber, bool isPriceNegotiable, bool isPromoted, PromotionType? promotionType, DateTime? promotionStartDate, DateTime? promotionEndDate, ContactMethod contactMethod, String ownerId, String categoryId, String subcategoryId, String pickupLocationId, PickupLocation pickupLocation, dynamic listingDetails
 });
 
 
@@ -311,7 +313,7 @@ class __$ListingCopyWithImpl<$Res>
 
 /// Create a copy of Listing
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = null,Object? createdAt = null,Object? updatedAt = freezed,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? isPromoted = null,Object? promotionType = freezed,Object? promotionStartDate = freezed,Object? promotionEndDate = freezed,Object? contactMethod = null,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? pickupLocation = null,Object? listingDetails = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? price = null,Object? status = null,Object? primaryImageUrl = freezed,Object? imagesUrl = freezed,Object? createdAt = null,Object? updatedAt = freezed,Object? name = null,Object? phoneNumber = null,Object? isPriceNegotiable = null,Object? isPromoted = null,Object? promotionType = freezed,Object? promotionStartDate = freezed,Object? promotionEndDate = freezed,Object? contactMethod = null,Object? ownerId = null,Object? categoryId = null,Object? subcategoryId = null,Object? pickupLocationId = null,Object? pickupLocation = null,Object? listingDetails = freezed,}) {
   return _then(_Listing(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -319,8 +321,8 @@ as String,description: null == description ? _self.description : description // 
 as String,price: null == price ? _self.price : price // ignore: cast_nullable_to_non_nullable
 as double,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
 as ListingStatus,primaryImageUrl: freezed == primaryImageUrl ? _self.primaryImageUrl : primaryImageUrl // ignore: cast_nullable_to_non_nullable
-as String?,imagesUrl: null == imagesUrl ? _self._imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as String?,imagesUrl: freezed == imagesUrl ? _self._imagesUrl : imagesUrl // ignore: cast_nullable_to_non_nullable
+as List<String>?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable

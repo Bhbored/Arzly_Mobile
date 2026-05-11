@@ -4,6 +4,16 @@ import 'package:arzly/data/dtos/response/listing/listing_response.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:arzly/domain/mappers/pickup_location_mapper.dart';
 
+Object? _encodeListingDetails(dynamic listingDetails) {
+  if (listingDetails == null) {
+    return null;
+  }
+  if (listingDetails is Map<String, dynamic>) {
+    return listingDetails;
+  }
+  return (listingDetails as dynamic).toJson();
+}
+
 extension ListingResponseMapper on ListingResponse {
   Listing toEntity() => Listing(
     id: id,
@@ -46,7 +56,7 @@ extension ListingToAddRequestMapper on Listing {
     phoneNumber: phoneNumber,
     isPriceNegotiable: isPriceNegotiable,
     contactMethod: contactMethod,
-    listingDetails: listingDetails,
+    listingDetails: _encodeListingDetails(listingDetails),
   );
 }
 
@@ -65,6 +75,6 @@ extension ListingToUpdateRequestMapper on Listing {
     phoneNumber: phoneNumber,
     isPriceNegotiable: isPriceNegotiable,
     contactMethod: contactMethod,
-    listingDetails: listingDetails,
+    listingDetails: _encodeListingDetails(listingDetails),
   );
 }

@@ -6,69 +6,102 @@ part of 'vehicles_details.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_VehiclesDetails _$VehiclesDetailsFromJson(
-  Map<String, dynamic> json,
-) => _VehiclesDetails(
-  listingId: json['ListingId'] as String?,
-  carBrand: json['CarBrand'] as String?,
-  carModel: json['CarModel'] as String?,
-  version: json['Version'] as String?,
-  condition: $enumDecodeNullable(_$VehicleConditionEnumMap, json['condition']),
-  kilometers: (json['Kilometers'] as num?)?.toInt(),
-  year: (json['Year'] as num?)?.toInt(),
-  fuelType: $enumDecodeNullable(_$FuelTypeEnumMap, json['fuelType']),
-  vehicleColor: $enumDecodeNullable(
-    _$VehicleColorEnumMap,
-    json['vehicleColor'],
-  ),
-  numberOfDoors: (json['NumberOfDoors'] as num?)?.toInt(),
-  transmissionType: $enumDecodeNullable(
-    _$TransmissionTypeEnumMap,
-    json['transmissionType'],
-  ),
-  carFeatures: (json['CarFeatures'] as List<dynamic>?)
-      ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
-      .toList(),
-  motorcycleType: $enumDecodeNullable(
-    _$MotorcycleTypeEnumMap,
-    json['motorcycleType'],
-  ),
-  accessoryType: $enumDecodeNullable(
-    _$AccessoryTypeEnumMap,
-    json['accessoryType'],
-  ),
-  vehicleType: $enumDecodeNullable(_$VehicleTypeEnumMap, json['vehicleType']),
-  numberOfDigits: $enumDecodeNullable(
-    _$PlateDigitsEnumMap,
-    json['numberOfDigits'],
-  ),
-  truckBrand: $enumDecodeNullable(_$TruckBrandEnumMap, json['truckBrand']),
-  boatType: $enumDecodeNullable(_$BoatTypeEnumMap, json['boatType']),
-);
+_VehiclesDetails _$VehiclesDetailsFromJson(Map<String, dynamic> json) =>
+    _VehiclesDetails(
+      carBrand: json['CarBrand'] as String?,
+      carModel: json['CarModel'] as String?,
+      version: json['Version'] as String?,
+      carType: $enumDecodeNullable(_$CarTypeEnumMap, json['CarType']),
+      numberOfSeats: (json['NumberOfSeats'] as num?)?.toInt(),
+      condition: $enumDecodeNullable(
+        _$VehicleConditionEnumMap,
+        json['Condition'],
+      ),
+      horsepower: (json['HorsePower'] as num?)?.toInt(),
+      fuelConsumption: (json['FuelConsumptionLPer100Km'] as num?)?.toDouble(),
+      kilometers: (json['Kilometers'] as num?)?.toInt(),
+      year: (json['Year'] as num?)?.toInt(),
+      numberOfOwners: (json['NumberOfOwners'] as num?)?.toInt(),
+      fuelType: $enumDecodeNullable(_$FuelTypeEnumMap, json['FuelType']),
+      vehicleInterior: $enumDecodeNullable(
+        _$VehicleInteriorEnumMap,
+        json['VehicleInterior'],
+      ),
+      vehicleColor: $enumDecodeNullable(
+        _$VehicleColorEnumMap,
+        json['VehicleColor'],
+      ),
+      numberOfDoors: (json['NumberOfDoors'] as num?)?.toInt(),
+      transmissionType: $enumDecodeNullable(
+        _$TransmissionTypeEnumMap,
+        json['TransmissionType'],
+      ),
+      carFeatures: (json['CarFeatures'] as List<dynamic>?)
+          ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
+          .toList(),
+      airConditioning: $enumDecodeNullable(
+        _$AirConditioningEnumMap,
+        json['AirConditioning'],
+      ),
+      motorcycleType: $enumDecodeNullable(
+        _$MotorcycleTypeEnumMap,
+        json['MotorcycleType'],
+      ),
+      accessoryType: $enumDecodeNullable(
+        _$AccessoryTypeEnumMap,
+        json['AccessoryType'],
+      ),
+      numberOfDigits: $enumDecodeNullable(
+        _$PlateDigitsEnumMap,
+        json['NumberOfDigits'],
+      ),
+      truckBrand: $enumDecodeNullable(_$TruckBrandEnumMap, json['TruckBrand']),
+      boatType: $enumDecodeNullable(_$BoatTypeEnumMap, json['BoatType']),
+    );
 
 Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
     <String, dynamic>{
-      'ListingId': instance.listingId,
       'CarBrand': instance.carBrand,
       'CarModel': instance.carModel,
       'Version': instance.version,
-      'condition': _$VehicleConditionEnumMap[instance.condition],
+      'CarType': _$CarTypeEnumMap[instance.carType],
+      'NumberOfSeats': instance.numberOfSeats,
+      'Condition': _$VehicleConditionEnumMap[instance.condition],
+      'HorsePower': instance.horsepower,
+      'FuelConsumptionLPer100Km': instance.fuelConsumption,
       'Kilometers': instance.kilometers,
       'Year': instance.year,
-      'fuelType': _$FuelTypeEnumMap[instance.fuelType],
-      'vehicleColor': _$VehicleColorEnumMap[instance.vehicleColor],
+      'NumberOfOwners': instance.numberOfOwners,
+      'FuelType': _$FuelTypeEnumMap[instance.fuelType],
+      'VehicleInterior': _$VehicleInteriorEnumMap[instance.vehicleInterior],
+      'VehicleColor': _$VehicleColorEnumMap[instance.vehicleColor],
       'NumberOfDoors': instance.numberOfDoors,
-      'transmissionType': _$TransmissionTypeEnumMap[instance.transmissionType],
+      'TransmissionType': _$TransmissionTypeEnumMap[instance.transmissionType],
       'CarFeatures': instance.carFeatures
           ?.map((e) => _$CarFeatureEnumMap[e]!)
           .toList(),
-      'motorcycleType': _$MotorcycleTypeEnumMap[instance.motorcycleType],
-      'accessoryType': _$AccessoryTypeEnumMap[instance.accessoryType],
-      'vehicleType': _$VehicleTypeEnumMap[instance.vehicleType],
-      'numberOfDigits': _$PlateDigitsEnumMap[instance.numberOfDigits],
-      'truckBrand': _$TruckBrandEnumMap[instance.truckBrand],
-      'boatType': _$BoatTypeEnumMap[instance.boatType],
+      'AirConditioning': _$AirConditioningEnumMap[instance.airConditioning],
+      'MotorcycleType': _$MotorcycleTypeEnumMap[instance.motorcycleType],
+      'AccessoryType': _$AccessoryTypeEnumMap[instance.accessoryType],
+      'NumberOfDigits': _$PlateDigitsEnumMap[instance.numberOfDigits],
+      'TruckBrand': _$TruckBrandEnumMap[instance.truckBrand],
+      'BoatType': _$BoatTypeEnumMap[instance.boatType],
     };
+
+const _$CarTypeEnumMap = {
+  CarType.convertible: 'Convertible',
+  CarType.estate: 'Estate',
+  CarType.hatchback: 'Hatchback',
+  CarType.mpv: 'MPV',
+  CarType.pickup: 'Pickup',
+  CarType.sedan: 'Sedan',
+  CarType.smallCityCar: 'SmallCityCar',
+  CarType.sportsCoupe: 'SportsCoupe',
+  CarType.suv: 'SUV',
+  CarType.vanBus: 'VanBus',
+  CarType.classicCar: 'ClassicCar',
+  CarType.other: 'Other',
+};
 
 const _$VehicleConditionEnumMap = {
   VehicleCondition.new_: 'New',
@@ -84,6 +117,16 @@ const _$FuelTypeEnumMap = {
   FuelType.cNG: 'CNG',
   FuelType.lPG: 'LPG',
   FuelType.other: 'Other',
+};
+
+const _$VehicleInteriorEnumMap = {
+  VehicleInterior.fabric: 'Fabric',
+  VehicleInterior.fullLeather: 'FullLeather',
+  VehicleInterior.partLeather: 'PartLeather',
+  VehicleInterior.velour: 'Velour',
+  VehicleInterior.alcantara: 'Alcantara',
+  VehicleInterior.suede: 'Suede',
+  VehicleInterior.other: 'Other',
 };
 
 const _$VehicleColorEnumMap = {
@@ -165,6 +208,15 @@ const _$CarFeatureEnumMap = {
   CarFeature.diffLock: 'DiffLock',
 };
 
+const _$AirConditioningEnumMap = {
+  AirConditioning.none: 'None',
+  AirConditioning.manual: 'Manual',
+  AirConditioning.automatic: 'Automatic',
+  AirConditioning.automatic2Zones: 'Automatic2Zones',
+  AirConditioning.automatic3Zones: 'Automatic3Zones',
+  AirConditioning.automatic4Zones: 'Automatic4Zones',
+};
+
 const _$MotorcycleTypeEnumMap = {
   MotorcycleType.atv: 'ATV',
   MotorcycleType.motorcycle: 'Motorcycle',
@@ -188,14 +240,6 @@ const _$AccessoryTypeEnumMap = {
   AccessoryType.dashboardCamera: 'DashboardCamera',
   AccessoryType.parkingSensors: 'ParkingSensors',
   AccessoryType.other: 'Other',
-};
-
-const _$VehicleTypeEnumMap = {
-  VehicleType.cars: 'Cars',
-  VehicleType.motorcycles: 'Motorcycles',
-  VehicleType.trucks: 'Trucks',
-  VehicleType.buses: 'Buses',
-  VehicleType.other: 'Other',
 };
 
 const _$PlateDigitsEnumMap = {

@@ -18,7 +18,7 @@ class ListingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageUrl =
         listing.primaryImageUrl ??
-        (listing.imagesUrl.isNotEmpty ? listing.imagesUrl.first : null);
+        (listing.imagesUrl!.isNotEmpty ? listing.imagesUrl?.first : null);
     final isFavorite = _isFavorite(listing);
     final realEstateDetails = listing.listingDetails is RealEstateDetails
         ? listing.listingDetails as RealEstateDetails
@@ -50,9 +50,8 @@ class ListingCard extends StatelessWidget {
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       fadeInDuration: const Duration(milliseconds: 250),
-                      placeholder: (context, url) => const ColoredBox(
-                        color: Colors.transparent,
-                      ),
+                      placeholder: (context, url) =>
+                          const ColoredBox(color: Colors.transparent),
                       errorWidget: (context, url, error) =>
                           _buildImageFallback(context),
                     ),

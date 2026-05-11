@@ -38,7 +38,31 @@ class ListingRepo {
   final CategoryRepo categoryRepo;
   final _logger = Logger();
   ListingRepo({required this.executor, required this.categoryRepo});
+
   //helpers
+
+  dynamic _parseListingDetails(String categoryName, dynamic listingDetails) {
+    if (listingDetails == null || listingDetails is! Map<String, dynamic>) {
+      return listingDetails;
+    }
+
+    return switch (categoryName) {
+      'Real Estate' => RealEstateDetails.fromJson(listingDetails),
+      'Vehicles' => VehiclesDetails.fromJson(listingDetails),
+      'Phones & Gadgets' => PhonesDetails.fromJson(listingDetails),
+      'Electronics & Appliances' => ElectronicsDetails.fromJson(
+        listingDetails,
+      ),
+      'Kids & Babies' => BabyChildDetails.fromJson(listingDetails),
+      'Sports & Equipment' => SportsDetails.fromJson(listingDetails),
+      'Fashion & Style' => FashionDetails.fromJson(listingDetails),
+      'Furniture & Decor' => FurnitureDetails.fromJson(listingDetails),
+      'Hobbies' => HobbiesDetails.fromJson(listingDetails),
+      'Pets' => PetsDetails.fromJson(listingDetails),
+      'Services' => ServicesDetails.fromJson(listingDetails),
+      _ => null,
+    };
+  }
 
   Future<List<ListingResponse>> assignDetailsToListings(
     List<ListingResponse> listings,
@@ -59,26 +83,10 @@ class ListingRepo {
       final categoryName = categoryNames[listing.categoryId] ?? '';
 
       final typedListing = listing.copyWith(
-        listingDetails: switch (categoryName) {
-          'Real Estate' => RealEstateDetails.fromJson(listing.listingDetails),
-          'Vehicles' => VehiclesDetails.fromJson(listing.listingDetails),
-          'Phones & Gadgets' => PhonesDetails.fromJson(listing.listingDetails),
-          'Electronics & Appliances' => ElectronicsDetails.fromJson(
-            listing.listingDetails,
-          ),
-          'Kids & Babies' => BabyChildDetails.fromJson(listing.listingDetails),
-          'Sports & Equipment' => SportsDetails.fromJson(
-            listing.listingDetails,
-          ),
-          'Fashion & Style' => FashionDetails.fromJson(listing.listingDetails),
-          'Furniture & Decor' => FurnitureDetails.fromJson(
-            listing.listingDetails,
-          ),
-          'Hobbies' => HobbiesDetails.fromJson(listing.listingDetails),
-          'Pets' => PetsDetails.fromJson(listing.listingDetails),
-          'Services' => ServicesDetails.fromJson(listing.listingDetails),
-          _ => null,
-        },
+        listingDetails: _parseListingDetails(
+          categoryName,
+          listing.listingDetails,
+        ),
       );
 
       listingsByCategory[listing.categoryId]?.add(typedListing);
@@ -95,24 +103,10 @@ class ListingRepo {
     final category = categories.firstWhere((c) => c.id == listing.categoryId);
 
     return listing.copyWith(
-      listingDetails: switch (category.name) {
-        'Real Estate' => RealEstateDetails.fromJson(listing.listingDetails),
-        'Vehicles' => VehiclesDetails.fromJson(listing.listingDetails),
-        'Phones & Gadgets' => PhonesDetails.fromJson(listing.listingDetails),
-        'Electronics & Appliances' => ElectronicsDetails.fromJson(
-          listing.listingDetails,
-        ),
-        'Kids & Babies' => BabyChildDetails.fromJson(listing.listingDetails),
-        'Sports & Equipment' => SportsDetails.fromJson(listing.listingDetails),
-        'Fashion & Style' => FashionDetails.fromJson(listing.listingDetails),
-        'Furniture & Decor' => FurnitureDetails.fromJson(
-          listing.listingDetails,
-        ),
-        'Hobbies' => HobbiesDetails.fromJson(listing.listingDetails),
-        'Pets' => PetsDetails.fromJson(listing.listingDetails),
-        'Services' => ServicesDetails.fromJson(listing.listingDetails),
-        _ => null,
-      },
+      listingDetails: _parseListingDetails(
+        category.name,
+        listing.listingDetails,
+      ),
     );
   }
 
@@ -133,8 +127,7 @@ class ListingRepo {
     };
     final categories = await categoryRepo.fetchAll();
     final categoriesIds = categories.map((category) => category.id).toList();
-    var listings = await fetchInitialListings(categoriesIds);
-    listings = await assignDetailsToListings(listings);
+    final listings = await fetchInitialListings(categoriesIds);
     for (var category in categories) {
       listingCategoriesMap[category.name] = listings
           .where((listing) => listing.categoryId == category.id)
@@ -160,7 +153,7 @@ class ListingRepo {
               .map((json) => ListingResponse.fromJson(json))
               .toList();
           _logger.i('Fetched ${listings.length} listings successfully');
-          return listings;
+          return assignDetailsToListings(listings);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(
@@ -197,7 +190,7 @@ class ListingRepo {
               .map((json) => ListingResponse.fromJson(json))
               .toList();
           _logger.i('Fetched ${listings.length} listings successfully');
-          return listings;
+          return assignDetailsToListings(listings);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(
@@ -235,7 +228,7 @@ class ListingRepo {
               .map((json) => ListingResponse.fromJson(json))
               .toList();
           _logger.i('Fetched ${listings.length} filtered listings');
-          return listings;
+          return assignDetailsToListings(listings);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(
@@ -262,7 +255,7 @@ class ListingRepo {
         try {
           final listing = ListingResponse.fromJson(data);
           _logger.i('Fetched listing: $id');
-          return listing;
+          return assignLDetailsToListing(listing);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(
@@ -302,7 +295,7 @@ class ListingRepo {
               .map((json) => ListingResponse.fromJson(json))
               .toList();
           _logger.i('Fetched ${listings.length} listings for user: $userId');
-          return listings;
+          return assignDetailsToListings(listings);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(
@@ -360,7 +353,7 @@ class ListingRepo {
           final raw = data as dynamic;
           final updatedListing = ListingResponse.fromJson(raw);
           _logger.i('Updated ${updatedListing.title} Successfully');
-          return updatedListing;
+          return assignLDetailsToListing(updatedListing);
         } catch (e) {
           _logger.e('Parse error: $e');
           throw ApiException(

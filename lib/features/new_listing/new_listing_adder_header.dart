@@ -77,16 +77,18 @@ class NewListingAdderHeader extends StatelessWidget {
                       CircularProgressIndicator(
                         value: progress,
                         strokeWidth: 3,
-                        backgroundColor:
-                            colors.surfaceContainerHighest.withValues(alpha: 0.6),
+                        backgroundColor: Colors.lightGreenAccent.withValues(
+                          alpha: 0.6,
+                        ),
                         color: colors.primary,
                       ),
                       Text(
                         '${clamped + 1}/$carForSaleStepTotal',
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: colors.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          fontSize: context.screenWidth * 0.035,
+                          color: colors.onSurface,
+                        ),
                       ),
                     ],
                   ),
