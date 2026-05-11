@@ -6,6 +6,9 @@ import 'package:arzly/features/home/widgets/category_grid_slider.dart';
 import 'package:arzly/features/home/widgets/category_listing_row.dart';
 import 'package:arzly/features/home/widgets/home_app_bar.dart';
 import 'package:arzly/features/home/widgets/home_search_bar.dart';
+import 'package:arzly/features/shared/skeletons/home_category_skeleton.dart';
+import 'package:arzly/features/shared/skeletons/home_search_bar_skeleton.dart';
+import 'package:arzly/features/shared/skeletons/initial_listing_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,6 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final initialListings = ref.watch(initialListingsProviderProvider);
     final categories = ref.watch(categoryDataProvider);
+    final showSearchSkeleton = categories.isLoading;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: PreferredSize(
@@ -39,14 +43,16 @@ class _HomePageState extends ConsumerState<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: context.spaceSmall),
-            const HomeSearchBar(),
+            showSearchSkeleton
+                ? const HomeSearchBarSkeleton()
+                : const HomeSearchBar(),
             SizedBox(height: context.spaceMedium),
             categories.when(
               data: (data) => CategoryGridSlider(categories: data),
               error: (error, stackTrace) {
                 return SizedBox.shrink();
               },
-              loading: () => SizedBox.shrink(),
+              loading: () => const HomeCategorySkeleton(),
             ),
             initialListings.when(
               data: (data) => Column(
@@ -70,7 +76,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 return Center(child: Text(message));
               },
 
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const InitialListingSkeleton(),
             ),
             SizedBox(height: context.bottomPadding + 60),
           ],

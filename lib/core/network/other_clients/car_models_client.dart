@@ -5,8 +5,8 @@ class CarApiService {
   final Dio _dio = Dio(
     BaseOptions(
       baseUrl: 'https://vpic.nhtsa.dot.gov/api/vehicles/',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 5),
+      receiveTimeout: const Duration(seconds: 5),
     ),
   );
   final logger = Logger();

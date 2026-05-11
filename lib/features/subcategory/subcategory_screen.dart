@@ -4,6 +4,7 @@ import 'package:arzly/data/providers/subcategory/subcategory_provider.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/domain/entities/subcategory/sub_category.dart';
 import 'package:arzly/features/categories/category_picker.dart';
+import 'package:arzly/features/shared/skeletons/list_tile_column_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -94,7 +95,12 @@ class SubcategoryScreen extends ConsumerWidget {
                       : error.toString();
                   return Center(child: Text(message));
                 },
-                loading: () => const Center(child: CircularProgressIndicator()),
+                loading: () => SingleChildScrollView(
+                  child: ListTileColumnSkeleton(
+                    includeLeading: false,
+                    tileBackgroundColor: colors.surfaceContainerLowest,
+                  ),
+                ),
               ),
             ),
           ],

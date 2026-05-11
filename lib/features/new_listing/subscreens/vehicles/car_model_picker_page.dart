@@ -1,6 +1,8 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/network/other_clients/car_models_client.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/shared/skeletons/home_search_bar_skeleton.dart';
+import 'package:arzly/features/shared/skeletons/list_tile_column_skeleton.dart';
 import 'package:flutter/material.dart';
 
 class CarModelPickerPage extends StatefulWidget {
@@ -101,15 +103,31 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
         ),
       ),
       body: _loading
-          ? Center(
-              child: SizedBox(
-                width: 32,
-                height: 32,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: scheme.primary,
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    context.paddingMedium,
+                    0,
+                    context.paddingMedium,
+                    context.spaceSmall,
+                  ),
+                  child: const HomeSearchBarSkeleton(),
                 ),
-              ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.paddingMedium,
+                    ),
+                    child: ListTileColumnSkeleton(
+                      includeLeading: false,
+                      includeTrailing: false,
+                      tileBackgroundColor: pageBg,
+                    ),
+                  ),
+                ),
+              ],
             )
           : _errorMessage != null
           ? Center(
