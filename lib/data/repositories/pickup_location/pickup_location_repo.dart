@@ -45,7 +45,7 @@ class PickupLocationRepo {
           _logger.i('Fetched ${locations.length} pickup locations');
           return locations;
         } catch (e) {
-          _logger.e('Parse error: $e');
+          _logger.e('Failed to parse pickup location data');
           throw ApiException(
             userMessage: ApiErrors.badResponse,
             error: 'Failed to parse pickup location data',

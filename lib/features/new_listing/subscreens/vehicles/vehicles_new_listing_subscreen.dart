@@ -1,6 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/data/providers/listings/listing_provider.dart';
+import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
 import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:arzly/core/enums/listing_owned/motors/air_conditioning.dart';
@@ -122,6 +123,9 @@ class _VehiclesNewListingSubscreenState
       name: widget.defaultContactName,
       phone: widget.defaultContactPhone,
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.read(tempImagesHolderProvider.notifier).clear();
+    });
   }
 
   @override
@@ -305,8 +309,16 @@ class _VehiclesNewListingSubscreenState
   Future<void> _addListing() async {
     setState(() => _isSubmittingListing = true);
     try {
-      final listing = buildListingFromForm();
+      final uploadedImages = await ref
+          .read(tempImagesHolderProvider.notifier)
+          .upload();
+      final listing = buildListingFromForm().copyWith(
+        primaryImageUrl: uploadedImages.primaryImageUrl,
+        imagesUrl: uploadedImages.imagesUrl,
+      );
       await ref.read(listingsProvider.notifier).add(listing);
+      if (!mounted) return;
+      await ref.read(tempImagesHolderProvider.notifier).clear();
       if (!mounted) return;
       AppSnackBar.show(
         context,

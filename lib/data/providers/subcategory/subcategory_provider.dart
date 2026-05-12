@@ -14,7 +14,7 @@ class SubcategoryNotifier extends _$SubcategoryNotifier {
     return _loadSubcategories(categoryId);
   }
 
-  Future<void> fetchSubcategories(String categoryId) async {
+  Future<void> refresh(String categoryId) async {
     if (ref.mounted) {
       state = const AsyncValue.loading();
       state = await AsyncValue.guard(() => _loadSubcategories(categoryId));

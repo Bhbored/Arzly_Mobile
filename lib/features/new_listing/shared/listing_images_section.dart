@@ -1,16 +1,55 @@
+import 'dart:io';
+
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_action_tile.dart';
+import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
 import 'package:arzly/features/new_listing/shared/listing_images_format_hint.dart';
+import 'package:arzly/features/new_listing/shared/listing_images_gallery_page.dart';
+import 'package:arzly/features/new_listing/shared/listing_images_preview.dart';
+import 'package:arzly/features/new_listing/shared/listing_images_source_sheet.dart';
+import 'package:arzly/features/shared/snack_bar/app_snack_bar.dart';
+import 'package:arzly/features/shared/snack_bar/app_snack_bar_variant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ListingImagesSection extends StatelessWidget {
-  const ListingImagesSection({super.key, this.imageUrls = const []});
-
-  final List<String> imageUrls;
+class ListingImagesSection extends ConsumerWidget {
+  const ListingImagesSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final imagesAsync = ref.watch(tempImagesHolderProvider);
+    final imagesNotifier = ref.read(tempImagesHolderProvider.notifier);
+
+    return imagesAsync.when(
+      loading: () => _buildContent(
+        context,
+        ref,
+        imagesState: const TempImagesState(),
+        imagesNotifier: imagesNotifier,
+      ),
+      error: (_, _) => _buildContent(
+        context,
+        ref,
+        imagesState: const TempImagesState(),
+        imagesNotifier: imagesNotifier,
+      ),
+      data: (imagesState) => _buildContent(
+        context,
+        ref,
+        imagesState: imagesState,
+        imagesNotifier: imagesNotifier,
+      ),
+    );
+  }
+
+  Widget _buildContent(
+    BuildContext context,
+    WidgetRef ref, {
+    required TempImagesState imagesState,
+    required TempImagesHolder imagesNotifier,
+  }) {
     final scheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: EdgeInsets.fromLTRB(
         context.paddingMedium,
@@ -52,7 +91,9 @@ class ListingImagesSection extends StatelessWidget {
                       SizedBox(width: context.paddingSmall),
                       Expanded(
                         child: Text(
-                          'Add listing photos',
+                          imagesState.hasImages
+                              ? '${imagesState.images.length} photo${imagesState.images.length == 1 ? '' : 's'} selected'
+                              : 'Add listing photos',
                           style: Theme.of(context).textTheme.titleSmall
                               ?.copyWith(
                                 fontWeight: FontWeight.w600,
@@ -62,30 +103,40 @@ class ListingImagesSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (imageUrls.isNotEmpty) ...[
-                    SizedBox(height: context.spaceSmall),
-                    Text(
-                      '${imageUrls.length} photo${imageUrls.length == 1 ? '' : 's'}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
+                  if (imagesState.hasImages) ...[
+                    SizedBox(height: context.spaceMedium),
+                    if (imagesState.images.length == 1)
+                      ListingImagesSinglePreview(
+                        image: imagesState.images.first,
+                        onOpenGallery: () => _openGallery(
+                          context,
+                          ref,
+                          imagesState: imagesState,
+                          initialIndex: 0,
+                        ),
+                        onRemove: () => imagesNotifier.removeImageAt(0),
+                      )
+                    else
+                      ListingImagesMultiPreview(
+                        images: imagesState.images,
+                        primaryIndex: imagesState.primaryIndex,
+                        onOpenGallery: (index) => _openGallery(
+                          context,
+                          ref,
+                          imagesState: imagesState,
+                          initialIndex: index,
+                        ),
+                        onRemove: imagesNotifier.removeImageAt,
+                        onSetPrimary: imagesNotifier.setPrimaryIndex,
                       ),
-                    ),
                   ],
                   SizedBox(height: context.spaceMedium),
-                  Row(
-                    children: [
-                      ListingImagesActionTile(
-                        icon: Icons.photo_camera_rounded,
-                        label: 'Camera',
-                        onTap: () {},
-                      ),
-                      SizedBox(width: context.paddingSmall),
-                      ListingImagesActionTile(
-                        icon: Icons.photo_library_rounded,
-                        label: 'Gallery',
-                        onTap: () {},
-                      ),
-                    ],
+                  FilledButton.tonalIcon(
+                    onPressed: () => _pickImages(context, ref),
+                    icon: const Icon(Icons.add_rounded),
+                    label: Text(
+                      imagesState.hasImages ? 'Add more photos' : 'Add photos',
+                    ),
                   ),
                   const ListingImagesFormatHint(),
                 ],
@@ -95,5 +146,77 @@ class ListingImagesSection extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _pickImages(BuildContext context, WidgetRef ref) async {
+    final source = await showListingImagesSourceSheet(context);
+    if (source == null || !context.mounted) {
+      return;
+    }
+
+    final picker = ImagePicker();
+    try {
+      final files = switch (source) {
+        ListingImageSource.camera => await _pickFromCamera(picker),
+        ListingImageSource.gallery => await _pickFromGallery(picker),
+      };
+      if (!context.mounted || files.isEmpty) {
+        return;
+      }
+
+      ref.read(tempImagesHolderProvider.notifier).addImages(files);
+    } catch (_) {
+      if (!context.mounted) {
+        return;
+      }
+      AppSnackBar.show(
+        context,
+        message: 'Could not load photos. Try again.',
+        variant: AppSnackBarVariant.error,
+      );
+    }
+  }
+
+  Future<List<File>> _pickFromCamera(ImagePicker picker) async {
+    final picked = await picker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 88,
+    );
+    if (picked == null) {
+      return const [];
+    }
+    return [File(picked.path)];
+  }
+
+  Future<List<File>> _pickFromGallery(ImagePicker picker) async {
+    final picked = await picker.pickMultiImage(imageQuality: 88);
+    if (picked.isEmpty) {
+      return const [];
+    }
+    return picked.map((file) => File(file.path)).toList();
+  }
+
+  Future<void> _openGallery(
+    BuildContext context,
+    WidgetRef ref, {
+    required TempImagesState imagesState,
+    required int initialIndex,
+  }) async {
+    final updatedPrimaryIndex = await Navigator.of(context).push<int>(
+      MaterialPageRoute(
+        builder: (context) => ListingImagesGalleryPage(
+          images: imagesState.images,
+          initialIndex: initialIndex,
+          primaryIndex: imagesState.primaryIndex,
+        ),
+      ),
+    );
+    if (!context.mounted || updatedPrimaryIndex == null) {
+      return;
+    }
+
+    ref
+        .read(tempImagesHolderProvider.notifier)
+        .setPrimaryIndex(updatedPrimaryIndex);
   }
 }

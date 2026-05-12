@@ -15,7 +15,7 @@ class CategoryData extends _$CategoryData {
     return _loadCategories();
   }
 
-  Future<void> fetchCategories() async {
+  Future<void> refresh() async {
     if (ref.mounted) {
       state = const AsyncValue.loading();
       state = await AsyncValue.guard(_loadCategories);

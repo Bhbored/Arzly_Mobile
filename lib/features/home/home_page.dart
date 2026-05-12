@@ -37,49 +37,58 @@ class _HomePageState extends ConsumerState<HomePage> {
         preferredSize: Size.fromHeight(HomeAppBar.preferredHeight(context)),
         child: const HomeAppBar(),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: context.spaceSmall),
-            showSearchSkeleton
-                ? const HomeSearchBarSkeleton()
-                : const HomeSearchBar(),
-            SizedBox(height: context.spaceMedium),
-            categories.when(
-              data: (data) => CategoryGridSlider(categories: data),
-              error: (error, stackTrace) {
-                return SizedBox.shrink();
-              },
-              loading: () => const HomeCategorySkeleton(),
-            ),
-            initialListings.when(
-              data: (data) => Column(
-                children: data.entries
-                    .map(
-                      (category) => [
-                        CategoryListingRow(
-                          title: category.key,
-                          listings: category.value,
-                        ),
-                        SizedBox(height: context.spaceMedium),
-                      ],
-                    )
-                    .expand((widget) => widget)
-                    .toList(),
+      body: RefreshIndicator(
+        color: Theme.of(context).colorScheme.primary,
+        onRefresh: () async {
+          await Future.wait([
+            ref.read(initialListingsProviderProvider.notifier).refresh(),
+            ref.read(categoryDataProvider.notifier).refresh(),
+          ]);
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: context.spaceSmall),
+              showSearchSkeleton
+                  ? const HomeSearchBarSkeleton()
+                  : const HomeSearchBar(),
+              SizedBox(height: context.spaceMedium),
+              categories.when(
+                data: (data) => CategoryGridSlider(categories: data),
+                error: (error, stackTrace) {
+                  return SizedBox.shrink();
+                },
+                loading: () => const HomeCategorySkeleton(),
               ),
-              error: (error, stackTrace) {
-                final message = error is ApiException
-                    ? error.userMessage
-                    : error.toString();
-                return Center(child: Text(message));
-              },
+              initialListings.when(
+                data: (data) => Column(
+                  children: data.entries
+                      .map(
+                        (category) => [
+                          CategoryListingRow(
+                            title: category.key,
+                            listings: category.value,
+                          ),
+                          SizedBox(height: context.spaceMedium),
+                        ],
+                      )
+                      .expand((widget) => widget)
+                      .toList(),
+                ),
+                error: (error, stackTrace) {
+                  final message = error is ApiException
+                      ? error.userMessage
+                      : error.toString();
+                  return Center(child: Text(message));
+                },
 
-              loading: () => const InitialListingSkeleton(),
-            ),
-            SizedBox(height: context.bottomPadding + 60),
-          ],
+                loading: () => const InitialListingSkeleton(),
+              ),
+              SizedBox(height: context.bottomPadding + 60),
+            ],
+          ),
         ),
       ),
     );

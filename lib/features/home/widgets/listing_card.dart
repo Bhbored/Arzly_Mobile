@@ -50,8 +50,19 @@ class ListingCard extends StatelessWidget {
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       fadeInDuration: const Duration(milliseconds: 250),
-                      placeholder: (context, url) =>
-                          const ColoredBox(color: Colors.transparent),
+                      placeholder: (context, url) => ColoredBox(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: SizedBox(
+                            width: context.screenWidth * 0.12,
+                            height: context.screenWidth * 0.12,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 5,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                      ),
                       errorWidget: (context, url, error) =>
                           _buildImageFallback(context),
                     ),
@@ -217,7 +228,13 @@ class ListingCard extends StatelessWidget {
           ],
         ),
       ),
-      child: const Center(child: Icon(Icons.image_not_supported_outlined)),
+      child: Center(
+        child: Icon(
+          Icons.image_not_supported_outlined,
+          size: context.screenWidth * 0.20,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
     );
   }
 }

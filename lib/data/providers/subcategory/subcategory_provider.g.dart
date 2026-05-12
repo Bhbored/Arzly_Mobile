@@ -51,7 +51,7 @@ final class SubcategoryNotifierProvider
 }
 
 String _$subcategoryNotifierHash() =>
-    r'4081bdd6de5fa07e9e6ad7396063dbf3191fb935';
+    r'4e487040fcdee45d193a8edc2b14e82db021aa60';
 
 final class SubcategoryNotifierFamily extends $Family
     with

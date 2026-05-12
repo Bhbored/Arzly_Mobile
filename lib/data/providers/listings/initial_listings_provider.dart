@@ -15,7 +15,7 @@ class InitialListingsProvider extends _$InitialListingsProvider {
     return _loadInitialListings();
   }
 
-  Future<void> fetchInitialListings() async {
+  Future<void> refresh() async {
     if (ref.mounted) {
       state = const AsyncValue.loading();
       state = await AsyncValue.guard(_loadInitialListings);
