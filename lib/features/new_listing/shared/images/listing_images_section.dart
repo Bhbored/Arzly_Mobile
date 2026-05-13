@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_format_hint.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_gallery_page.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_preview.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_source_sheet.dart';
+import 'package:arzly/features/new_listing/shared/images/listing_images_format_hint.dart';
+import 'package:arzly/features/new_listing/shared/images/listing_images_gallery_page.dart';
+import 'package:arzly/features/new_listing/shared/images/listing_images_preview.dart';
+import 'package:arzly/features/new_listing/shared/images/listing_images_source_sheet.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar_variant.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ListingImagesSection extends ConsumerWidget {
-  const ListingImagesSection({super.key});
+  const ListingImagesSection({
+    super.key,
+    this.showRequireAtLeastOnePhotoError = false,
+  });
+
+  final bool showRequireAtLeastOnePhotoError;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,6 +72,16 @@ class ListingImagesSection extends ConsumerWidget {
               color: scheme.onSurface,
             ),
           ),
+          if (showRequireAtLeastOnePhotoError && !imagesState.hasImages) ...[
+            SizedBox(height: context.spaceSmall * 0.75),
+            Text(
+              'Add at least one photo to continue.',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: scheme.error,
+                    fontWeight: FontWeight.w600,
+                  ),
+            ),
+          ],
           SizedBox(height: context.spaceSmall),
           DecoratedBox(
             decoration: BoxDecoration(

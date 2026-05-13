@@ -1,33 +1,41 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/network/other_clients/car_models_client.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/models/car_brand_selection.dart';
 import 'package:arzly/features/shared/skeletons/home_search_bar_skeleton.dart';
 import 'package:arzly/features/shared/skeletons/list_tile_column_skeleton.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class CarModelPickerPage extends StatefulWidget {
-  const CarModelPickerPage({super.key, required this.brandName});
-
-  final String brandName;
+class CarBrandPickerPage extends StatefulWidget {
+  const CarBrandPickerPage({super.key});
 
   @override
-  State<CarModelPickerPage> createState() => _CarModelPickerPageState();
+  State<CarBrandPickerPage> createState() => _CarBrandPickerPageState();
 }
 
-class _CarModelPickerPageState extends State<CarModelPickerPage> {
+class _CarBrandPickerPageState extends State<CarBrandPickerPage> {
   final CarApiService _api = CarApiService();
   late final TextEditingController _searchController;
   String _query = '';
 
   bool _loading = true;
   String? _errorMessage;
-  List<String> _models = [];
+  List<CarBrandSelection> _brands = [];
+  final Set<String> _failedBrandLogoUrls = {};
+
+  void _onBrandLogoFailed(String logoUrl) {
+    if (!mounted) return;
+    if (_failedBrandLogoUrls.add(logoUrl)) {
+      setState(() {});
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _searchController = TextEditingController();
-    _loadModels();
+    _loadBrands();
   }
 
   @override
@@ -36,45 +44,48 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
     super.dispose();
   }
 
-  Future<void> _loadModels() async {
+  Future<void> _loadBrands() async {
     setState(() {
       _loading = true;
       _errorMessage = null;
     });
     try {
-      final models = await _api.fetchModelsForBrand(widget.brandName);
+      final map = await _api.fetchBrandsWithLogos();
       if (!mounted) return;
-      if (models.isEmpty) {
+      if (map.isEmpty) {
         setState(() {
-          _models = [];
+          _brands = [];
           _loading = false;
           _errorMessage =
-              'No models found for this brand. Check your connection and try again.';
+              'No brands are available. Check your connection and try again.';
         });
         return;
       }
+      final list =
+          map.entries
+              .map((e) => CarBrandSelection(name: e.key, logoUrl: e.value))
+              .toList()
+            ..sort((a, b) => a.name.compareTo(b.name));
       setState(() {
-        _models = models;
+        _brands = list;
         _loading = false;
         _errorMessage = null;
+        _failedBrandLogoUrls.clear();
       });
     } catch (_) {
       if (!mounted) return;
       setState(() {
-        _models = [];
+        _brands = [];
         _loading = false;
-        _errorMessage = 'Could not load models. Try again.';
+        _errorMessage = 'Something went wrong. Try again.';
       });
     }
   }
 
-  List<String> get _filtered {
+  List<CarBrandSelection> get _filtered {
     final q = _query.trim().toLowerCase();
-    if (q.isEmpty) {
-      final list = List<String>.from(_models)..sort();
-      return list;
-    }
-    return _models.where((m) => m.toLowerCase().contains(q)).toList()..sort();
+    if (q.isEmpty) return _brands;
+    return _brands.where((b) => b.name.toLowerCase().contains(q)).toList();
   }
 
   @override
@@ -96,7 +107,7 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
         titleSpacing: 0,
         centerTitle: false,
         title: Text(
-          'Model · ${widget.brandName}',
+          'Brand',
           style: Theme.of(
             context,
           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
@@ -121,7 +132,6 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
                       horizontal: context.paddingMedium,
                     ),
                     child: ListTileColumnSkeleton(
-                      includeLeading: false,
                       includeTrailing: false,
                       tileBackgroundColor: pageBg,
                     ),
@@ -145,7 +155,7 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
                     ),
                     SizedBox(height: context.spaceMedium),
                     FilledButton(
-                      onPressed: _loadModels,
+                      onPressed: _loadBrands,
                       child: const Text('Try again'),
                     ),
                   ],
@@ -183,7 +193,7 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
                         context,
                         pageBg,
                         scheme,
-                        hintText: 'Search models',
+                        hintText: 'Search brands',
                       ),
                     ),
                   ),
@@ -192,7 +202,7 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
                   child: filtered.isEmpty
                       ? _EmptyMessage(
                           message:
-                              'No models match your search. Try another name.',
+                              'No brands match your search. Try a different name.',
                         )
                       : ListView.separated(
                           padding: EdgeInsets.symmetric(
@@ -202,24 +212,91 @@ class _CarModelPickerPageState extends State<CarModelPickerPage> {
                           separatorBuilder: (context, index) =>
                               Divider(height: 1, color: scheme.outlineVariant),
                           itemBuilder: (context, index) {
-                            final model = filtered[index];
-                            return ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                vertical: context.spaceSmall,
+                            final brand = filtered[index];
+                            return _BrandPickerTile(
+                              brand: brand,
+                              logoFailed: _failedBrandLogoUrls.contains(
+                                brand.logoUrl,
                               ),
-                              title: Text(
-                                model,
-                                style: Theme.of(context).textTheme.bodyLarge
-                                    ?.copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              onTap: () =>
-                                  Navigator.of(context).pop<String>(model),
+                              onLogoFailed: _onBrandLogoFailed,
+                              onTap: () => Navigator.of(
+                                context,
+                              ).pop<CarBrandSelection>(brand),
                             );
                           },
                         ),
                 ),
               ],
             ),
+    );
+  }
+}
+
+class _BrandPickerTile extends StatelessWidget {
+  const _BrandPickerTile({
+    required this.brand,
+    required this.logoFailed,
+    required this.onLogoFailed,
+    required this.onTap,
+  });
+
+  final CarBrandSelection brand;
+  final bool logoFailed;
+  final ValueChanged<String> onLogoFailed;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final size = context.screenWidth * 0.11;
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(vertical: context.spaceSmall),
+      onTap: onTap,
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(context.borderRadiusMedium),
+        child: ColoredBox(
+          color: scheme.surfaceContainerLow,
+          child: SizedBox(
+            width: size.clamp(44, 52),
+            height: size.clamp(44, 52),
+            child: logoFailed
+                ? Icon(
+                    Icons.broken_image_outlined,
+                    color: scheme.onSurfaceVariant,
+                  )
+                : CachedNetworkImage(
+                    imageUrl: brand.logoUrl,
+                    fit: BoxFit.contain,
+                    fadeInDuration: const Duration(milliseconds: 200),
+                    placeholder: (context, url) => Center(
+                      child: SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: scheme.primary,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        onLogoFailed(brand.logoUrl);
+                      });
+                      return Icon(
+                        Icons.broken_image_outlined,
+                        color: scheme.onSurfaceVariant,
+                      );
+                    },
+                  ),
+          ),
+        ),
+      ),
+      title: Text(
+        brand.name,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+      ),
     );
   }
 }

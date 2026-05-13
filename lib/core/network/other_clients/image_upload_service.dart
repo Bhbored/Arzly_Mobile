@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'image_upload_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 ImageUploadHelper imageUploadHelper(Ref ref) {
   final client = ref.read(imageUploaderClientProvider);
   final executor = ref.read(executorProvider(client.dio));

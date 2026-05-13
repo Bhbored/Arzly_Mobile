@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/features/new_listing/shared/listing_images_primary_badge.dart';
+import 'package:arzly/features/new_listing/shared/images/listing_images_primary_badge.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';

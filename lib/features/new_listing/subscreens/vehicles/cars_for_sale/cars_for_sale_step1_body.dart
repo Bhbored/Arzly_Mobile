@@ -1,61 +1,141 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/enums/listing_owned/motors/vehicle_condition.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/models/car_brand_selection.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_brand_avatar.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_kilometers_field.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/cars_for_sale/cars_for_sale_year_field.dart';
+import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
+import 'package:arzly/data/providers/new_listing/temp_vehicles_details/temp_vehicles_details_holder.dart';
+import 'package:arzly/domain/entities/listing/vehicles_details/vehicles_details.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/car_brand_picker_page.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/car_model_picker_page.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/models/car_brand_selection.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_brand_avatar.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_kilometers_field.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_year_field.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/shared/vehicle_condition_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CarsForSaleListingBody extends StatelessWidget {
-  const CarsForSaleListingBody({
+class CarsForSaleStep1Body extends ConsumerStatefulWidget {
+  const CarsForSaleStep1Body({
     super.key,
     required this.formKey,
-    required this.selectedBrand,
-    required this.onChooseBrand,
-    required this.selectedModel,
-    required this.onChooseModel,
-    required this.versionController,
-    required this.kilometersController,
-    required this.yearController,
-    required this.selectedCondition,
-    required this.onConditionChanged,
-    this.brandError,
-    this.modelError,
-    this.conditionError,
+    required this.requireStepFieldErrors,
   });
 
   final GlobalKey<FormState> formKey;
+  final bool requireStepFieldErrors;
 
-  final CarBrandSelection? selectedBrand;
-  final VoidCallback onChooseBrand;
+  @override
+  ConsumerState<CarsForSaleStep1Body> createState() => _CarsForSaleStep1BodyState();
+}
 
-  final String? selectedModel;
-  final VoidCallback onChooseModel;
+class _CarsForSaleStep1BodyState extends ConsumerState<CarsForSaleStep1Body> {
+  late final TextEditingController _versionController;
+  late final TextEditingController _yearController;
+  late final TextEditingController _kilometersController;
 
-  final TextEditingController versionController;
+  @override
+  void initState() {
+    super.initState();
+    final veh = ref.read(tempVehiclesDetailsHolderProvider);
+    _versionController = TextEditingController(text: veh.version ?? '');
+    _yearController = TextEditingController(
+      text: veh.year != null ? '${veh.year}' : '',
+    );
+    _kilometersController = TextEditingController(
+      text: veh.kilometers != null ? '${veh.kilometers}' : '',
+    );
+    _versionController.addListener(() {
+      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+            (d) => d.copyWith(version: _versionController.text.trim().isEmpty
+                ? null
+                : _versionController.text),
+          );
+    });
+    _yearController.addListener(() {
+      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+            (d) => d.copyWith(year: parseCarYear(_yearController.text)),
+          );
+    });
+    _kilometersController.addListener(() {
+      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+            (d) => d.copyWith(
+              kilometers: parseCarKilometers(_kilometersController.text),
+            ),
+          );
+    });
+  }
 
-  final TextEditingController kilometersController;
+  @override
+  void dispose() {
+    _versionController.dispose();
+    _yearController.dispose();
+    _kilometersController.dispose();
+    super.dispose();
+  }
 
-  final TextEditingController yearController;
+  Future<void> _openBrandPicker() async {
+    final picked = await Navigator.of(context).push<CarBrandSelection>(
+      MaterialPageRoute(builder: (context) => const CarBrandPickerPage()),
+    );
+    if (picked != null && mounted) {
+      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+            (_) => VehiclesDetails(carBrand: picked.name),
+          );
+      ref.read(tempListingDraftHolderProvider.notifier).update(
+            (l) => l.copyWith(
+              pickupLocation: kListingDraftPickupPlaceholder,
+              pickupLocationId: '',
+            ),
+          );
+      _versionController.text = '';
+      _yearController.text = '';
+      _kilometersController.text = '';
+    }
+  }
 
-  final VehicleCondition? selectedCondition;
-  final ValueChanged<VehicleCondition?> onConditionChanged;
-
-  final String? brandError;
-  final String? modelError;
-  final String? conditionError;
+  Future<void> _openModelPicker() async {
+    final veh = ref.read(tempVehiclesDetailsHolderProvider);
+    final brandName = veh.carBrand;
+    if (brandName == null) return;
+    final picked = await Navigator.of(context).push<String>(
+      MaterialPageRoute(
+        builder: (context) => CarModelPickerPage(brandName: brandName),
+      ),
+    );
+    if (picked != null && mounted) {
+      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+            (d) => d.copyWith(carModel: picked),
+          );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final veh = ref.watch(tempVehiclesDetailsHolderProvider);
     final scheme = Theme.of(context).colorScheme;
     final pageBg = scheme.surfaceContainerLowest;
     final valueBlockHeight = (context.screenHeight * 0.048).clamp(44.0, 56.0);
     final leadingSide = CarsForSaleBrandAvatar.leadingExtent(context);
 
+    final brandSelection = veh.carBrand == null
+        ? null
+        : CarBrandSelection(name: veh.carBrand!, logoUrl: '');
+
+    final brandError = widget.requireStepFieldErrors && veh.carBrand == null
+        ? 'Choose a brand'
+        : null;
+    final modelError = widget.requireStepFieldErrors &&
+            veh.carBrand != null &&
+            veh.carModel == null
+        ? 'Choose a model'
+        : null;
+    final conditionError =
+        widget.requireStepFieldErrors && veh.condition == null
+            ? 'Choose condition'
+            : null;
+
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
         child: Column(
@@ -79,12 +159,12 @@ class CarsForSaleListingBody extends StatelessWidget {
                   contentPadding: EdgeInsets.symmetric(
                     vertical: context.spaceSmall,
                   ),
-                  onTap: onChooseBrand,
-                  leading: CarsForSaleBrandAvatar(brand: selectedBrand),
+                  onTap: _openBrandPicker,
+                  leading: CarsForSaleBrandAvatar(brand: brandSelection),
                   title: _CarsForSaleValueLine(
                     height: valueBlockHeight,
-                    text: selectedBrand?.name ?? 'Choose brand',
-                    isPlaceholder: selectedBrand == null,
+                    text: veh.carBrand ?? 'Choose brand',
+                    isPlaceholder: veh.carBrand == null,
                   ),
                   trailing: Icon(
                     Icons.chevron_right_rounded,
@@ -94,15 +174,15 @@ class CarsForSaleListingBody extends StatelessWidget {
                 if (brandError != null) ...[
                   SizedBox(height: context.spaceSmall * 0.5),
                   Text(
-                    brandError!,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(color: scheme.error),
+                    brandError,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.error,
+                    ),
                   ),
                 ],
               ],
             ),
-            if (selectedBrand != null) ...[
+            if (veh.carBrand != null) ...[
               SizedBox(height: context.spaceSmall),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,15 +202,15 @@ class CarsForSaleListingBody extends StatelessWidget {
                     contentPadding: EdgeInsets.symmetric(
                       vertical: context.spaceSmall,
                     ),
-                    onTap: onChooseModel,
+                    onTap: _openModelPicker,
                     leading: _CarsForSaleModelLeading(
                       side: leadingSide,
                       color: scheme.primary,
                     ),
                     title: _CarsForSaleValueLine(
                       height: valueBlockHeight,
-                      text: selectedModel ?? 'Choose model',
-                      isPlaceholder: selectedModel == null,
+                      text: veh.carModel ?? 'Choose model',
+                      isPlaceholder: veh.carModel == null,
                     ),
                     trailing: Icon(
                       Icons.chevron_right_rounded,
@@ -140,10 +220,10 @@ class CarsForSaleListingBody extends StatelessWidget {
                   if (modelError != null) ...[
                     SizedBox(height: context.spaceSmall * 0.5),
                     Text(
-                      modelError!,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.bodySmall?.copyWith(color: scheme.error),
+                      modelError,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: scheme.error,
+                      ),
                     ),
                   ],
                 ],
@@ -162,7 +242,7 @@ class CarsForSaleListingBody extends StatelessWidget {
                 ),
                 SizedBox(height: context.spaceSmall),
                 TextField(
-                  controller: versionController,
+                  controller: _versionController,
                   maxLines: 1,
                   textInputAction: TextInputAction.done,
                   decoration: carForSaleVersionFieldDecoration(
@@ -187,16 +267,33 @@ class CarsForSaleListingBody extends StatelessWidget {
                 ),
                 SizedBox(height: context.spaceSmall),
                 VehicleConditionField(
-                  value: selectedCondition,
-                  onChanged: onConditionChanged,
+                  value: veh.condition,
+                  onChanged: (v) {
+                    ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+                          (d) {
+                            if (v == null) {
+                              return d.copyWith(condition: null);
+                            }
+                            return d.copyWith(
+                              condition: v,
+                              kilometers: v == VehicleCondition.new_
+                                  ? null
+                                  : d.kilometers,
+                            );
+                          },
+                        );
+                    if (v == VehicleCondition.new_) {
+                      _kilometersController.text = '';
+                    }
+                  },
                 ),
                 if (conditionError != null) ...[
                   SizedBox(height: context.spaceSmall * 0.5),
                   Text(
-                    conditionError!,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.bodySmall?.copyWith(color: scheme.error),
+                    conditionError,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: scheme.error,
+                    ),
                   ),
                 ],
               ],
@@ -214,13 +311,13 @@ class CarsForSaleListingBody extends StatelessWidget {
                 ),
                 SizedBox(height: context.spaceSmall),
                 CarsForSaleYearField(
-                  controller: yearController,
+                  controller: _yearController,
                   pageBg: pageBg,
                   requiredField: true,
                 ),
               ],
             ),
-            if (selectedCondition != VehicleCondition.new_) ...[
+            if (veh.condition != VehicleCondition.new_) ...[
               SizedBox(height: context.spaceSmall),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,9 +331,9 @@ class CarsForSaleListingBody extends StatelessWidget {
                   ),
                   SizedBox(height: context.spaceSmall),
                   CarsForSaleKilometersField(
-                    controller: kilometersController,
+                    controller: _kilometersController,
                     pageBg: pageBg,
-                    requiredField: selectedCondition == VehicleCondition.used,
+                    requiredField: veh.condition == VehicleCondition.used,
                   ),
                 ],
               ),

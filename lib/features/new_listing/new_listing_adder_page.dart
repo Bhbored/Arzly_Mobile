@@ -31,7 +31,10 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
 
   bool get _showCarForSaleProgress =>
       widget.pick.category.name.trim() == BackendListingCatalog.vehicles &&
-      widget.pick.subcategory.name.trim() == VehiclesSubcategoryBody.carsForSale;
+      (widget.pick.subcategory.name.trim() ==
+              VehiclesSubcategoryBody.carsForSale ||
+          widget.pick.subcategory.name.trim() ==
+              VehiclesSubcategoryBody.numberPlates);
 
   @override
   Widget build(BuildContext context) {

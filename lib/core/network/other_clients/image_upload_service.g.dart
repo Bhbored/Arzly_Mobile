@@ -26,7 +26,7 @@ final class ImageUploadHelperProvider
         argument: null,
         retry: null,
         name: r'imageUploadHelperProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -54,4 +54,4 @@ final class ImageUploadHelperProvider
   }
 }
 
-String _$imageUploadHelperHash() => r'09fbd860797465996720ae04168d5537d43bf9e8';
+String _$imageUploadHelperHash() => r'575578e0484f4ea32b6d2fb08dc19947cd8d22e8';

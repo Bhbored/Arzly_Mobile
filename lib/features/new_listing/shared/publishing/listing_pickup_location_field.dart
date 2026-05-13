@@ -1,7 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/data/providers/pickup_location/pickup_locations_provider.dart';
 import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
 import 'package:arzly/features/settings/sub_screens/saved_locations_screen.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_label_display.dart';
 import 'package:flutter/material.dart';

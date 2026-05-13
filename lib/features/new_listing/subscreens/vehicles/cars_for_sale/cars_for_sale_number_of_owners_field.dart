@@ -1,40 +1,40 @@
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-const int kCarHorsepowerMin = 10;
-const int kCarHorsepowerMax = 2000;
+const int kCarOwnersMin = 1;
+const int kCarOwnersMax = 10;
 
-String? validateCarHorsepower(String? raw, {bool requiredField = false}) {
+String? validateCarNumberOfOwners(String? raw, {bool requiredField = false}) {
   final s = raw?.trim() ?? '';
   if (s.isEmpty) {
-    return requiredField ? 'Enter horsepower' : null;
+    return requiredField ? 'Enter number of owners' : null;
   }
-  final n = int.tryParse(s);
-  if (n == null) {
+  final owners = int.tryParse(s);
+  if (owners == null) {
     return 'Use whole numbers only';
   }
-  if (n < kCarHorsepowerMin) {
-    return 'Horsepower must be at least $kCarHorsepowerMin';
+  if (owners < kCarOwnersMin) {
+    return 'Number of owners must be at least $kCarOwnersMin';
   }
-  if (n > kCarHorsepowerMax) {
-    return 'Horsepower cannot exceed $kCarHorsepowerMax';
+  if (owners > kCarOwnersMax) {
+    return 'Number of owners cannot exceed $kCarOwnersMax';
   }
   return null;
 }
 
-int? parseCarHorsepower(String raw) {
+int? parseCarNumberOfOwners(String raw) {
   final s = raw.trim();
   if (s.isEmpty) return null;
-  final n = int.tryParse(s);
-  if (n == null || n < kCarHorsepowerMin || n > kCarHorsepowerMax) {
+  final owners = int.tryParse(s);
+  if (owners == null || owners < kCarOwnersMin || owners > kCarOwnersMax) {
     return null;
   }
-  return n;
+  return owners;
 }
 
-class CarsForSaleHorsepowerField extends StatelessWidget {
-  const CarsForSaleHorsepowerField({
+class CarsForSaleNumberOfOwnersField extends StatelessWidget {
+  const CarsForSaleNumberOfOwnersField({
     super.key,
     required this.controller,
     required this.pageBg,
@@ -56,14 +56,15 @@ class CarsForSaleHorsepowerField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(4),
+        LengthLimitingTextInputFormatter(2),
       ],
-      validator: (v) => validateCarHorsepower(v, requiredField: requiredField),
+      validator: (v) =>
+          validateCarNumberOfOwners(v, requiredField: requiredField),
       decoration: carForSaleVersionFieldDecoration(
         context,
         pageBg,
         scheme,
-        hintText: 'Enter horsepower e.g. 150',
+        hintText: 'Enter number of owners e.g. 1',
       ).copyWith(isDense: true),
     );
   }

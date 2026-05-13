@@ -1,44 +1,37 @@
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-const int kCarYearMin = 1900;
+const int kCarKilometersMax = 9999999;
 
-int carYearMaxInclusive() => DateTime.now().year + 1;
-
-String? validateCarYear(
-  String? raw,
-  int maxYear, {
-  bool requiredField = false,
-}) {
+String? validateCarKilometers(String? raw, {bool requiredField = false}) {
   final s = raw?.trim() ?? '';
   if (s.isEmpty) {
-    return requiredField ? 'Enter year' : null;
+    return requiredField ? 'Enter kilometers' : null;
   }
   final n = int.tryParse(s);
   if (n == null) {
     return 'Use numbers only';
   }
-  if (n < kCarYearMin) {
-    return 'Year must be $kCarYearMin or later';
+  if (n < 0) {
+    return 'Kilometers cannot be negative';
   }
-  if (n > maxYear) {
-    return 'Year cannot be after $maxYear';
+  if (n > kCarKilometersMax) {
+    return 'Maximum is 9,999,999 km';
   }
   return null;
 }
 
-int? parseCarYear(String raw) {
+int? parseCarKilometers(String raw) {
   final s = raw.trim();
   if (s.isEmpty) return null;
   final n = int.tryParse(s);
-  final maxY = carYearMaxInclusive();
-  if (n == null || n < kCarYearMin || n > maxY) return null;
+  if (n == null || n < 0 || n > kCarKilometersMax) return null;
   return n;
 }
 
-class CarsForSaleYearField extends StatelessWidget {
-  const CarsForSaleYearField({
+class CarsForSaleKilometersField extends StatelessWidget {
+  const CarsForSaleKilometersField({
     super.key,
     required this.controller,
     required this.pageBg,
@@ -52,7 +45,6 @@ class CarsForSaleYearField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final maxYear = carYearMaxInclusive();
     return TextFormField(
       controller: controller,
       maxLines: 1,
@@ -61,15 +53,14 @@ class CarsForSaleYearField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
-        LengthLimitingTextInputFormatter(4),
+        LengthLimitingTextInputFormatter(7),
       ],
-      validator: (v) =>
-          validateCarYear(v, maxYear, requiredField: requiredField),
+      validator: (v) => validateCarKilometers(v, requiredField: requiredField),
       decoration: carForSaleVersionFieldDecoration(
         context,
         pageBg,
         scheme,
-        hintText: 'Enter year e.g. 2026',
+        hintText: 'Enter kilometers e.g. 85,000',
       ).copyWith(isDense: true),
     );
   }

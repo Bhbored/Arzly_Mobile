@@ -1,7 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/enums/listing_owned/motors/car_feature.dart';
 import 'package:arzly/core/utils/car_features_helper.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/car_picker_search_decoration.dart';
+import 'package:arzly/features/new_listing/shared/inputs/car_picker_search_decoration.dart';
 import 'package:flutter/material.dart';
 
 Route<List<CarFeature>> createExtraFeaturesSelectorRoute({

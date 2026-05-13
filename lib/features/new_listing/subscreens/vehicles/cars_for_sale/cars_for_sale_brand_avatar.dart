@@ -1,5 +1,5 @@
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/models/car_brand_selection.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/models/car_brand_selection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
