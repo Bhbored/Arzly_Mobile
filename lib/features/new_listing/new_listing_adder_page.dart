@@ -34,7 +34,9 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
       (widget.pick.subcategory.name.trim() ==
               VehiclesSubcategoryBody.carsForSale ||
           widget.pick.subcategory.name.trim() ==
-              VehiclesSubcategoryBody.numberPlates);
+              VehiclesSubcategoryBody.numberPlates ||
+          widget.pick.subcategory.name.trim() ==
+              VehiclesSubcategoryBody.motorcyclesAndAtvs);
 
   @override
   Widget build(BuildContext context) {

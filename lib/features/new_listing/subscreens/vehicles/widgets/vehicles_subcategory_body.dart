@@ -15,6 +15,7 @@ class VehiclesSubcategoryBody extends StatelessWidget {
 
   static const String carsForSale = 'Cars For Sale';
   static const String numberPlates = 'Number Plates';
+  static const String motorcyclesAndAtvs = "Motorcycles & ATV's";
 
   @override
   Widget build(BuildContext context) {

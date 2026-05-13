@@ -91,10 +91,12 @@ class ListingPublishingDetailsSection extends ConsumerStatefulWidget {
     super.key,
     required this.pageBg,
     required this.showRequiredErrors,
+    this.premadeTitle,
   });
 
   final Color pageBg;
   final bool showRequiredErrors;
+  final String? premadeTitle;
 
   @override
   ConsumerState<ListingPublishingDetailsSection> createState() =>
@@ -113,11 +115,24 @@ class _ListingPublishingDetailsSectionState
   void initState() {
     super.initState();
     final draft = ref.read(tempListingDraftHolderProvider);
-    _titleController = TextEditingController(text: draft.title);
+    final premade = widget.premadeTitle?.trim();
+    final premadeUsable = premade != null && premade.isNotEmpty;
+    final usePremade = premadeUsable && draft.title.trim().isEmpty;
+    final initialTitle = usePremade ? premade : draft.title;
+    _titleController = TextEditingController(text: initialTitle);
     _descriptionController = TextEditingController(text: draft.description);
     _priceController = TextEditingController(text: _priceFieldText(draft.price));
     _nameController = TextEditingController(text: draft.name);
     _phoneController = TextEditingController(text: draft.phoneNumber);
+    if (usePremade) {
+      final titleToSeed = premade;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ref.read(tempListingDraftHolderProvider.notifier).update(
+              (l) => l.copyWith(title: titleToSeed),
+            );
+      });
+    }
   }
 
   @override
@@ -180,6 +195,8 @@ class _ListingPublishingDetailsSectionState
         (s) => Object.hash(
           s.carBrand,
           s.carModel,
+          s.motorcycleBrand,
+          s.motorcycleModel,
           s.numberOfDigits,
           s.version,
         ),

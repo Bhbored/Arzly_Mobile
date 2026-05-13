@@ -3,10 +3,20 @@ import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/models/ca
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+enum CarsForSaleBrandAvatarPlaceholderKind {
+  car,
+  motorcycle,
+}
+
 class CarsForSaleBrandAvatar extends StatelessWidget {
-  const CarsForSaleBrandAvatar({super.key, required this.brand});
+  const CarsForSaleBrandAvatar({
+    super.key,
+    required this.brand,
+    this.placeholderKind = CarsForSaleBrandAvatarPlaceholderKind.car,
+  });
 
   final CarBrandSelection? brand;
+  final CarsForSaleBrandAvatarPlaceholderKind placeholderKind;
 
   static double leadingExtent(BuildContext context) {
     final size = context.screenWidth * 0.14;
@@ -27,7 +37,10 @@ class CarsForSaleBrandAvatar extends StatelessWidget {
           child: brand == null
               ? Center(
                   child: Icon(
-                    Icons.directions_car_outlined,
+                    placeholderKind ==
+                            CarsForSaleBrandAvatarPlaceholderKind.motorcycle
+                        ? Icons.two_wheeler_outlined
+                        : Icons.directions_car_outlined,
                     color: scheme.onSurfaceVariant,
                   ),
                 )

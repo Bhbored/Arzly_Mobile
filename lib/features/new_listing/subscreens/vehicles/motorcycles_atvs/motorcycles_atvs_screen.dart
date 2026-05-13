@@ -8,16 +8,16 @@ import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/domain/entities/subcategory/sub_category.dart';
 import 'package:arzly/features/new_listing/shared/images/listing_images_section.dart';
 import 'package:arzly/features/new_listing/shared/images/listing_temp_images_validation.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_step1_body.dart';
-import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_step2_body.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/motorcycles_atvs/motorcycles_atvs_step1_body.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/number_plates/number_plates_step2_body.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/vehicles_listing_from_temp.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar_variant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CarsForSaleScreen extends ConsumerStatefulWidget {
-  const CarsForSaleScreen({
+class MotorcyclesAtvsScreen extends ConsumerStatefulWidget {
+  const MotorcyclesAtvsScreen({
     super.key,
     required this.category,
     required this.subcategory,
@@ -33,16 +33,13 @@ class CarsForSaleScreen extends ConsumerStatefulWidget {
   final int? defaultContactPhone;
 
   @override
-  ConsumerState<CarsForSaleScreen> createState() => _CarsForSaleScreenState();
+  ConsumerState<MotorcyclesAtvsScreen> createState() =>
+      _MotorcyclesAtvsScreenState();
 }
 
-class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
+class _MotorcyclesAtvsScreenState extends ConsumerState<MotorcyclesAtvsScreen> {
   final GlobalKey<FormState> _step1FormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _step2FormKey = GlobalKey<FormState>();
-  final GlobalKey<FormFieldState<String>> _numberOfSeatsFieldKey =
-      GlobalKey<FormFieldState<String>>();
-  final GlobalKey<FormFieldState<String>> _numberOfDoorsFieldKey =
-      GlobalKey<FormFieldState<String>>();
   late final PageController _pageController;
   bool _requireStep1FieldErrors = false;
   bool _requireAtLeastOnePhotoError = false;
@@ -98,9 +95,10 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
       _requireStep1FieldErrors = true;
     });
     final veh = ref.read(tempVehiclesDetailsHolderProvider);
-    final pickersOk = veh.carBrand != null &&
-        veh.carModel != null &&
-        veh.condition != null;
+    final pickersOk = veh.motorcycleBrand != null &&
+        veh.motorcycleModel != null &&
+        veh.condition != null &&
+        veh.motorcycleFuelType != null;
     final formOk = _step1FormKey.currentState?.validate() ?? false;
     if (!pickersOk || !formOk) return;
 
@@ -209,7 +207,7 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
                           _requireAtLeastOnePhotoError && !hasListingPhotos,
                     ),
                     SizedBox(height: context.spaceSmall),
-                    CarsForSaleStep1Body(
+                    MotorcyclesAtvsStep1Body(
                       formKey: _step1FormKey,
                       requireStepFieldErrors: _requireStep1FieldErrors,
                     ),
@@ -254,16 +252,14 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
                   ],
                 ),
               ),
-              CarsForSaleStep2Body(
+              NumberPlatesStep2Body(
                 key: ValueKey(_step2BodyGeneration),
                 formKey: _step2FormKey,
                 showRequiredErrors: _step2ShowRequiredErrors,
                 isSubmitting: _isSubmitting,
                 onPrevious: _backStep2,
                 onPostNow: _onPostNow,
-                numberOfSeatsFieldKey: _numberOfSeatsFieldKey,
-                numberOfDoorsFieldKey: _numberOfDoorsFieldKey,
-                premadeTitle: suggestedCarsForSaleTitle(ref),
+                premadeTitle: suggestedMotorcyclesTitle(ref),
               ),
             ],
           ),

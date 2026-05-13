@@ -4,6 +4,8 @@ import 'package:arzly/core/enums/listing_owned/motors/boat_type.dart';
 import 'package:arzly/core/enums/listing_owned/motors/car_feature.dart';
 import 'package:arzly/core/enums/listing_owned/motors/car_type.dart';
 import 'package:arzly/core/enums/listing_owned/motors/fuel_type.dart';
+import 'package:arzly/core/enums/listing_owned/motors/motorcycle_cc.dart';
+import 'package:arzly/core/enums/listing_owned/motors/motorcycle_fuel_type.dart';
 import 'package:arzly/core/enums/listing_owned/motors/motorcycle_type.dart';
 import 'package:arzly/core/enums/listing_owned/motors/plate_digits.dart';
 import 'package:arzly/core/enums/listing_owned/motors/transmission_type.dart';
@@ -20,6 +22,10 @@ part 'vehicles_details.g.dart';
 @freezed
 sealed class VehiclesDetails with _$VehiclesDetails {
   const factory VehiclesDetails({
+    @JsonKey(name: 'MotorcycleBrand') String? motorcycleBrand,
+    @JsonKey(name: 'MotorcycleModel') String? motorcycleModel,
+    @JsonKey(name: 'MotorcycleFuelType') MotorcycleFuelType? motorcycleFuelType,
+    @JsonKey(name: 'MotorcycleCC') MotorcycleCC? motorcycleCC,
     @JsonKey(name: 'CarBrand') String? carBrand,
     @JsonKey(name: 'CarModel') String? carModel,
     @JsonKey(name: 'Version') String? version,

@@ -3,6 +3,7 @@ import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/domain/entities/subcategory/sub_category.dart';
 import 'package:arzly/features/new_listing/shared/images/listing_images_section.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_screen.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/motorcycles_atvs/motorcycles_atvs_screen.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/number_plates/number_plates_screen.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/vehicles_subcategory_body.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,15 @@ class VehiclesNewListingSubscreen extends StatelessWidget {
     }
     if (name == VehiclesSubcategoryBody.numberPlates) {
       return NumberPlatesScreen(
+        category: category,
+        subcategory: subcategory,
+        stepNotifier: carForSaleStepNotifier,
+        defaultContactName: defaultContactName,
+        defaultContactPhone: defaultContactPhone,
+      );
+    }
+    if (name == VehiclesSubcategoryBody.motorcyclesAndAtvs) {
+      return MotorcyclesAtvsScreen(
         category: category,
         subcategory: subcategory,
         stepNotifier: carForSaleStepNotifier,

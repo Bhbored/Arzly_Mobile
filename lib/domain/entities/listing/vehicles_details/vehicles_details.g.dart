@@ -8,6 +8,16 @@ part of 'vehicles_details.dart';
 
 _VehiclesDetails _$VehiclesDetailsFromJson(Map<String, dynamic> json) =>
     _VehiclesDetails(
+      motorcycleBrand: json['MotorcycleBrand'] as String?,
+      motorcycleModel: json['MotorcycleModel'] as String?,
+      motorcycleFuelType: $enumDecodeNullable(
+        _$MotorcycleFuelTypeEnumMap,
+        json['MotorcycleFuelType'],
+      ),
+      motorcycleCC: $enumDecodeNullable(
+        _$MotorcycleCCEnumMap,
+        json['MotorcycleCC'],
+      ),
       carBrand: json['CarBrand'] as String?,
       carModel: json['CarModel'] as String?,
       version: json['Version'] as String?,
@@ -61,6 +71,11 @@ _VehiclesDetails _$VehiclesDetailsFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
     <String, dynamic>{
+      'MotorcycleBrand': instance.motorcycleBrand,
+      'MotorcycleModel': instance.motorcycleModel,
+      'MotorcycleFuelType':
+          _$MotorcycleFuelTypeEnumMap[instance.motorcycleFuelType],
+      'MotorcycleCC': _$MotorcycleCCEnumMap[instance.motorcycleCC],
       'CarBrand': instance.carBrand,
       'CarModel': instance.carModel,
       'Version': instance.version,
@@ -87,6 +102,20 @@ Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
       'TruckBrand': _$TruckBrandEnumMap[instance.truckBrand],
       'BoatType': _$BoatTypeEnumMap[instance.boatType],
     };
+
+const _$MotorcycleFuelTypeEnumMap = {
+  MotorcycleFuelType.electric: 'Electric',
+  MotorcycleFuelType.benzine: 'Benzine',
+};
+
+const _$MotorcycleCCEnumMap = {
+  MotorcycleCC.cc1_150: 'CC_1_150',
+  MotorcycleCC.cc151_300: 'CC_151_300',
+  MotorcycleCC.cc301_500: 'CC_301_500',
+  MotorcycleCC.cc501_750: 'CC_501_750',
+  MotorcycleCC.cc751_1000: 'CC_751_1000',
+  MotorcycleCC.cc1000Plus: 'CC_1000Plus',
+};
 
 const _$CarTypeEnumMap = {
   CarType.convertible: 'Convertible',

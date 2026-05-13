@@ -10,6 +10,7 @@ class NumberPlatesStep2Body extends StatelessWidget {
     required this.isSubmitting,
     required this.onPrevious,
     required this.onPostNow,
+    this.premadeTitle,
   });
 
   final GlobalKey<FormState> formKey;
@@ -17,6 +18,7 @@ class NumberPlatesStep2Body extends StatelessWidget {
   final bool isSubmitting;
   final VoidCallback onPrevious;
   final VoidCallback onPostNow;
+  final String? premadeTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class NumberPlatesStep2Body extends StatelessWidget {
                   ListingPublishingDetailsSection(
                     pageBg: pageBg,
                     showRequiredErrors: showRequiredErrors,
+                    premadeTitle: premadeTitle,
                   ),
                   SizedBox(height: context.spaceSmall),
                   Row(

@@ -32,6 +32,17 @@ Listing buildListingFromTempDrafts(
   );
 }
 
+String? suggestedMotorcyclesTitle(WidgetRef ref) {
+  final d = ref.read(tempVehiclesDetailsHolderProvider);
+  final parts = <String>[
+    ?d.motorcycleBrand,
+    ?d.motorcycleModel,
+    ?d.year?.toString(),
+  ];
+  if (parts.isEmpty) return null;
+  return parts.join(' ');
+}
+
 String? suggestedCarsForSaleTitle(WidgetRef ref) {
   final d = ref.read(tempVehiclesDetailsHolderProvider);
   final parts = <String>[?d.carBrand, ?d.carModel, ?d.year?.toString()];

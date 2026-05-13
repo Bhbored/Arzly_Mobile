@@ -16,6 +16,7 @@ import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/car
 import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_number_of_doors_field.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_number_of_owners_field.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/cars_for_sale/cars_for_sale_number_of_seats_field.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/shared/cars_for_sale_style_dropdown_field.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/pickers/extra_features_selector_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +31,7 @@ class CarsForSaleStep2Body extends ConsumerStatefulWidget {
     required this.onPostNow,
     required this.numberOfSeatsFieldKey,
     required this.numberOfDoorsFieldKey,
+    this.premadeTitle,
   });
 
   final GlobalKey<FormState> formKey;
@@ -39,6 +41,7 @@ class CarsForSaleStep2Body extends ConsumerStatefulWidget {
   final VoidCallback onPostNow;
   final GlobalKey<FormFieldState<String>> numberOfSeatsFieldKey;
   final GlobalKey<FormFieldState<String>> numberOfDoorsFieldKey;
+  final String? premadeTitle;
 
   @override
   ConsumerState<CarsForSaleStep2Body> createState() =>
@@ -181,7 +184,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                             ),
                       ),
                       SizedBox(height: context.spaceSmall),
-                      _CarsForSaleDropdownField<FuelType>(
+                      CarsForSaleStyleDropdownField<FuelType>(
                         fieldsResetKey: fieldsResetKey,
                         fieldSuffix: 'fuel',
                         value: veh.fuelType,
@@ -213,7 +216,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                             ),
                       ),
                       SizedBox(height: context.spaceSmall),
-                      _CarsForSaleDropdownField<TransmissionType>(
+                      CarsForSaleStyleDropdownField<TransmissionType>(
                         fieldsResetKey: fieldsResetKey,
                         fieldSuffix: 'transmission',
                         value: veh.transmissionType,
@@ -245,7 +248,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                             ),
                       ),
                       SizedBox(height: context.spaceSmall),
-                      _CarsForSaleDropdownField<CarType>(
+                      CarsForSaleStyleDropdownField<CarType>(
                         fieldsResetKey: fieldsResetKey,
                         fieldSuffix: 'car_type',
                         value: veh.carType,
@@ -333,7 +336,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                             ),
                       ),
                       SizedBox(height: context.spaceSmall),
-                      _CarsForSaleDropdownField<AirConditioning>(
+                      CarsForSaleStyleDropdownField<AirConditioning>(
                         fieldsResetKey: fieldsResetKey,
                         fieldSuffix: 'air_conditioning',
                         value: veh.airConditioning,
@@ -432,7 +435,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                             ),
                       ),
                       SizedBox(height: context.spaceSmall),
-                      _CarsForSaleDropdownField<VehicleInterior>(
+                      CarsForSaleStyleDropdownField<VehicleInterior>(
                         fieldsResetKey: fieldsResetKey,
                         fieldSuffix: 'vehicle_interior',
                         value: veh.vehicleInterior,
@@ -497,6 +500,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                   ListingPublishingDetailsSection(
                     pageBg: pageBg,
                     showRequiredErrors: widget.showRequiredErrors,
+                    premadeTitle: widget.premadeTitle,
                   ),
                   SizedBox(height: context.spaceSmall),
                   Row(
@@ -744,116 +748,6 @@ class _CarsForSaleVehicleColorDropdownField extends StatelessWidget {
                         ),
                       ),
                   ],
-                  onChanged: (v) {
-                    state.didChange(v);
-                    onChanged(v);
-                  },
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _CarsForSaleDropdownField<T extends Object> extends StatelessWidget {
-  const _CarsForSaleDropdownField({
-    required this.fieldsResetKey,
-    required this.fieldSuffix,
-    required this.value,
-    required this.onChanged,
-    required this.hintText,
-    required this.validationMessage,
-    required this.showRequiredErrors,
-    required this.pageBg,
-    required this.scheme,
-    required this.menuRadius,
-    required this.items,
-    this.validator,
-  });
-
-  final Object? fieldsResetKey;
-  final String fieldSuffix;
-  final T? value;
-  final ValueChanged<T?> onChanged;
-  final String hintText;
-  final String validationMessage;
-  final bool showRequiredErrors;
-  final String? Function(T?)? validator;
-  final Color pageBg;
-  final ColorScheme scheme;
-  final BorderRadius menuRadius;
-  final List<DropdownMenuItem<T>> items;
-
-  @override
-  Widget build(BuildContext context) {
-    final hintStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w500,
-          color: scheme.onSurfaceVariant,
-          height: 1.2,
-        );
-    final valueStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: scheme.onSurface,
-          height: 1.2,
-        );
-
-    return FormField<T>(
-      key: ValueKey(Object.hash(fieldsResetKey, fieldSuffix)),
-      initialValue: value,
-      autovalidateMode: showRequiredErrors
-          ? AutovalidateMode.onUserInteraction
-          : AutovalidateMode.disabled,
-      validator:
-          validator ??
-          (v) => v == null && showRequiredErrors ? validationMessage : null,
-      builder: (state) {
-        final baseDecoration = carForSaleVersionFieldDecoration(
-          context,
-          pageBg,
-          scheme,
-          hintText: hintText,
-        );
-        return InputDecorator(
-          decoration: baseDecoration.copyWith(
-            hintText: null,
-            errorText: state.hasError ? state.errorText : null,
-            isDense: true,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: context.paddingMedium,
-              vertical: context.spaceSmall * 0.40,
-            ),
-          ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final itemCount = items.length;
-              return DropdownButtonHideUnderline(
-                child: DropdownButton<T>(
-                  padding: EdgeInsets.zero,
-                  isExpanded: true,
-                  borderRadius: menuRadius,
-                  menuWidth: constraints.maxWidth,
-                  itemHeight: kMinInteractiveDimension,
-                  menuMaxHeight: context.carsForSaleDropdownMenuMaxHeight(
-                    itemCount: itemCount,
-                  ),
-                  dropdownColor: scheme.surfaceContainerHigh,
-                  elevation: 4,
-                  alignment: AlignmentDirectional.bottomStart,
-                  style: valueStyle,
-                  hint: Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(hintText, style: hintStyle),
-                  ),
-                  value: state.value,
-                  icon: Icon(
-                    Icons.keyboard_arrow_down_rounded,
-                    color: scheme.onSurfaceVariant,
-                    size: 22,
-                  ),
-                  items: items,
                   onChanged: (v) {
                     state.didChange(v);
                     onChanged(v);
