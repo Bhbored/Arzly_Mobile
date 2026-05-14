@@ -9,6 +9,7 @@ import 'package:arzly/data/dtos/request/listing/listing_add_request.dart';
 import 'package:arzly/data/dtos/request/listing/listing_update_request.dart';
 import 'package:arzly/data/dtos/response/listing/listing_response.dart';
 import 'package:arzly/data/repositories/category/category_repo.dart';
+import 'package:arzly/data/repositories/subcategory/subcatgeory_repo.dart';
 import 'package:arzly/domain/entities/listing/baby_and_child_details/baby_child_details.dart';
 import 'package:arzly/domain/entities/listing/electronics_details/electronics_details.dart';
 import 'package:arzly/domain/entities/listing/fashion_details/fashion_details.dart';
@@ -30,14 +31,24 @@ ListingRepo listingRepo(Ref ref) {
   final client = ref.read(listingClientProvider);
   final executor = ref.read(executorProvider(client.dio));
   final categoryRepo = ref.read(categoryRepoProvider);
-  return ListingRepo(executor: executor, categoryRepo: categoryRepo);
+  final subCategoryRepo = ref.read(subCategoryRepoProvider);
+  return ListingRepo(
+    executor: executor,
+    categoryRepo: categoryRepo,
+    subCategoryRepo: subCategoryRepo,
+  );
 }
 
 class ListingRepo {
   final ApiExecutor executor;
   final CategoryRepo categoryRepo;
+  final SubCategoryRepo subCategoryRepo;
   final _logger = Logger();
-  ListingRepo({required this.executor, required this.categoryRepo});
+  ListingRepo({
+    required this.executor,
+    required this.categoryRepo,
+    required this.subCategoryRepo,
+  });
 
   //helpers
 
@@ -50,9 +61,7 @@ class ListingRepo {
       'Real Estate' => RealEstateDetails.fromJson(listingDetails),
       'Vehicles' => VehiclesDetails.fromJson(listingDetails),
       'Phones & Gadgets' => PhonesDetails.fromJson(listingDetails),
-      'Electronics & Appliances' => ElectronicsDetails.fromJson(
-        listingDetails,
-      ),
+      'Electronics & Appliances' => ElectronicsDetails.fromJson(listingDetails),
       'Kids & Babies' => BabyChildDetails.fromJson(listingDetails),
       'Sports & Equipment' => SportsDetails.fromJson(listingDetails),
       'Fashion & Style' => FashionDetails.fromJson(listingDetails),
@@ -113,24 +122,21 @@ class ListingRepo {
   Future<Map<String, List<ListingResponse>>>
   assignInitialListingsToCategories() async {
     Map<String, List<ListingResponse>> listingCategoriesMap = {
-      'Real Estate': [],
-      'Vehicles': [],
-      'Phones & Gadgets': [],
-      'Electronics & Appliances': [],
-      'Kids & Babies': [],
-      'Sports & Equipment': [],
-      'Fashion & Style': [],
-      'Furniture & Decor': [],
-      'Hobbies': [],
-      'Pets': [],
-      'Services': [],
+      'Cars For Sale': [],
+      'Houses For Sale': [],
+      'Mobile Phones': [],
+      'Houses For Rent': [],
+      "Motorcycles & ATV's": [],
+      'Laptops Tablets Computers': [],
     };
-    final categories = await categoryRepo.fetchAll();
-    final categoriesIds = categories.map((category) => category.id).toList();
-    final listings = await fetchInitialListings(categoriesIds);
-    for (var category in categories) {
-      listingCategoriesMap[category.name] = listings
-          .where((listing) => listing.categoryId == category.id)
+    final subCategories = await subCategoryRepo.fetchAll();
+    final subCategoriesIds = subCategories
+        .map((subCategory) => subCategory.id)
+        .toList();
+    final listings = await fetchInitialListings(subCategoriesIds);
+    for (var subCategory in subCategories) {
+      listingCategoriesMap[subCategory.name] = listings
+          .where((listing) => listing.categoryId == subCategory.id)
           .toList();
     }
     return listingCategoriesMap;
@@ -171,9 +177,9 @@ class ListingRepo {
   }
 
   Future<List<ListingResponse>> fetchInitialListings(
-    List<String> categoriesIds,
+    List<String> subcategoriesIds,
   ) async {
-    final jsonCategories = jsonEncode(categoriesIds);
+    final jsonCategories = jsonEncode(subcategoriesIds);
     final response = await executor.execute(
       ApiRequest(
         path: '/initial-listings',

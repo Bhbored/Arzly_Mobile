@@ -1,6 +1,7 @@
 import 'package:arzly/core/enums/job_listing/contact_method.dart';
 import 'package:arzly/core/enums/listing/listing_status.dart';
 import 'package:arzly/core/enums/listing/location_label.dart';
+import 'package:arzly/core/enums/location_preset.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -15,6 +16,7 @@ const PickupLocation kListingDraftPickupPlaceholder = PickupLocation(
   lat: 0,
   lon: 0,
   isDefault: false,
+  locationPreset: LocationPreset.beirut,
 );
 
 Listing createEmptyDraftListing({

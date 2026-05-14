@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PickupLocation {
 
- String get id; String get userId; LocationLabel get label; String get address; String? get notes; double get lat; double get lon; bool get isDefault;
+ String get id; String get userId; LocationLabel get label; String get address; LocationPreset get locationPreset; String? get notes; double get lat; double get lon; bool get isDefault;
 /// Create a copy of PickupLocation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PickupLocationCopyWith<PickupLocation> get copyWith => _$PickupLocationCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.locationPreset, locationPreset) || other.locationPreset == locationPreset)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,label,address,notes,lat,lon,isDefault);
+int get hashCode => Object.hash(runtimeType,id,userId,label,address,locationPreset,notes,lat,lon,isDefault);
 
 @override
 String toString() {
-  return 'PickupLocation(id: $id, userId: $userId, label: $label, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
+  return 'PickupLocation(id: $id, userId: $userId, label: $label, address: $address, locationPreset: $locationPreset, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PickupLocationCopyWith<$Res>  {
   factory $PickupLocationCopyWith(PickupLocation value, $Res Function(PickupLocation) _then) = _$PickupLocationCopyWithImpl;
 @useResult
 $Res call({
- String id, String userId, LocationLabel label, String address, String? notes, double lat, double lon, bool isDefault
+ String id, String userId, LocationLabel label, String address, LocationPreset locationPreset, String? notes, double lat, double lon, bool isDefault
 });
 
 
@@ -62,13 +62,14 @@ class _$PickupLocationCopyWithImpl<$Res>
 
 /// Create a copy of PickupLocation
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? locationPreset = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as LocationLabel,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as String,locationPreset: null == locationPreset ? _self.locationPreset : locationPreset // ignore: cast_nullable_to_non_nullable
+as LocationPreset,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String?,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double,lon: null == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
 as double,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  LocationLabel label,  String address,  String? notes,  double lat,  double lon,  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String userId,  LocationLabel label,  String address,  LocationPreset locationPreset,  String? notes,  double lat,  double lon,  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PickupLocation() when $default != null:
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
+return $default(_that.id,_that.userId,_that.label,_that.address,_that.locationPreset,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  LocationLabel label,  String address,  String? notes,  double lat,  double lon,  bool isDefault)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String userId,  LocationLabel label,  String address,  LocationPreset locationPreset,  String? notes,  double lat,  double lon,  bool isDefault)  $default,) {final _that = this;
 switch (_that) {
 case _PickupLocation():
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);}
+return $default(_that.id,_that.userId,_that.label,_that.address,_that.locationPreset,_that.notes,_that.lat,_that.lon,_that.isDefault);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -192,10 +193,10 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  LocationLabel label,  String address,  String? notes,  double lat,  double lon,  bool isDefault)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String userId,  LocationLabel label,  String address,  LocationPreset locationPreset,  String? notes,  double lat,  double lon,  bool isDefault)?  $default,) {final _that = this;
 switch (_that) {
 case _PickupLocation() when $default != null:
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
+return $default(_that.id,_that.userId,_that.label,_that.address,_that.locationPreset,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
   return null;
 
 }
@@ -207,13 +208,14 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 
 
 class _PickupLocation implements PickupLocation {
-  const _PickupLocation({required this.id, required this.userId, required this.label, required this.address, this.notes, required this.lat, required this.lon, required this.isDefault});
+  const _PickupLocation({required this.id, required this.userId, required this.label, required this.address, required this.locationPreset, this.notes, required this.lat, required this.lon, required this.isDefault});
   
 
 @override final  String id;
 @override final  String userId;
 @override final  LocationLabel label;
 @override final  String address;
+@override final  LocationPreset locationPreset;
 @override final  String? notes;
 @override final  double lat;
 @override final  double lon;
@@ -229,16 +231,16 @@ _$PickupLocationCopyWith<_PickupLocation> get copyWith => __$PickupLocationCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupLocation&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.locationPreset, locationPreset) || other.locationPreset == locationPreset)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,label,address,notes,lat,lon,isDefault);
+int get hashCode => Object.hash(runtimeType,id,userId,label,address,locationPreset,notes,lat,lon,isDefault);
 
 @override
 String toString() {
-  return 'PickupLocation(id: $id, userId: $userId, label: $label, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
+  return 'PickupLocation(id: $id, userId: $userId, label: $label, address: $address, locationPreset: $locationPreset, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$PickupLocationCopyWith<$Res> implements $PickupLocationCo
   factory _$PickupLocationCopyWith(_PickupLocation value, $Res Function(_PickupLocation) _then) = __$PickupLocationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String userId, LocationLabel label, String address, String? notes, double lat, double lon, bool isDefault
+ String id, String userId, LocationLabel label, String address, LocationPreset locationPreset, String? notes, double lat, double lon, bool isDefault
 });
 
 
@@ -266,13 +268,14 @@ class __$PickupLocationCopyWithImpl<$Res>
 
 /// Create a copy of PickupLocation
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? locationPreset = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
   return _then(_PickupLocation(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
 as LocationLabel,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
-as String,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as String,locationPreset: null == locationPreset ? _self.locationPreset : locationPreset // ignore: cast_nullable_to_non_nullable
+as LocationPreset,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String?,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double,lon: null == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
 as double,isDefault: null == isDefault ? _self.isDefault : isDefault // ignore: cast_nullable_to_non_nullable

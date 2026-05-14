@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PickupLocationResponse {
 
-@JsonKey(name: 'Id') String get id;@JsonKey(name: 'UserId') String get userId;@JsonKey(name: 'Label') LocationLabel get label;@JsonKey(name: 'Address') String get address;@JsonKey(name: 'Notes') String? get notes;@JsonKey(name: 'Lat') double get lat;@JsonKey(name: 'Lon') double get lon;@JsonKey(name: 'IsDefault') bool get isDefault;
+@JsonKey(name: 'Id') String get id;@JsonKey(name: 'UserId') String get userId;@JsonKey(name: 'Label') LocationLabel get label;@JsonKey(name: 'LocationPreset') LocationPreset get locationPreset;@JsonKey(name: 'Address') String get address;@JsonKey(name: 'Notes') String? get notes;@JsonKey(name: 'Lat') double get lat;@JsonKey(name: 'Lon') double get lon;@JsonKey(name: 'IsDefault') bool get isDefault;
 /// Create a copy of PickupLocationResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PickupLocationResponseCopyWith<PickupLocationResponse> get copyWith => _$Pickup
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupLocationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupLocationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.locationPreset, locationPreset) || other.locationPreset == locationPreset)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,label,address,notes,lat,lon,isDefault);
+int get hashCode => Object.hash(runtimeType,id,userId,label,locationPreset,address,notes,lat,lon,isDefault);
 
 @override
 String toString() {
-  return 'PickupLocationResponse(id: $id, userId: $userId, label: $label, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
+  return 'PickupLocationResponse(id: $id, userId: $userId, label: $label, locationPreset: $locationPreset, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PickupLocationResponseCopyWith<$Res>  {
   factory $PickupLocationResponseCopyWith(PickupLocationResponse value, $Res Function(PickupLocationResponse) _then) = _$PickupLocationResponseCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(name: 'Id') String id,@JsonKey(name: 'UserId') String userId,@JsonKey(name: 'Label') LocationLabel label,@JsonKey(name: 'Address') String address,@JsonKey(name: 'Notes') String? notes,@JsonKey(name: 'Lat') double lat,@JsonKey(name: 'Lon') double lon,@JsonKey(name: 'IsDefault') bool isDefault
+@JsonKey(name: 'Id') String id,@JsonKey(name: 'UserId') String userId,@JsonKey(name: 'Label') LocationLabel label,@JsonKey(name: 'LocationPreset') LocationPreset locationPreset,@JsonKey(name: 'Address') String address,@JsonKey(name: 'Notes') String? notes,@JsonKey(name: 'Lat') double lat,@JsonKey(name: 'Lon') double lon,@JsonKey(name: 'IsDefault') bool isDefault
 });
 
 
@@ -65,12 +65,13 @@ class _$PickupLocationResponseCopyWithImpl<$Res>
 
 /// Create a copy of PickupLocationResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? locationPreset = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as LocationLabel,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as LocationLabel,locationPreset: null == locationPreset ? _self.locationPreset : locationPreset // ignore: cast_nullable_to_non_nullable
+as LocationPreset,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String?,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double,lon: null == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'LocationPreset')  LocationPreset locationPreset, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PickupLocationResponse() when $default != null:
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
+return $default(_that.id,_that.userId,_that.label,_that.locationPreset,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'LocationPreset')  LocationPreset locationPreset, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)  $default,) {final _that = this;
 switch (_that) {
 case _PickupLocationResponse():
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);}
+return $default(_that.id,_that.userId,_that.label,_that.locationPreset,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -195,10 +196,10 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'Id')  String id, @JsonKey(name: 'UserId')  String userId, @JsonKey(name: 'Label')  LocationLabel label, @JsonKey(name: 'LocationPreset')  LocationPreset locationPreset, @JsonKey(name: 'Address')  String address, @JsonKey(name: 'Notes')  String? notes, @JsonKey(name: 'Lat')  double lat, @JsonKey(name: 'Lon')  double lon, @JsonKey(name: 'IsDefault')  bool isDefault)?  $default,) {final _that = this;
 switch (_that) {
 case _PickupLocationResponse() when $default != null:
-return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
+return $default(_that.id,_that.userId,_that.label,_that.locationPreset,_that.address,_that.notes,_that.lat,_that.lon,_that.isDefault);case _:
   return null;
 
 }
@@ -210,12 +211,13 @@ return $default(_that.id,_that.userId,_that.label,_that.address,_that.notes,_tha
 @JsonSerializable()
 
 class _PickupLocationResponse implements PickupLocationResponse {
-  const _PickupLocationResponse({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'UserId') required this.userId, @JsonKey(name: 'Label') required this.label, @JsonKey(name: 'Address') required this.address, @JsonKey(name: 'Notes') this.notes, @JsonKey(name: 'Lat') required this.lat, @JsonKey(name: 'Lon') required this.lon, @JsonKey(name: 'IsDefault') required this.isDefault});
+  const _PickupLocationResponse({@JsonKey(name: 'Id') required this.id, @JsonKey(name: 'UserId') required this.userId, @JsonKey(name: 'Label') required this.label, @JsonKey(name: 'LocationPreset') required this.locationPreset, @JsonKey(name: 'Address') required this.address, @JsonKey(name: 'Notes') this.notes, @JsonKey(name: 'Lat') required this.lat, @JsonKey(name: 'Lon') required this.lon, @JsonKey(name: 'IsDefault') required this.isDefault});
   factory _PickupLocationResponse.fromJson(Map<String, dynamic> json) => _$PickupLocationResponseFromJson(json);
 
 @override@JsonKey(name: 'Id') final  String id;
 @override@JsonKey(name: 'UserId') final  String userId;
 @override@JsonKey(name: 'Label') final  LocationLabel label;
+@override@JsonKey(name: 'LocationPreset') final  LocationPreset locationPreset;
 @override@JsonKey(name: 'Address') final  String address;
 @override@JsonKey(name: 'Notes') final  String? notes;
 @override@JsonKey(name: 'Lat') final  double lat;
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupLocationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupLocationResponse&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.label, label) || other.label == label)&&(identical(other.locationPreset, locationPreset) || other.locationPreset == locationPreset)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.lat, lat) || other.lat == lat)&&(identical(other.lon, lon) || other.lon == lon)&&(identical(other.isDefault, isDefault) || other.isDefault == isDefault));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,label,address,notes,lat,lon,isDefault);
+int get hashCode => Object.hash(runtimeType,id,userId,label,locationPreset,address,notes,lat,lon,isDefault);
 
 @override
 String toString() {
-  return 'PickupLocationResponse(id: $id, userId: $userId, label: $label, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
+  return 'PickupLocationResponse(id: $id, userId: $userId, label: $label, locationPreset: $locationPreset, address: $address, notes: $notes, lat: $lat, lon: $lon, isDefault: $isDefault)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$PickupLocationResponseCopyWith<$Res> implements $PickupLo
   factory _$PickupLocationResponseCopyWith(_PickupLocationResponse value, $Res Function(_PickupLocationResponse) _then) = __$PickupLocationResponseCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(name: 'Id') String id,@JsonKey(name: 'UserId') String userId,@JsonKey(name: 'Label') LocationLabel label,@JsonKey(name: 'Address') String address,@JsonKey(name: 'Notes') String? notes,@JsonKey(name: 'Lat') double lat,@JsonKey(name: 'Lon') double lon,@JsonKey(name: 'IsDefault') bool isDefault
+@JsonKey(name: 'Id') String id,@JsonKey(name: 'UserId') String userId,@JsonKey(name: 'Label') LocationLabel label,@JsonKey(name: 'LocationPreset') LocationPreset locationPreset,@JsonKey(name: 'Address') String address,@JsonKey(name: 'Notes') String? notes,@JsonKey(name: 'Lat') double lat,@JsonKey(name: 'Lon') double lon,@JsonKey(name: 'IsDefault') bool isDefault
 });
 
 
@@ -272,12 +274,13 @@ class __$PickupLocationResponseCopyWithImpl<$Res>
 
 /// Create a copy of PickupLocationResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? label = null,Object? locationPreset = null,Object? address = null,Object? notes = freezed,Object? lat = null,Object? lon = null,Object? isDefault = null,}) {
   return _then(_PickupLocationResponse(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,label: null == label ? _self.label : label // ignore: cast_nullable_to_non_nullable
-as LocationLabel,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as LocationLabel,locationPreset: null == locationPreset ? _self.locationPreset : locationPreset // ignore: cast_nullable_to_non_nullable
+as LocationPreset,address: null == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
 as String?,lat: null == lat ? _self.lat : lat // ignore: cast_nullable_to_non_nullable
 as double,lon: null == lon ? _self.lon : lon // ignore: cast_nullable_to_non_nullable

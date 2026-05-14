@@ -1,5 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/enums/listing/location_label.dart';
+import 'package:arzly/core/enums/location_preset.dart';
 import 'package:arzly/core/utils/location_getter.dart';
 import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_device_coordinates_section.dart';
@@ -16,11 +17,7 @@ class PickupLocationForm extends ConsumerStatefulWidget {
   final PickupLocation? existing;
   final Future<void> Function(PickupLocation location) onSubmit;
 
-  const PickupLocationForm({
-    super.key,
-    this.existing,
-    required this.onSubmit,
-  });
+  const PickupLocationForm({super.key, this.existing, required this.onSubmit});
 
   bool get isEditing => existing != null;
 
@@ -63,7 +60,10 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
       alignLabelWithHint: maxLines > 1,
       floatingLabelBehavior: FloatingLabelBehavior.auto,
       border: OutlineInputBorder(borderRadius: r, borderSide: idleBorder),
-      enabledBorder: OutlineInputBorder(borderRadius: r, borderSide: idleBorder),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: r,
+        borderSide: idleBorder,
+      ),
       focusedBorder: OutlineInputBorder(
         borderRadius: r,
         borderSide: BorderSide(color: c.primary, width: 2),
@@ -109,8 +109,9 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   Future<void> _fetchGps() async {
     setState(() => _gpsLoading = true);
     try {
-      final data =
-          await ref.read(locationGetterProvider).getLocationWithFallback();
+      final data = await ref
+          .read(locationGetterProvider)
+          .getLocationWithFallback();
       if (!mounted) return;
       if (data?.latitude != null && data?.longitude != null) {
         setState(() {
@@ -156,6 +157,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
       lat: lat,
       lon: lon,
       isDefault: _isDefault,
+      locationPreset: LocationPreset.beirut,
     );
     try {
       await widget.onSubmit(location);
@@ -310,14 +312,14 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
                   title: Text(
                     'Default pickup',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   subtitle: Text(
                     'Use this spot first when posting listings.',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: colors.onSurfaceVariant,
-                        ),
+                      color: colors.onSurfaceVariant,
+                    ),
                   ),
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: context.paddingMedium * 0.75,
@@ -333,13 +335,9 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         minimumSize: Size(0, ctaHeight),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: ctaRadius,
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: ctaRadius),
                         side: BorderSide(
-                          color: colors.outlineVariant.withValues(
-                            alpha: 0.75,
-                          ),
+                          color: colors.outlineVariant.withValues(alpha: 0.75),
                         ),
                         foregroundColor: colors.onSurface,
                       ),
@@ -362,9 +360,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
                     child: FilledButton(
                       style: FilledButton.styleFrom(
                         minimumSize: Size(0, ctaHeight),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: ctaRadius,
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: ctaRadius),
                         elevation: _isSubmitting ? 0 : 2,
                         shadowColor: colors.primary.withValues(alpha: 0.35),
                       ),

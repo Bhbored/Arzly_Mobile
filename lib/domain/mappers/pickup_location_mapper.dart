@@ -5,37 +5,40 @@ import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
 
 extension PickupLocationResponseMapper on PickupLocationResponse {
   PickupLocation toEntity() => PickupLocation(
-        id: id,
-        userId: userId,
-        label: label,
-        address: address,
-        notes: notes,
-        lat: lat,
-        lon: lon,
-        isDefault: isDefault,
-      );
+    id: id,
+    userId: userId,
+    label: label,
+    address: address,
+    notes: notes,
+    lat: lat,
+    lon: lon,
+    isDefault: isDefault,
+    locationPreset: locationPreset,
+  );
 }
 
 extension PickupLocationToAddRequestMapper on PickupLocation {
   PickupLocationAddRequest toAddRequest() => PickupLocationAddRequest(
-        userId: userId,
-        label: label,
-        address: address,
-        notes: notes,
-        lat: lat,
-        lon: lon,
-        isDefault: isDefault,
-      );
+    userId: userId,
+    label: label,
+    address: address,
+    notes: notes,
+    lat: lat,
+    lon: lon,
+    isDefault: isDefault,
+    locationPreset: locationPreset,
+  );
 }
 
 extension PickupLocationToUpdateRequestMapper on PickupLocation {
   PickupLocationUpdateRequest toUpdateRequest() => PickupLocationUpdateRequest(
-        id: id,
-        label: label,
-        address: address,
-        notes: notes,
-        lat: lat,
-        lon: lon,
-        isDefault: isDefault,
-      );
+    id: id,
+    label: label,
+    address: address,
+    notes: notes,
+    lat: lat,
+    lon: lon,
+    isDefault: isDefault,
+    locationPreset: locationPreset,
+  );
 }

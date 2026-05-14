@@ -48,4 +48,4 @@ final class ListingRepoProvider
   }
 }
 
-String _$listingRepoHash() => r'a27b87a3ad75c0168c0f220d0261733c7a7ea176';
+String _$listingRepoHash() => r'6268dd73fbbb64a60d42daf5db0165e8da461722';

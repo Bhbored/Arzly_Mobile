@@ -55,4 +55,35 @@ class SubCategoryRepo {
       },
     );
   }
+
+  Future<List<SubCategoryResponse>> fetchAll() async {
+    final response = await executor.execute(
+      ApiRequest(path: '', method: HttpMethod.get),
+    );
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          final rawList = data as List<dynamic>;
+          final subCategories = rawList
+              .map((json) => SubCategoryResponse.fromJson(json))
+              .toList();
+          _logger.i(
+            'Fetched ${subCategories.length} subcategories successfully',
+          );
+          return subCategories;
+        } catch (e) {
+          _logger.e('Parse error: $e');
+          throw ApiException(
+            userMessage: ApiErrors.badResponse,
+            error: 'Failed to parse subcategory data',
+            originalError: e,
+          );
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e('Failed to fetch subcategories: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
 }
