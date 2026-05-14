@@ -63,7 +63,10 @@ class _MotorcyclesAtvsStep1BodyState
     );
     if (picked != null && mounted) {
       ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
-            (_) => VehiclesDetails(motorcycleBrand: picked.name),
+            (_) => VehiclesDetails(
+              motorcycleBrand: picked.name,
+              motorcycleBrandLogoUrl: picked.logoUrl,
+            ),
           );
       ref.read(tempListingDraftHolderProvider.notifier).update(
             (l) => l.copyWith(
@@ -102,7 +105,10 @@ class _MotorcyclesAtvsStep1BodyState
 
     final brandSelection = veh.motorcycleBrand == null
         ? null
-        : CarBrandSelection(name: veh.motorcycleBrand!, logoUrl: '');
+        : CarBrandSelection(
+            name: veh.motorcycleBrand!,
+            logoUrl: veh.motorcycleBrandLogoUrl ?? '',
+          );
 
     final brandError =
         widget.requireStepFieldErrors && veh.motorcycleBrand == null

@@ -79,7 +79,10 @@ class _CarsForSaleStep1BodyState extends ConsumerState<CarsForSaleStep1Body> {
     );
     if (picked != null && mounted) {
       ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
-            (_) => VehiclesDetails(carBrand: picked.name),
+            (_) => VehiclesDetails(
+              carBrand: picked.name,
+              carBrandLogoUrl: picked.logoUrl,
+            ),
           );
       ref.read(tempListingDraftHolderProvider.notifier).update(
             (l) => l.copyWith(
@@ -119,7 +122,10 @@ class _CarsForSaleStep1BodyState extends ConsumerState<CarsForSaleStep1Body> {
 
     final brandSelection = veh.carBrand == null
         ? null
-        : CarBrandSelection(name: veh.carBrand!, logoUrl: '');
+        : CarBrandSelection(
+            name: veh.carBrand!,
+            logoUrl: veh.carBrandLogoUrl ?? '',
+          );
 
     final brandError = widget.requireStepFieldErrors && veh.carBrand == null
         ? 'Choose a brand'

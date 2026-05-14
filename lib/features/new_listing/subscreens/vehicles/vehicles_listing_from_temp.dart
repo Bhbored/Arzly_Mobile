@@ -1,3 +1,8 @@
+import 'package:arzly/core/enums/listing_owned/motors/accessory_type.dart';
+import 'package:arzly/core/enums/listing_owned/motors/boat_type.dart';
+import 'package:arzly/core/enums/listing_owned/motors/part_type.dart';
+import 'package:arzly/core/enums/listing_owned/motors/truck_brand.dart';
+import 'package:arzly/core/enums/listing_owned/motors/vehicle_type.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_vehicles_details/temp_vehicles_details_holder.dart';
 import 'package:arzly/domain/entities/category/category.dart';
@@ -46,6 +51,47 @@ String? suggestedMotorcyclesTitle(WidgetRef ref) {
 String? suggestedCarsForSaleTitle(WidgetRef ref) {
   final d = ref.read(tempVehiclesDetailsHolderProvider);
   final parts = <String>[?d.carBrand, ?d.carModel, ?d.year?.toString()];
+  if (parts.isEmpty) return null;
+  return parts.join(' ');
+}
+
+String? suggestedVehicleSparePartsTitle(WidgetRef ref) {
+  final d = ref.read(tempVehiclesDetailsHolderProvider);
+  final parts = <String>[
+    ?d.carBrand,
+    ?d.partType?.label,
+    ?d.vehicleType?.label,
+  ];
+  if (parts.isEmpty) return null;
+  return parts.join(' ');
+}
+
+String? suggestedVehicleAccessoriesTitle(WidgetRef ref) {
+  final d = ref.read(tempVehiclesDetailsHolderProvider);
+  final parts = <String>[
+    ?d.accessoryType?.label,
+    ?d.vehicleType?.label,
+  ];
+  if (parts.isEmpty) return null;
+  return parts.join(' ');
+}
+
+String? suggestedTrucksAndBusesTitle(WidgetRef ref) {
+  final d = ref.read(tempVehiclesDetailsHolderProvider);
+  final parts = <String>[
+    ?d.truckBrand?.label,
+    ?d.year?.toString(),
+  ];
+  if (parts.isEmpty) return null;
+  return parts.join(' ');
+}
+
+String? suggestedBoatsTitle(WidgetRef ref) {
+  final d = ref.read(tempVehiclesDetailsHolderProvider);
+  final parts = <String>[
+    ?d.boatType?.label,
+    ?d.year?.toString(),
+  ];
   if (parts.isEmpty) return null;
   return parts.join(' ');
 }

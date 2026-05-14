@@ -6,68 +6,68 @@ part of 'vehicles_details.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_VehiclesDetails _$VehiclesDetailsFromJson(Map<String, dynamic> json) =>
-    _VehiclesDetails(
-      motorcycleBrand: json['MotorcycleBrand'] as String?,
-      motorcycleModel: json['MotorcycleModel'] as String?,
-      motorcycleFuelType: $enumDecodeNullable(
-        _$MotorcycleFuelTypeEnumMap,
-        json['MotorcycleFuelType'],
-      ),
-      motorcycleCC: $enumDecodeNullable(
-        _$MotorcycleCCEnumMap,
-        json['MotorcycleCC'],
-      ),
-      carBrand: json['CarBrand'] as String?,
-      carModel: json['CarModel'] as String?,
-      version: json['Version'] as String?,
-      carType: $enumDecodeNullable(_$CarTypeEnumMap, json['CarType']),
-      numberOfSeats: (json['NumberOfSeats'] as num?)?.toInt(),
-      condition: $enumDecodeNullable(
-        _$VehicleConditionEnumMap,
-        json['Condition'],
-      ),
-      horsepower: (json['HorsePower'] as num?)?.toInt(),
-      fuelConsumption: (json['FuelConsumptionLPer100Km'] as num?)?.toDouble(),
-      kilometers: (json['Kilometers'] as num?)?.toInt(),
-      year: (json['Year'] as num?)?.toInt(),
-      numberOfOwners: (json['NumberOfOwners'] as num?)?.toInt(),
-      fuelType: $enumDecodeNullable(_$FuelTypeEnumMap, json['FuelType']),
-      vehicleInterior: $enumDecodeNullable(
-        _$VehicleInteriorEnumMap,
-        json['VehicleInterior'],
-      ),
-      vehicleColor: $enumDecodeNullable(
-        _$VehicleColorEnumMap,
-        json['VehicleColor'],
-      ),
-      numberOfDoors: (json['NumberOfDoors'] as num?)?.toInt(),
-      transmissionType: $enumDecodeNullable(
-        _$TransmissionTypeEnumMap,
-        json['TransmissionType'],
-      ),
-      carFeatures: (json['CarFeatures'] as List<dynamic>?)
-          ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
-          .toList(),
-      airConditioning: $enumDecodeNullable(
-        _$AirConditioningEnumMap,
-        json['AirConditioning'],
-      ),
-      motorcycleType: $enumDecodeNullable(
-        _$MotorcycleTypeEnumMap,
-        json['MotorcycleType'],
-      ),
-      accessoryType: $enumDecodeNullable(
-        _$AccessoryTypeEnumMap,
-        json['AccessoryType'],
-      ),
-      numberOfDigits: $enumDecodeNullable(
-        _$PlateDigitsEnumMap,
-        json['NumberOfDigits'],
-      ),
-      truckBrand: $enumDecodeNullable(_$TruckBrandEnumMap, json['TruckBrand']),
-      boatType: $enumDecodeNullable(_$BoatTypeEnumMap, json['BoatType']),
-    );
+_VehiclesDetails _$VehiclesDetailsFromJson(
+  Map<String, dynamic> json,
+) => _VehiclesDetails(
+  motorcycleBrand: json['MotorcycleBrand'] as String?,
+  motorcycleModel: json['MotorcycleModel'] as String?,
+  motorcycleFuelType: $enumDecodeNullable(
+    _$MotorcycleFuelTypeEnumMap,
+    json['MotorcycleFuelType'],
+  ),
+  motorcycleCC: $enumDecodeNullable(
+    _$MotorcycleCCEnumMap,
+    json['MotorcycleCC'],
+  ),
+  carBrand: json['CarBrand'] as String?,
+  carModel: json['CarModel'] as String?,
+  version: json['Version'] as String?,
+  carType: $enumDecodeNullable(_$CarTypeEnumMap, json['CarType']),
+  numberOfSeats: (json['NumberOfSeats'] as num?)?.toInt(),
+  condition: $enumDecodeNullable(_$VehicleConditionEnumMap, json['Condition']),
+  horsepower: (json['HorsePower'] as num?)?.toInt(),
+  fuelConsumption: (json['FuelConsumptionLPer100Km'] as num?)?.toDouble(),
+  kilometers: (json['Kilometers'] as num?)?.toInt(),
+  year: (json['Year'] as num?)?.toInt(),
+  numberOfOwners: (json['NumberOfOwners'] as num?)?.toInt(),
+  fuelType: $enumDecodeNullable(_$FuelTypeEnumMap, json['FuelType']),
+  vehicleInterior: $enumDecodeNullable(
+    _$VehicleInteriorEnumMap,
+    json['VehicleInterior'],
+  ),
+  vehicleColor: $enumDecodeNullable(
+    _$VehicleColorEnumMap,
+    json['VehicleColor'],
+  ),
+  numberOfDoors: (json['NumberOfDoors'] as num?)?.toInt(),
+  transmissionType: $enumDecodeNullable(
+    _$TransmissionTypeEnumMap,
+    json['TransmissionType'],
+  ),
+  carFeatures: (json['CarFeatures'] as List<dynamic>?)
+      ?.map((e) => $enumDecode(_$CarFeatureEnumMap, e))
+      .toList(),
+  airConditioning: $enumDecodeNullable(
+    _$AirConditioningEnumMap,
+    json['AirConditioning'],
+  ),
+  motorcycleType: $enumDecodeNullable(
+    _$MotorcycleTypeEnumMap,
+    json['MotorcycleType'],
+  ),
+  accessoryType: $enumDecodeNullable(
+    _$AccessoryTypeEnumMap,
+    json['AccessoryType'],
+  ),
+  numberOfDigits: $enumDecodeNullable(
+    _$PlateDigitsEnumMap,
+    json['NumberOfDigits'],
+  ),
+  truckBrand: $enumDecodeNullable(_$TruckBrandEnumMap, json['TruckBrand']),
+  boatType: $enumDecodeNullable(_$BoatTypeEnumMap, json['BoatType']),
+  partType: $enumDecodeNullable(_$PartTypeEnumMap, json['PartType']),
+  vehicleType: $enumDecodeNullable(_$VehicleTypeEnumMap, json['VehicleType']),
+);
 
 Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
     <String, dynamic>{
@@ -101,6 +101,8 @@ Map<String, dynamic> _$VehiclesDetailsToJson(_VehiclesDetails instance) =>
       'NumberOfDigits': _$PlateDigitsEnumMap[instance.numberOfDigits],
       'TruckBrand': _$TruckBrandEnumMap[instance.truckBrand],
       'BoatType': _$BoatTypeEnumMap[instance.boatType],
+      'PartType': _$PartTypeEnumMap[instance.partType],
+      'VehicleType': _$VehicleTypeEnumMap[instance.vehicleType],
     };
 
 const _$MotorcycleFuelTypeEnumMap = {
@@ -307,4 +309,23 @@ const _$BoatTypeEnumMap = {
   BoatType.motorboat: 'Motorboat',
   BoatType.sailboat: 'Sailboat',
   BoatType.other: 'Other',
+};
+
+const _$PartTypeEnumMap = {
+  PartType.brakes: 'Brakes',
+  PartType.oilAndFilters: 'OilAndFilters',
+  PartType.coolingAndHeating: 'CoolingAndHeating',
+  PartType.electricalAndLighting: 'ElectricalAndLighting',
+  PartType.engineAndTransmission: 'EngineAndTransmission',
+  PartType.exhaustsAndEmission: 'ExhaustsAndEmission',
+  PartType.otherParts: 'OtherParts',
+  PartType.steeringAndSuspension: 'SteeringAndSuspension',
+};
+
+const _$VehicleTypeEnumMap = {
+  VehicleType.boat: 'Boat',
+  VehicleType.car: 'Car',
+  VehicleType.motorcycle: 'Motorcycle',
+  VehicleType.other: 'Other',
+  VehicleType.truckAndBuses: 'TruckAndBuses',
 };

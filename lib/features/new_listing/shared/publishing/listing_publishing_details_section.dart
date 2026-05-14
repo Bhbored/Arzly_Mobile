@@ -199,6 +199,12 @@ class _ListingPublishingDetailsSectionState
           s.motorcycleModel,
           s.numberOfDigits,
           s.version,
+          s.partType,
+          s.vehicleType,
+          s.accessoryType,
+          s.truckBrand,
+          s.boatType,
+          s.condition,
         ),
       ),
     );

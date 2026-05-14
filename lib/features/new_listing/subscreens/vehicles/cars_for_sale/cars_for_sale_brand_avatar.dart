@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 enum CarsForSaleBrandAvatarPlaceholderKind {
   car,
   motorcycle,
+  truck,
 }
 
 class CarsForSaleBrandAvatar extends StatelessWidget {
@@ -34,17 +35,8 @@ class CarsForSaleBrandAvatar extends StatelessWidget {
         child: SizedBox(
           width: side,
           height: side,
-          child: brand == null
-              ? Center(
-                  child: Icon(
-                    placeholderKind ==
-                            CarsForSaleBrandAvatarPlaceholderKind.motorcycle
-                        ? Icons.two_wheeler_outlined
-                        : Icons.directions_car_outlined,
-                    color: scheme.onSurfaceVariant,
-                  ),
-                )
-              : CachedNetworkImage(
+          child: _shouldShowBrandLogo(brand)
+              ? CachedNetworkImage(
                   imageUrl: brand!.logoUrl,
                   fit: BoxFit.contain,
                   fadeInDuration: const Duration(milliseconds: 200),
@@ -62,9 +54,27 @@ class CarsForSaleBrandAvatar extends StatelessWidget {
                     Icons.broken_image_outlined,
                     color: scheme.onSurfaceVariant,
                   ),
+                )
+              : Center(
+                  child: Icon(
+                    switch (placeholderKind) {
+                      CarsForSaleBrandAvatarPlaceholderKind.motorcycle =>
+                        Icons.two_wheeler_outlined,
+                      CarsForSaleBrandAvatarPlaceholderKind.truck =>
+                        Icons.local_shipping_outlined,
+                      CarsForSaleBrandAvatarPlaceholderKind.car =>
+                        Icons.directions_car_outlined,
+                    },
+                    color: scheme.onSurfaceVariant,
+                  ),
                 ),
         ),
       ),
     );
   }
+}
+
+bool _shouldShowBrandLogo(CarBrandSelection? brand) {
+  if (brand == null) return false;
+  return brand.logoUrl.trim().isNotEmpty;
 }

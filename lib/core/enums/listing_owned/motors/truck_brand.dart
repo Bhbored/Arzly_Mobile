@@ -43,3 +43,28 @@ enum TruckBrand {
   @JsonValue('Other')
   other,
 }
+
+extension TruckBrandDisplay on TruckBrand {
+  String get label => switch (this) {
+        TruckBrand.mercedes => 'Mercedes',
+        TruckBrand.volvo => 'Volvo',
+        TruckBrand.scania => 'Scania',
+        TruckBrand.man => 'MAN',
+        TruckBrand.iveco => 'Iveco',
+        TruckBrand.renault => 'Renault',
+        TruckBrand.dAF => 'DAF',
+        TruckBrand.freightliner => 'Freightliner',
+        TruckBrand.kenworth => 'Kenworth',
+        TruckBrand.peterbilt => 'Peterbilt',
+        TruckBrand.mack => 'Mack',
+        TruckBrand.international => 'International',
+        TruckBrand.hino => 'Hino',
+        TruckBrand.isuzu => 'Isuzu',
+        TruckBrand.mitsubishi => 'Mitsubishi',
+        TruckBrand.ford => 'Ford',
+        TruckBrand.chevrolet => 'Chevrolet',
+        TruckBrand.gMC => 'GMC',
+        TruckBrand.ram => 'Ram',
+        TruckBrand.other => 'Other',
+      };
+}

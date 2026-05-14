@@ -11,3 +11,12 @@ enum BoatType {
   @JsonValue('Other')
   other,
 }
+
+extension BoatTypeDisplay on BoatType {
+  String get label => switch (this) {
+        BoatType.jetSki => 'Jet ski',
+        BoatType.motorboat => 'Motorboat',
+        BoatType.sailboat => 'Sailboat',
+        BoatType.other => 'Other',
+      };
+}

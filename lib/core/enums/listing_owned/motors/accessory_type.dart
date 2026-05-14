@@ -33,3 +33,23 @@ enum AccessoryType {
   @JsonValue('Other')
   other,
 }
+
+extension AccessoryTypeDisplay on AccessoryType {
+  String get label => switch (this) {
+        AccessoryType.tires => 'Tires',
+        AccessoryType.rims => 'Rims',
+        AccessoryType.soundSystem => 'Sound system',
+        AccessoryType.screens => 'Screens',
+        AccessoryType.spoilers => 'Spoilers',
+        AccessoryType.lights => 'Lights',
+        AccessoryType.seatCovers => 'Seat covers',
+        AccessoryType.floorMats => 'Floor mats',
+        AccessoryType.roofRack => 'Roof rack',
+        AccessoryType.towHitch => 'Tow hitch',
+        AccessoryType.phoneHolder => 'Phone holder',
+        AccessoryType.charger => 'Charger',
+        AccessoryType.dashboardCamera => 'Dashboard camera',
+        AccessoryType.parkingSensors => 'Parking sensors',
+        AccessoryType.other => 'Other',
+      };
+}
