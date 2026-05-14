@@ -43,3 +43,28 @@ enum MobileAccessoryType {
   @JsonValue('Other')
   other,
 }
+
+extension MobileAccessoryTypeDisplay on MobileAccessoryType {
+  String get label => switch (this) {
+        MobileAccessoryType.headphones => 'Headphones',
+        MobileAccessoryType.earbuds => 'Earbuds',
+        MobileAccessoryType.charger => 'Charger',
+        MobileAccessoryType.cable => 'Cable',
+        MobileAccessoryType.powerBank => 'Power bank',
+        MobileAccessoryType.wirelessCharger => 'Wireless charger',
+        MobileAccessoryType.carCharger => 'Car charger',
+        MobileAccessoryType.carMount => 'Car mount',
+        MobileAccessoryType.phoneCase => 'Phone case',
+        MobileAccessoryType.screenProtector => 'Screen protector',
+        MobileAccessoryType.selfieStick => 'Selfie stick',
+        MobileAccessoryType.ringLight => 'Ring light',
+        MobileAccessoryType.tripod => 'Tripod',
+        MobileAccessoryType.popSocket => 'PopSocket',
+        MobileAccessoryType.memoryCard => 'Memory card',
+        MobileAccessoryType.otgAdapter => 'OTG adapter',
+        MobileAccessoryType.bluetoothSpeaker => 'Bluetooth speaker',
+        MobileAccessoryType.smartTag => 'Smart tag',
+        MobileAccessoryType.stylus => 'Stylus',
+        MobileAccessoryType.other => 'Other',
+      };
+}

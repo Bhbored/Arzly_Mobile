@@ -9,3 +9,11 @@ enum MobileOperator {
   @JsonValue('Other')
   other,
 }
+
+extension MobileOperatorDisplay on MobileOperator {
+  String get label => switch (this) {
+        MobileOperator.alfa => 'Alfa',
+        MobileOperator.touch => 'Touch',
+        MobileOperator.other => 'Other',
+      };
+}

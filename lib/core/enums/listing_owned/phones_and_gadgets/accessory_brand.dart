@@ -37,3 +37,25 @@ enum AccessoryBrand {
   @JsonValue('Other')
   other,
 }
+
+extension AccessoryBrandDisplay on AccessoryBrand {
+  String get label => switch (this) {
+        AccessoryBrand.apple => 'Apple',
+        AccessoryBrand.samsung => 'Samsung',
+        AccessoryBrand.anker => 'Anker',
+        AccessoryBrand.belkin => 'Belkin',
+        AccessoryBrand.spigen => 'Spigen',
+        AccessoryBrand.otterBox => 'OtterBox',
+        AccessoryBrand.uag => 'UAG',
+        AccessoryBrand.baseus => 'Baseus',
+        AccessoryBrand.xiaomi => 'Xiaomi',
+        AccessoryBrand.huawei => 'Huawei',
+        AccessoryBrand.jBL => 'JBL',
+        AccessoryBrand.sony => 'Sony',
+        AccessoryBrand.bose => 'Bose',
+        AccessoryBrand.beats => 'Beats',
+        AccessoryBrand.sennheiser => 'Sennheiser',
+        AccessoryBrand.logitech => 'Logitech',
+        AccessoryBrand.other => 'Other',
+      };
+}

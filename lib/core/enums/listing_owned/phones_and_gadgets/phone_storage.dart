@@ -17,3 +17,15 @@ enum PhoneStorage {
   @JsonValue('TB2')
   tb2,
 }
+
+extension PhoneStorageDisplay on PhoneStorage {
+  String get label => switch (this) {
+        PhoneStorage.gb32 => '32 GB',
+        PhoneStorage.gb64 => '64 GB',
+        PhoneStorage.gb128 => '128 GB',
+        PhoneStorage.gb256 => '256 GB',
+        PhoneStorage.gb512 => '512 GB',
+        PhoneStorage.tb1 => '1 TB',
+        PhoneStorage.tb2 => '2 TB',
+      };
+}

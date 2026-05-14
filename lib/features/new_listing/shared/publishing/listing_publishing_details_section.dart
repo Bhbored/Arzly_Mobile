@@ -1,5 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
+import 'package:arzly/data/providers/new_listing/temp_phones_gadgets_draft/temp_phones_gadgets_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_real_estate_draft/temp_real_estate_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_vehicles_details/temp_vehicles_details_holder.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
@@ -122,16 +123,18 @@ class _ListingPublishingDetailsSectionState
     final initialTitle = usePremade ? premade : draft.title;
     _titleController = TextEditingController(text: initialTitle);
     _descriptionController = TextEditingController(text: draft.description);
-    _priceController = TextEditingController(text: _priceFieldText(draft.price));
+    _priceController = TextEditingController(
+      text: _priceFieldText(draft.price),
+    );
     _nameController = TextEditingController(text: draft.name);
     _phoneController = TextEditingController(text: draft.phoneNumber);
     if (usePremade) {
       final titleToSeed = premade;
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!mounted) return;
-        ref.read(tempListingDraftHolderProvider.notifier).update(
-              (l) => l.copyWith(title: titleToSeed),
-            );
+        ref
+            .read(tempListingDraftHolderProvider.notifier)
+            .update((l) => l.copyWith(title: titleToSeed));
       });
     }
   }
@@ -164,22 +167,22 @@ class _ListingPublishingDetailsSectionState
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<String>(
-      tempListingDraftHolderProvider.select((s) => s.title),
-      (previous, next) {
-        if (_titleController.text != next) {
-          _applyDraftTitle(next);
-        }
-      },
-    );
-    ref.listen<String>(
-      tempListingDraftHolderProvider.select((s) => s.name),
-      (previous, next) {
-        if (_nameController.text != next) {
-          _applyDraftText(_nameController, next);
-        }
-      },
-    );
+    ref.listen<String>(tempListingDraftHolderProvider.select((s) => s.title), (
+      previous,
+      next,
+    ) {
+      if (_titleController.text != next) {
+        _applyDraftTitle(next);
+      }
+    });
+    ref.listen<String>(tempListingDraftHolderProvider.select((s) => s.name), (
+      previous,
+      next,
+    ) {
+      if (_nameController.text != next) {
+        _applyDraftText(_nameController, next);
+      }
+    });
     ref.listen<String>(
       tempListingDraftHolderProvider.select((s) => s.phoneNumber),
       (previous, next) {
@@ -234,6 +237,24 @@ class _ListingPublishingDetailsSectionState
           ),
         ),
       ),
+      ref.watch(
+        tempPhonesGadgetsDraftHolderProvider.select(
+          (s) => Object.hash(
+            s.phoneBrand,
+            s.phoneCondition,
+            s.storage,
+            s.color,
+            s.accessoryBrand,
+            s.accessoryItemType,
+            s.operator,
+            s.membershipType,
+            s.watchBrand,
+            s.watchStorage,
+            s.bandMaterial,
+            s.bandColor,
+          ),
+        ),
+      ),
     );
 
     final fieldDecoration = carForSaleVersionFieldDecoration(
@@ -260,9 +281,7 @@ class _ListingPublishingDetailsSectionState
             value,
             showRequiredErrors: widget.showRequiredErrors,
           ),
-          decoration: fieldDecoration.copyWith(
-            hintText: 'Enter ad title',
-          ),
+          decoration: fieldDecoration.copyWith(hintText: 'Enter ad title'),
         ),
         SizedBox(height: context.spaceSmall),
         _ListingPublishingFieldLabel(title: 'Description'),
@@ -296,7 +315,9 @@ class _ListingPublishingDetailsSectionState
         ListingPickupLocationField(
           fieldsResetKey: pickupResetKey,
           value: _pickupForUi(draft),
-          onChanged: (v) => ref.read(tempListingDraftHolderProvider.notifier).update(
+          onChanged: (v) => ref
+              .read(tempListingDraftHolderProvider.notifier)
+              .update(
                 (l) => l.copyWith(
                   pickupLocation: v ?? kListingDraftPickupPlaceholder,
                   pickupLocationId: v?.id ?? '',
@@ -312,9 +333,9 @@ class _ListingPublishingDetailsSectionState
           controller: _priceController,
           pageBg: widget.pageBg,
           showRequiredErrors: widget.showRequiredErrors,
-          onChanged: (v) => ref.read(tempListingDraftHolderProvider.notifier).update(
-                (l) => l.copyWith(price: parseListingPrice(v) ?? 0),
-              ),
+          onChanged: (v) => ref
+              .read(tempListingDraftHolderProvider.notifier)
+              .update((l) => l.copyWith(price: parseListingPrice(v) ?? 0)),
         ),
         SizedBox(height: context.spaceSmall * 0.75),
         Row(
@@ -338,9 +359,8 @@ class _ListingPublishingDetailsSectionState
                 onTap: () => ref
                     .read(tempListingDraftHolderProvider.notifier)
                     .update(
-                      (l) => l.copyWith(
-                        isPriceNegotiable: !l.isPriceNegotiable,
-                      ),
+                      (l) =>
+                          l.copyWith(isPriceNegotiable: !l.isPriceNegotiable),
                     ),
                 child: Text(
                   'Negotiable',
@@ -368,9 +388,7 @@ class _ListingPublishingDetailsSectionState
             value,
             showRequiredErrors: widget.showRequiredErrors,
           ),
-          decoration: fieldDecoration.copyWith(
-            hintText: 'Enter your name',
-          ),
+          decoration: fieldDecoration.copyWith(hintText: 'Enter your name'),
         ),
         SizedBox(height: context.spaceSmall),
         _ListingPublishingFieldLabel(title: 'Mobile phone'),
@@ -399,10 +417,7 @@ class _ListingPublishingDetailsSectionState
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    '🇱🇧',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  Text('🇱🇧', style: Theme.of(context).textTheme.bodyLarge),
                   SizedBox(width: context.paddingSmall * 0.75),
                   Text(
                     '+961 |',

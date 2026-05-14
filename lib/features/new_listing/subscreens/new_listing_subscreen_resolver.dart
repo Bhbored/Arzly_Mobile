@@ -35,6 +35,7 @@ Widget newListingCategorySubscreen(
       PhonesAndGadgetsNewListingSubscreen(
         category: category,
         subcategory: subcategory,
+        stepNotifier: listingFlowStepNotifier,
       ),
     BackendListingCatalog.electronicsAndAppliances =>
       ElectronicsAndAppliancesNewListingSubscreen(

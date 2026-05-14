@@ -27,3 +27,20 @@ enum WatchBrand {
   @JsonValue('Other')
   other,
 }
+
+extension WatchBrandDisplay on WatchBrand {
+  String get label => switch (this) {
+        WatchBrand.apple => 'Apple',
+        WatchBrand.samsung => 'Samsung',
+        WatchBrand.huawei => 'Huawei',
+        WatchBrand.xiaomi => 'Xiaomi',
+        WatchBrand.garmin => 'Garmin',
+        WatchBrand.fitbit => 'Fitbit',
+        WatchBrand.amazfit => 'Amazfit',
+        WatchBrand.fossil => 'Fossil',
+        WatchBrand.suunto => 'Suunto',
+        WatchBrand.polar => 'Polar',
+        WatchBrand.ticWatch => 'TicWatch',
+        WatchBrand.other => 'Other',
+      };
+}

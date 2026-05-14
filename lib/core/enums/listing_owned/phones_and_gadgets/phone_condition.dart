@@ -9,3 +9,11 @@ enum PhoneCondition {
   @JsonValue('Used')
   used,
 }
+
+extension PhoneConditionDisplay on PhoneCondition {
+  String get label => switch (this) {
+        PhoneCondition.new_ => 'New',
+        PhoneCondition.refurbished => 'Refurbished',
+        PhoneCondition.used => 'Used',
+      };
+}

@@ -9,16 +9,13 @@ import 'package:arzly/features/new_listing/subscreens/real_estate/houses_for_sal
 import 'package:arzly/features/new_listing/subscreens/real_estate/rooms_for_rent/room_features_selector_page.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/shared/cars_for_sale_style_dropdown_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 double? parseRoomsForRentSizeM2Field(String raw) {
   final v = raw.trim().replaceAll(',', '.');
   if (v.isEmpty) return null;
   final d = double.tryParse(v);
-  if (d == null ||
-      d <= 0 ||
-      d > HousesForSaleSizeM2InputFormatter.maxM2) {
+  if (d == null || d <= 0 || d > HousesForSaleSizeM2InputFormatter.maxM2) {
     return null;
   }
   return d;
@@ -50,11 +47,11 @@ class _RoomsForRentStep1BodyState extends ConsumerState<RoomsForRentStep1Body> {
     _sizeController = TextEditingController(
       text: re.size != null ? _sizeText(re.size!) : '',
     );
-    _referenceIdController = TextEditingController(
-      text: re.referenceId ?? '',
-    );
+    _referenceIdController = TextEditingController(text: re.referenceId ?? '');
     _sizeController.addListener(() {
-      ref.read(tempRealEstateDraftHolderProvider.notifier).update(
+      ref
+          .read(tempRealEstateDraftHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
               size: parseRoomsForRentSizeM2Field(_sizeController.text),
             ),
@@ -62,9 +59,9 @@ class _RoomsForRentStep1BodyState extends ConsumerState<RoomsForRentStep1Body> {
     });
     _referenceIdController.addListener(() {
       final t = _referenceIdController.text.trim();
-      ref.read(tempRealEstateDraftHolderProvider.notifier).update(
-            (d) => d.copyWith(referenceId: t.isEmpty ? null : t),
-          );
+      ref
+          .read(tempRealEstateDraftHolderProvider.notifier)
+          .update((d) => d.copyWith(referenceId: t.isEmpty ? null : t));
     });
   }
 
@@ -88,10 +85,10 @@ class _RoomsForRentStep1BodyState extends ConsumerState<RoomsForRentStep1Body> {
       ),
     );
     if (picked != null && mounted) {
-      ref.read(tempRealEstateDraftHolderProvider.notifier).update(
-            (d) => d.copyWith(
-              roomFeatures: picked.isEmpty ? null : picked,
-            ),
+      ref
+          .read(tempRealEstateDraftHolderProvider.notifier)
+          .update(
+            (d) => d.copyWith(roomFeatures: picked.isEmpty ? null : picked),
           );
     }
   }
@@ -104,9 +101,9 @@ class _RoomsForRentStep1BodyState extends ConsumerState<RoomsForRentStep1Body> {
     final menuRadius = BorderRadius.circular(context.borderRadiusMedium);
     final fieldsResetKey = Object.hash(re.furnished, re.floor);
     final titleStyle = Theme.of(context).textTheme.titleSmall?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: scheme.onSurface,
-        );
+      fontWeight: FontWeight.w700,
+      color: scheme.onSurface,
+    );
     final fieldDecoration = carForSaleVersionFieldDecoration(
       context,
       pageBg,
@@ -228,9 +225,7 @@ class _RoomsForRentStep1BodyState extends ConsumerState<RoomsForRentStep1Body> {
                               formatRoomFeaturesSummary(features),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
+                              style: Theme.of(context).textTheme.bodyLarge
                                   ?.copyWith(
                                     color: features.isEmpty
                                         ? scheme.onSurfaceVariant

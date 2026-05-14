@@ -7,3 +7,10 @@ enum MembershipType {
   @JsonValue('Prepaid')
   prepaid,
 }
+
+extension MembershipTypeDisplay on MembershipType {
+  String get label => switch (this) {
+        MembershipType.postpaid => 'Postpaid',
+        MembershipType.prepaid => 'Prepaid',
+      };
+}

@@ -2,6 +2,7 @@ import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/new_listing/backend_listing_catalog.dart';
 import 'package:arzly/features/new_listing/new_listing_adder_header.dart';
 import 'package:arzly/features/new_listing/subscreens/new_listing_subscreen_resolver.dart';
+import 'package:arzly/features/new_listing/subscreens/phones_and_gadgets/widgets/phones_and_gadgets_subcategory_body.dart';
 import 'package:arzly/features/new_listing/subscreens/real_estate/widgets/real_estate_subcategory_body.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/vehicles_subcategory_body.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,16 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
               widget.pick.subcategory.name.trim() ==
                   RealEstateSubcategoryBody.chaletsCabinsForRent ||
               widget.pick.subcategory.name.trim() ==
-                  RealEstateSubcategoryBody.roomsForRent));
+                  RealEstateSubcategoryBody.roomsForRent)) ||
+      (widget.pick.category.name.trim() == BackendListingCatalog.phonesAndGadgets &&
+          (widget.pick.subcategory.name.trim() ==
+                  PhonesAndGadgetsSubcategoryBody.mobileNumbers ||
+              widget.pick.subcategory.name.trim() ==
+                  PhonesAndGadgetsSubcategoryBody.mobilePhones ||
+              widget.pick.subcategory.name.trim() ==
+                  PhonesAndGadgetsSubcategoryBody.mobileAccessories ||
+              widget.pick.subcategory.name.trim() ==
+                  PhonesAndGadgetsSubcategoryBody.smartWatches));
 
   @override
   Widget build(BuildContext context) {

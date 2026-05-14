@@ -47,3 +47,30 @@ enum PhoneBrand {
   @JsonValue('Other')
   other,
 }
+
+extension PhoneBrandDisplay on PhoneBrand {
+  String get label => switch (this) {
+        PhoneBrand.apple => 'Apple',
+        PhoneBrand.samsung => 'Samsung',
+        PhoneBrand.huawei => 'Huawei',
+        PhoneBrand.xiaomi => 'Xiaomi',
+        PhoneBrand.onePlus => 'OnePlus',
+        PhoneBrand.oppo => 'Oppo',
+        PhoneBrand.vivo => 'Vivo',
+        PhoneBrand.realme => 'Realme',
+        PhoneBrand.google => 'Google',
+        PhoneBrand.motorola => 'Motorola',
+        PhoneBrand.nokia => 'Nokia',
+        PhoneBrand.sony => 'Sony',
+        PhoneBrand.lG => 'LG',
+        PhoneBrand.asus => 'Asus',
+        PhoneBrand.lenovo => 'Lenovo',
+        PhoneBrand.honor => 'Honor',
+        PhoneBrand.infinix => 'Infinix',
+        PhoneBrand.tecno => 'Tecno',
+        PhoneBrand.alcatel => 'Alcatel',
+        PhoneBrand.blackberry => 'Blackberry',
+        PhoneBrand.hTC => 'HTC',
+        PhoneBrand.other => 'Other',
+      };
+}

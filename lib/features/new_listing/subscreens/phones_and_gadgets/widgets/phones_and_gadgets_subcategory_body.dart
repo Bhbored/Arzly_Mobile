@@ -10,6 +10,11 @@ class PhonesAndGadgetsSubcategoryBody extends StatelessWidget {
     required this.subcategory,
   });
 
+  static const String mobilePhones = 'Mobile Phones';
+  static const String mobileAccessories = 'Mobile Accessories';
+  static const String mobileNumbers = 'Mobile Numbers';
+  static const String smartWatches = 'Smart Watches';
+
   final Category category;
   final SubCategory subcategory;
 

@@ -11,3 +11,12 @@ enum WatchStorage {
   @JsonValue('Other')
   other,
 }
+
+extension WatchStorageDisplay on WatchStorage {
+  String get label => switch (this) {
+        WatchStorage.gb8 => '8 GB',
+        WatchStorage.gb16 => '16 GB',
+        WatchStorage.gb32 => '32 GB',
+        WatchStorage.other => 'Other',
+      };
+}
