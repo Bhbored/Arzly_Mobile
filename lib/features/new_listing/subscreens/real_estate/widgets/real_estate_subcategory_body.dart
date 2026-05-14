@@ -10,6 +10,16 @@ class RealEstateSubcategoryBody extends StatelessWidget {
     required this.subcategory,
   });
 
+  static const String housesForSale = 'Houses For Sale';
+  static const String housesForRent = 'Houses For Rent';
+  static const String landForSale = 'Land For Sale';
+  static const String landForRent = 'Land For Rent';
+  static const String commercialsForSale = 'Commercials For Sale';
+  static const String commercialsForRent = 'Commercials For Rent';
+  static const String chaletsCabinsForSale = 'Chalets & Cabins For Sale';
+  static const String chaletsCabinsForRent = 'Chalets & Cabins For Rent';
+  static const String roomsForRent = 'Rooms For Rent';
+
   final Category category;
   final SubCategory subcategory;
 

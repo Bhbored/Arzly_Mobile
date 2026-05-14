@@ -11,3 +11,12 @@ enum FurnishedStatus {
   @JsonValue('Unfurnished')
   unfurnished,
 }
+
+extension FurnishedStatusDisplay on FurnishedStatus {
+  String get label => switch (this) {
+        FurnishedStatus.appliancesOnly => 'Appliances only',
+        FurnishedStatus.fullyFurnished => 'Fully furnished',
+        FurnishedStatus.semiFurnished => 'Semi-furnished',
+        FurnishedStatus.unfurnished => 'Unfurnished',
+      };
+}

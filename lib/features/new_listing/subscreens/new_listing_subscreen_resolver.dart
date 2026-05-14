@@ -18,17 +18,18 @@ import 'package:flutter/material.dart';
 Widget newListingCategorySubscreen(
   Category category,
   SubCategory subcategory, {
-  ValueNotifier<int>? carForSaleStepNotifier,
+  ValueNotifier<int>? listingFlowStepNotifier,
 }) {
   return switch (category.name.trim()) {
     BackendListingCatalog.vehicles => VehiclesNewListingSubscreen(
       category: category,
       subcategory: subcategory,
-      carForSaleStepNotifier: carForSaleStepNotifier,
+      carForSaleStepNotifier: listingFlowStepNotifier,
     ),
     BackendListingCatalog.realEstate => RealEstateNewListingSubscreen(
       category: category,
       subcategory: subcategory,
+      stepNotifier: listingFlowStepNotifier,
     ),
     BackendListingCatalog.phonesAndGadgets =>
       PhonesAndGadgetsNewListingSubscreen(

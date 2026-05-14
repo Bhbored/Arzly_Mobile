@@ -2,6 +2,7 @@ import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/new_listing/backend_listing_catalog.dart';
 import 'package:arzly/features/new_listing/new_listing_adder_header.dart';
 import 'package:arzly/features/new_listing/subscreens/new_listing_subscreen_resolver.dart';
+import 'package:arzly/features/new_listing/subscreens/real_estate/widgets/real_estate_subcategory_body.dart';
 import 'package:arzly/features/new_listing/subscreens/vehicles/widgets/vehicles_subcategory_body.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +30,33 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
     super.dispose();
   }
 
-  bool get _showCarForSaleProgress =>
-      widget.pick.category.name.trim() == BackendListingCatalog.vehicles &&
-      (widget.pick.subcategory.name.trim() ==
-              VehiclesSubcategoryBody.carsForSale ||
-          widget.pick.subcategory.name.trim() ==
-              VehiclesSubcategoryBody.numberPlates ||
-          widget.pick.subcategory.name.trim() ==
-              VehiclesSubcategoryBody.motorcyclesAndAtvs);
+  bool get _showListingFlowStepProgress =>
+      (widget.pick.category.name.trim() == BackendListingCatalog.vehicles &&
+          (widget.pick.subcategory.name.trim() ==
+                  VehiclesSubcategoryBody.carsForSale ||
+              widget.pick.subcategory.name.trim() ==
+                  VehiclesSubcategoryBody.numberPlates ||
+              widget.pick.subcategory.name.trim() ==
+                  VehiclesSubcategoryBody.motorcyclesAndAtvs)) ||
+      (widget.pick.category.name.trim() == BackendListingCatalog.realEstate &&
+          (widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.housesForSale ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.housesForRent ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.landForSale ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.landForRent ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.commercialsForSale ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.commercialsForRent ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.chaletsCabinsForSale ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.chaletsCabinsForRent ||
+              widget.pick.subcategory.name.trim() ==
+                  RealEstateSubcategoryBody.roomsForRent));
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +90,9 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
           NewListingAdderHeader(
             category: category,
             subcategory: subcategory,
-            carForSaleStepListenable:
-                _showCarForSaleProgress ? _carForSaleStep : null,
+            carForSaleStepListenable: _showListingFlowStepProgress
+                ? _carForSaleStep
+                : null,
             carForSaleStepTotal: 2,
           ),
           Divider(
@@ -82,8 +103,9 @@ class _NewListingAdderPageState extends State<NewListingAdderPage> {
             child: newListingCategorySubscreen(
               category,
               subcategory,
-              carForSaleStepNotifier:
-                  _showCarForSaleProgress ? _carForSaleStep : null,
+              listingFlowStepNotifier: _showListingFlowStepProgress
+                  ? _carForSaleStep
+                  : null,
             ),
           ),
         ],

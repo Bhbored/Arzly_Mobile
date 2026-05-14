@@ -7,3 +7,10 @@ enum PropertyCondition {
   @JsonValue('UnderConstruction')
   underConstruction,
 }
+
+extension PropertyConditionDisplay on PropertyCondition {
+  String get label => switch (this) {
+        PropertyCondition.readyToMoveIn => 'Ready to move in',
+        PropertyCondition.underConstruction => 'Under construction',
+      };
+}

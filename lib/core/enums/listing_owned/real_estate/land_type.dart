@@ -11,3 +11,12 @@ enum LandType {
   @JsonValue('Other')
   other,
 }
+
+extension LandTypeDisplay on LandType {
+  String get label => switch (this) {
+    LandType.agricultural => 'Agricultural',
+    LandType.industrial => 'Industrial',
+    LandType.residential => 'Residential',
+    LandType.other => 'Other',
+  };
+}

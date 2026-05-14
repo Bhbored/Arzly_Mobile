@@ -75,22 +75,29 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
       text: veh.numberOfOwners != null ? '${veh.numberOfOwners}' : '',
     );
     _horsepowerController.addListener(() {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
               horsepower: parseCarHorsepower(_horsepowerController.text),
             ),
           );
     });
     _fuelConsumptionController.addListener(() {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
-              fuelConsumption:
-                  parseCarFuelConsumption(_fuelConsumptionController.text),
+              fuelConsumption: parseCarFuelConsumption(
+                _fuelConsumptionController.text,
+              ),
             ),
           );
     });
     _numberOfSeatsController.addListener(() {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
               numberOfSeats: parseCarNumberOfSeats(
                 _numberOfSeatsController.text,
@@ -100,7 +107,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
           );
     });
     _numberOfDoorsController.addListener(() {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
               numberOfDoors: parseCarNumberOfDoors(
                 _numberOfDoorsController.text,
@@ -110,10 +119,13 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
           );
     });
     _numberOfOwnersController.addListener(() {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
             (d) => d.copyWith(
-              numberOfOwners:
-                  parseCarNumberOfOwners(_numberOfOwnersController.text),
+              numberOfOwners: parseCarNumberOfOwners(
+                _numberOfOwnersController.text,
+              ),
             ),
           );
     });
@@ -137,10 +149,10 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
       ),
     );
     if (picked != null && mounted) {
-      ref.read(tempVehiclesDetailsHolderProvider.notifier).update(
-            (d) => d.copyWith(
-              carFeatures: picked.isEmpty ? null : picked,
-            ),
+      ref
+          .read(tempVehiclesDetailsHolderProvider.notifier)
+          .update(
+            (d) => d.copyWith(carFeatures: picked.isEmpty ? null : picked),
           );
     }
   }
@@ -152,8 +164,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
     final pageBg = scheme.surfaceContainerLowest;
     final menuRadius = BorderRadius.circular(context.borderRadiusMedium);
     final fieldsResetKey = veh.carBrand;
-    final selectedFeatures =
-        List<CarFeature>.from(veh.carFeatures ?? const []);
+    final selectedFeatures = List<CarFeature>.from(veh.carFeatures ?? const []);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: context.paddingMedium),
@@ -177,11 +188,11 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Fuel type',
+                        'Fuel Type',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleStyleDropdownField<FuelType>(
@@ -211,9 +222,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Transmission',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleStyleDropdownField<TransmissionType>(
@@ -241,11 +252,11 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Car type',
+                        'Car Type',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleStyleDropdownField<CarType>(
@@ -254,9 +265,7 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                         value: veh.carType,
                         onChanged: (v) {
                           ref
-                              .read(
-                                tempVehiclesDetailsHolderProvider.notifier,
-                              )
+                              .read(tempVehiclesDetailsHolderProvider.notifier)
                               .update((d) => d.copyWith(carType: v));
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             if (_numberOfSeatsController.text
@@ -291,11 +300,11 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Per [hp]',
+                        'Power [hp]',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleHorsepowerField(
@@ -312,9 +321,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Consumption [L/100km]',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleFuelConsumptionField(
@@ -331,9 +340,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Air Conditioning',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleStyleDropdownField<AirConditioning>(
@@ -363,9 +372,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Color',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       _CarsForSaleVehicleColorDropdownField(
@@ -388,9 +397,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Number of seats',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleNumberOfSeatsField(
@@ -409,9 +418,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Number of doors',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleNumberOfDoorsField(
@@ -430,9 +439,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Interior',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleStyleDropdownField<VehicleInterior>(
@@ -465,9 +474,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Extra features',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleExtraFeaturesTile(
@@ -484,9 +493,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                       Text(
                         'Number of owners',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: scheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface,
+                        ),
                       ),
                       SizedBox(height: context.spaceSmall),
                       CarsForSaleNumberOfOwnersField(
@@ -507,7 +516,9 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       OutlinedButton(
-                        onPressed: widget.isSubmitting ? null : widget.onPrevious,
+                        onPressed: widget.isSubmitting
+                            ? null
+                            : widget.onPrevious,
                         style: OutlinedButton.styleFrom(
                           minimumSize: Size(
                             context.screenWidth * 0.35,
@@ -527,16 +538,15 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                         ),
                         child: Text(
                           'Previous',
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
                       SizedBox(width: context.paddingMedium * 1.15),
                       FilledButton(
-                        onPressed:
-                            widget.isSubmitting ? null : widget.onPostNow,
+                        onPressed: widget.isSubmitting
+                            ? null
+                            : widget.onPostNow,
                         style: FilledButton.styleFrom(
                           minimumSize: Size(
                             context.screenWidth * 0.35,
@@ -553,11 +563,11 @@ class _CarsForSaleStep2BodyState extends ConsumerState<CarsForSaleStep2Body> {
                         ),
                         child: Text(
                           'Post now',
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    color: scheme.onPrimary,
-                                  ),
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: scheme.onPrimary,
+                              ),
                         ),
                       ),
                     ],
@@ -666,15 +676,15 @@ class _CarsForSaleVehicleColorDropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hintStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w500,
-          color: scheme.onSurfaceVariant,
-          height: 1.2,
-        );
+      fontWeight: FontWeight.w500,
+      color: scheme.onSurfaceVariant,
+      height: 1.2,
+    );
     final valueStyle = Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: scheme.onSurface,
-          height: 1.2,
-        );
+      fontWeight: FontWeight.w600,
+      color: scheme.onSurface,
+      height: 1.2,
+    );
 
     return FormField<VehicleColor>(
       key: ValueKey(Object.hash(fieldsResetKey, 'vehicle_color')),
@@ -682,8 +692,7 @@ class _CarsForSaleVehicleColorDropdownField extends StatelessWidget {
       autovalidateMode: showRequiredErrors
           ? AutovalidateMode.onUserInteraction
           : AutovalidateMode.disabled,
-      validator: (v) =>
-          v == null && showRequiredErrors ? 'Choose color' : null,
+      validator: (v) => v == null && showRequiredErrors ? 'Choose color' : null,
       builder: (state) {
         final baseDecoration = carForSaleVersionFieldDecoration(
           context,

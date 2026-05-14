@@ -1,5 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
+import 'package:arzly/data/providers/new_listing/temp_real_estate_draft/temp_real_estate_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_vehicles_details/temp_vehicles_details_holder.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
@@ -190,21 +191,47 @@ class _ListingPublishingDetailsSectionState
 
     final scheme = Theme.of(context).colorScheme;
     final draft = ref.watch(tempListingDraftHolderProvider);
-    final pickupResetKey = ref.watch(
-      tempVehiclesDetailsHolderProvider.select(
-        (s) => Object.hash(
-          s.carBrand,
-          s.carModel,
-          s.motorcycleBrand,
-          s.motorcycleModel,
-          s.numberOfDigits,
-          s.version,
-          s.partType,
-          s.vehicleType,
-          s.accessoryType,
-          s.truckBrand,
-          s.boatType,
-          s.condition,
+    final pickupResetKey = Object.hash(
+      ref.watch(
+        tempVehiclesDetailsHolderProvider.select(
+          (s) => Object.hash(
+            s.carBrand,
+            s.carModel,
+            s.motorcycleBrand,
+            s.motorcycleModel,
+            s.numberOfDigits,
+            s.version,
+            s.partType,
+            s.vehicleType,
+            s.accessoryType,
+            s.truckBrand,
+            s.boatType,
+            s.condition,
+          ),
+        ),
+      ),
+      ref.watch(
+        tempRealEstateDraftHolderProvider.select(
+          (s) => Object.hash(
+            s.propertyType,
+            s.ownership,
+            s.bedrooms,
+            s.bathrooms,
+            s.size,
+            s.furnished,
+            s.condition,
+            s.floor,
+            s.features,
+            s.propertyAge,
+            s.referenceId,
+            s.landType,
+            s.commercialType,
+            s.equipped,
+            s.commercialFeatures,
+            s.chaletType,
+            s.chaletFeatures,
+            s.roomFeatures,
+          ),
         ),
       ),
     );

@@ -17,3 +17,15 @@ enum CommercialType {
   @JsonValue('Other')
   other,
 }
+
+extension CommercialTypeDisplay on CommercialType {
+  String get label => switch (this) {
+    CommercialType.garage => 'Garage',
+    CommercialType.office => 'Office',
+    CommercialType.shop => 'Shop',
+    CommercialType.warehouse => 'Warehouse',
+    CommercialType.workshop => 'Workshop',
+    CommercialType.showroom => 'Showroom',
+    CommercialType.other => 'Other',
+  };
+}

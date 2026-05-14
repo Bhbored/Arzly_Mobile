@@ -9,3 +9,11 @@ enum ChaletType {
   @JsonValue('Other')
   other,
 }
+
+extension ChaletTypeDisplay on ChaletType {
+  String get label => switch (this) {
+        ChaletType.mountainLocation => 'Mountain location',
+        ChaletType.seaLocation => 'Sea location',
+        ChaletType.other => 'Other',
+      };
+}

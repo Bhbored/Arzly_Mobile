@@ -31,3 +31,22 @@ enum ChaletFeature {
   @JsonValue('WoodenCabin')
   woodenCabin,
 }
+
+extension ChaletFeatureDisplay on ChaletFeature {
+  String get label => switch (this) {
+        ChaletFeature.balcony => 'Balcony',
+        ChaletFeature.bbqArea => 'BBQ area',
+        ChaletFeature.beachAccess => 'Beach access',
+        ChaletFeature.fireplace => 'Fireplace',
+        ChaletFeature.garden => 'Garden',
+        ChaletFeature.jacuzzi => 'Jacuzzi',
+        ChaletFeature.mountainView => 'Mountain view',
+        ChaletFeature.outdoorSeating => 'Outdoor seating',
+        ChaletFeature.pool => 'Pool',
+        ChaletFeature.privateEntrance => 'Private entrance',
+        ChaletFeature.seaView => 'Sea view',
+        ChaletFeature.skiAccess => 'Ski access',
+        ChaletFeature.terrace => 'Terrace',
+        ChaletFeature.woodenCabin => 'Wooden cabin',
+      };
+}

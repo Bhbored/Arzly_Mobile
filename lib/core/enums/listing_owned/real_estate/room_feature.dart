@@ -19,3 +19,16 @@ enum RoomFeature {
   @JsonValue('BillsIncluded')
   billsIncluded,
 }
+
+extension RoomFeatureDisplay on RoomFeature {
+  String get label => switch (this) {
+        RoomFeature.airConditioning => 'Air conditioning',
+        RoomFeature.balcony => 'Balcony',
+        RoomFeature.bathroomAttached => 'Bathroom attached',
+        RoomFeature.furnished => 'Furnished',
+        RoomFeature.kitchenAccess => 'Kitchen access',
+        RoomFeature.parking => 'Parking',
+        RoomFeature.wiFi => 'WiFi',
+        RoomFeature.billsIncluded => 'Bills included',
+      };
+}
