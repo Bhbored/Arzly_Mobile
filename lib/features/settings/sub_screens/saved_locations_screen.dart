@@ -4,6 +4,7 @@ import 'package:arzly/data/providers/pickup_location/pickup_locations_provider.d
 import 'package:arzly/features/settings/widgets/pickup_location/saved_location_card.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/saved_locations_empty_view.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_screen.dart';
+import 'package:arzly/features/shared/skeletons/saved_locations_list_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -70,7 +71,7 @@ class SavedLocationsScreen extends ConsumerWidget {
               },
             );
           },
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => const SavedLocationsListSkeleton(),
           error: (err, _) {
             final message = err is ApiException
                 ? err.userMessage

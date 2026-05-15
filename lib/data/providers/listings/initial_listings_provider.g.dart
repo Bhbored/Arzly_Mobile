@@ -16,7 +16,7 @@ final class InitialListingsProviderProvider
     extends
         $AsyncNotifierProvider<
           InitialListingsProvider,
-          Map<String, List<Listing>>
+          List<InitialListingSection>
         > {
   InitialListingsProviderProvider._()
     : super(
@@ -38,28 +38,28 @@ final class InitialListingsProviderProvider
 }
 
 String _$initialListingsProviderHash() =>
-    r'4d99b263f589d5e2524a73d8c2a09cff40a0310e';
+    r'4e05c7273f93abcd56d15467780fe2fba012fcf4';
 
 abstract class _$InitialListingsProvider
-    extends $AsyncNotifier<Map<String, List<Listing>>> {
-  FutureOr<Map<String, List<Listing>>> build();
+    extends $AsyncNotifier<List<InitialListingSection>> {
+  FutureOr<List<InitialListingSection>> build();
   @$mustCallSuper
   @override
   void runBuild() {
     final ref =
         this.ref
             as $Ref<
-              AsyncValue<Map<String, List<Listing>>>,
-              Map<String, List<Listing>>
+              AsyncValue<List<InitialListingSection>>,
+              List<InitialListingSection>
             >;
     final element =
         ref.element
             as $ClassProviderElement<
               AnyNotifier<
-                AsyncValue<Map<String, List<Listing>>>,
-                Map<String, List<Listing>>
+                AsyncValue<List<InitialListingSection>>,
+                List<InitialListingSection>
               >,
-              AsyncValue<Map<String, List<Listing>>>,
+              AsyncValue<List<InitialListingSection>>,
               Object?,
               Object?
             >;

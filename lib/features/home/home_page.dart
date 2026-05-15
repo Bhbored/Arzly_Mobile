@@ -3,7 +3,7 @@ import 'package:arzly/data/providers/category/category_provider.dart';
 import 'package:arzly/data/providers/listings/initial_listings_provider.dart';
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider.dart';
-import 'package:arzly/features/home/widgets/category_listing_row.dart';
+import 'package:arzly/features/home/widgets/subcategory_listing_row.dart';
 import 'package:arzly/features/home/widgets/home_app_bar.dart';
 import 'package:arzly/features/home/widgets/home_search_bar.dart';
 import 'package:arzly/features/shared/skeletons/home_category_skeleton.dart';
@@ -63,15 +63,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                 loading: () => const HomeCategorySkeleton(),
               ),
               initialListings.when(
-                data: (data) => Column(
-                  children: data.entries
+                data: (sections) => Column(
+                  children: sections
                       .map(
-                        (category) => [
-                          CategoryListingRow(
-                            title: category.key,
-                            listings: category.value,
+                        (section) => [
+                          SubcategoryListingRow(
+                            subcategoryName: section.subcategoryName,
+                            listings: section.listings,
                           ),
-                          SizedBox(height: context.spaceMedium),
+                          SizedBox(height: context.screenHeight * 0.004),
                         ],
                       )
                       .expand((widget) => widget)

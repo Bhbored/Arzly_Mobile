@@ -43,21 +43,17 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   String? _staticMapUrl;
   bool _gpsLoading = false;
   late bool _entityHadCoordinates;
+  bool _locationResolvedInSession = false;
+  PickupLocationAddressCaptureMethod? _captureMethod;
 
   static const _mockUserId = 'firebase-uid-123';
 
   bool get _hasGpsCoords => _gpsLat != null && _gpsLon != null;
 
-  String? get _mapPreviewUrl {
-    if (_staticMapUrl != null && _staticMapUrl!.isNotEmpty) {
-      return _staticMapUrl;
-    }
-    if (_hasGpsCoords) {
-      return 'https://staticmap.openstreetmap.de/staticmap.php'
-          '?center=$_gpsLat,$_gpsLon&zoom=15&size=256x160&maptype=mapnik';
-    }
-    return null;
-  }
+  bool get _fetchMapFromApi =>
+      widget.isEditing &&
+      _entityHadCoordinates &&
+      !_locationResolvedInSession;
 
   String _locationServiceErrorMessage(Object e) {
     if (e is ApiException) return e.userMessage;
@@ -71,6 +67,24 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
       _gpsLon = details.longitude;
       _staticMapUrl = details.staticMapUrl;
       _addressController.text = details.formattedAddress;
+      _locationResolvedInSession = true;
+    });
+  }
+
+  void _clearResolvedAddress() {
+    _gpsLat = null;
+    _gpsLon = null;
+    _staticMapUrl = null;
+    _addressController.clear();
+    _gpsLoading = false;
+    _locationResolvedInSession = false;
+  }
+
+  void _onCaptureMethodChanged(PickupLocationAddressCaptureMethod method) {
+    if (_captureMethod == method) return;
+    setState(() {
+      _captureMethod = method;
+      _clearResolvedAddress();
     });
   }
 
@@ -129,6 +143,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
         _gpsLat = e.lat;
         _gpsLon = e.lon;
         _entityHadCoordinates = true;
+        _captureMethod = PickupLocationAddressCaptureMethod.device;
       }
     }
   }
@@ -141,6 +156,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   }
 
   Future<void> _fetchGps() async {
+    if (_captureMethod != PickupLocationAddressCaptureMethod.device) return;
     setState(() => _gpsLoading = true);
     try {
       final data = await ref
@@ -174,7 +190,10 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   }
 
   Future<void> _openAddressSearch() async {
-    if (_isSubmitting) return;
+    if (_isSubmitting ||
+        _captureMethod != PickupLocationAddressCaptureMethod.search) {
+      return;
+    }
     final details = await openPickupLocationAddressSearch(context);
     if (!mounted || details == null) return;
     _applyPlaceDetails(details);
@@ -182,10 +201,20 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
 
   Future<void> _submit() async {
     setState(() => _showFieldErrors = true);
+    if (_captureMethod == null) {
+      AppSnackBar.show(
+        context,
+        message: 'Choose device GPS or search to set your pickup address.',
+        variant: AppSnackBarVariant.error,
+      );
+      return;
+    }
     if (!_hasGpsCoords) {
       AppSnackBar.show(
         context,
-        message: 'Set a pickup spot using GPS or address search.',
+        message: _captureMethod == PickupLocationAddressCaptureMethod.device
+            ? 'Use current location to set your pickup spot.'
+            : 'Search and select an address for your pickup spot.',
         variant: AppSnackBarVariant.error,
       );
       return;
@@ -268,17 +297,25 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
               SizedBox(height: context.spaceMedium),
               const PickupLocationFormSectionLabel(title: 'Location'),
               PickupLocationAddressCaptureSection(
+                selectedMethod: _captureMethod,
+                onMethodChanged: _onCaptureMethodChanged,
                 isGpsLoading: _gpsLoading,
                 hasCoordinates: _hasGpsCoords,
                 showUpdateCoordinatesHint:
-                    widget.isEditing && _entityHadCoordinates,
+                    widget.isEditing &&
+                    _entityHadCoordinates &&
+                    _captureMethod ==
+                        PickupLocationAddressCaptureMethod.device,
                 requestEnabled: !_isSubmitting,
                 onRequestLocation: _fetchGps,
                 onSearchAddress: _openAddressSearch,
                 resolvedAddress: _addressController.text.trim().isEmpty
                     ? null
                     : _addressController.text.trim(),
-                staticMapUrl: _mapPreviewUrl,
+                staticMapUrl: _staticMapUrl,
+                latitude: _gpsLat,
+                longitude: _gpsLon,
+                fetchMapFromCoordinates: _fetchMapFromApi,
               ),
               SizedBox(height: context.spaceMedium),
               const PickupLocationFormSectionLabel(

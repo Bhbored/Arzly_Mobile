@@ -17,4 +17,8 @@ extension LocationLabelDisplay on LocationLabel {
         LocationLabel.work => {Icons.work_outline_rounded: 'Work'},
         LocationLabel.other => {Icons.place_outlined: 'Other'},
       };
+
+  IconData get icon => chipPresentation.keys.single;
+
+  String get title => chipPresentation.values.single;
 }

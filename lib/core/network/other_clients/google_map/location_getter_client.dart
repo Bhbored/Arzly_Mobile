@@ -104,4 +104,42 @@ class LocationService {
       },
     );
   }
+
+  Future<String> getStaticMapUrl({
+    required double lat,
+    required double lng,
+    int zoom = 15,
+    int width = 400,
+    int height = 250,
+  }) async {
+    final response = await executor.execute(
+      ApiRequest(
+        path: '/static-map',
+        method: HttpMethod.get,
+        queryParams: {
+          'lat': lat,
+          'lng': lng,
+          'zoom': zoom,
+          'width': width,
+          'height': height,
+        },
+      ),
+    );
+
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          final json = data as Map<String, dynamic>;
+          return json['staticMapUrl'] as String;
+        } catch (e) {
+          _logger.e('Failed to parse static map URL: $e');
+          throw Exception('Failed to get map URL');
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e('Static map failed: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
 }

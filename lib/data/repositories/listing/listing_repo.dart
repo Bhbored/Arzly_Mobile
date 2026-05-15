@@ -119,27 +119,40 @@ class ListingRepo {
     );
   }
 
-  Future<Map<String, List<ListingResponse>>>
-  assignInitialListingsToCategories() async {
-    Map<String, List<ListingResponse>> listingCategoriesMap = {
-      'Cars For Sale': [],
-      'Houses For Sale': [],
-      'Mobile Phones': [],
-      'Houses For Rent': [],
-      "Motorcycles & ATV's": [],
-      'Laptops Tablets Computers': [],
-    };
+  static const initialHomeSubcategoryNames = [
+    'Cars For Sale',
+    'Houses For Sale',
+    'Mobile Phones',
+    'Houses For Rent',
+    "Motorcycles & ATV's",
+    'Laptops Tablets Computers',
+  ];
+
+  Future<List<({String subcategoryName, List<ListingResponse> listings})>>
+  assignInitialListingsSubcatgeory() async {
     final subCategories = await subCategoryRepo.fetchAll();
     final subCategoriesIds = subCategories
         .map((subCategory) => subCategory.id)
         .toList();
     final listings = await fetchInitialListings(subCategoriesIds);
-    for (var subCategory in subCategories) {
-      listingCategoriesMap[subCategory.name] = listings
-          .where((listing) => listing.categoryId == subCategory.id)
+
+    final subCategoryByName = {
+      for (final subCategory in subCategories) subCategory.name: subCategory,
+    };
+
+    final sections = <({String subcategoryName, List<ListingResponse> listings})>[];
+    for (final name in initialHomeSubcategoryNames) {
+      final subCategory = subCategoryByName[name];
+      if (subCategory == null) continue;
+      final sectionListings = listings
+          .where((listing) => listing.subcategoryId == subCategory.id)
           .toList();
+      sections.add((
+        subcategoryName: name,
+        listings: sectionListings,
+      ));
     }
-    return listingCategoriesMap;
+    return sections;
   }
 
   Future<List<ListingResponse>> fetchAll() async {
