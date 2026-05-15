@@ -9,6 +9,8 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+part 'location_getter_client.g.dart';
+
 @Riverpod(keepAlive: true)
 LocationService locationService(Ref ref) {
   final client = ref.read(locationGetterClientProvider);
@@ -28,7 +30,7 @@ class LocationService {
 
     final response = await executor.execute(
       ApiRequest(
-        path: '/api/location/autocomplete',
+        path: '/autocomplete',
         method: HttpMethod.get,
         queryParams: {'input': input},
       ),
@@ -56,7 +58,7 @@ class LocationService {
   Future<PlaceDetailsResult> getPlaceDetails(String placeId) async {
     final response = await executor.execute(
       ApiRequest(
-        path: '/api/location/place-details',
+        path: '/place-details',
         method: HttpMethod.get,
         queryParams: {'placeId': placeId},
       ),
@@ -81,7 +83,7 @@ class LocationService {
   Future<PlaceDetailsResult> reverseGeocode(double lat, double lng) async {
     final response = await executor.execute(
       ApiRequest(
-        path: '/api/location/reverse-geocode',
+        path: '/reverse-geocode',
         method: HttpMethod.get,
         queryParams: {'lat': lat, 'lng': lng},
       ),

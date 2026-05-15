@@ -1,12 +1,16 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/enums/listing/location_label.dart';
 import 'package:arzly/core/enums/location_preset.dart';
+import 'package:arzly/core/exceptions/api_exception.dart';
+import 'package:arzly/core/network/other_clients/google_map/location_getter_client.dart';
+import 'package:arzly/core/network/other_clients/google_map/models/place_details_result.dart';
 import 'package:arzly/core/utils/location_getter.dart';
 import 'package:arzly/domain/entities/pickup_location/pickup_location.dart';
-import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_device_coordinates_section.dart';
+import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_address_capture_section.dart';
+import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_address_search_screen.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_form_header.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_form_section_label.dart';
-import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_label_display.dart';
+import 'package:arzly/features/new_listing/subscreens/vehicles/shared/cars_for_sale_style_dropdown_field.dart';
 import 'package:arzly/features/settings/widgets/pickup_location/pickup_location_route_result.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar.dart';
 import 'package:arzly/features/shared/snack_bar/app_snack_bar_variant.dart';
@@ -30,16 +34,45 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   final _addressController = TextEditingController();
   final _notesController = TextEditingController();
   late LocationLabel _label;
+  late LocationPreset _locationPreset;
   late bool _isDefault;
   bool _isSubmitting = false;
+  bool _showFieldErrors = false;
   double? _gpsLat;
   double? _gpsLon;
+  String? _staticMapUrl;
   bool _gpsLoading = false;
   late bool _entityHadCoordinates;
 
   static const _mockUserId = 'firebase-uid-123';
 
   bool get _hasGpsCoords => _gpsLat != null && _gpsLon != null;
+
+  String? get _mapPreviewUrl {
+    if (_staticMapUrl != null && _staticMapUrl!.isNotEmpty) {
+      return _staticMapUrl;
+    }
+    if (_hasGpsCoords) {
+      return 'https://staticmap.openstreetmap.de/staticmap.php'
+          '?center=$_gpsLat,$_gpsLon&zoom=15&size=256x160&maptype=mapnik';
+    }
+    return null;
+  }
+
+  String _locationServiceErrorMessage(Object e) {
+    if (e is ApiException) return e.userMessage;
+    if (e is LocationGetterException) return e.message;
+    return 'Could not resolve this address. Try again.';
+  }
+
+  void _applyPlaceDetails(PlaceDetailsResult details) {
+    setState(() {
+      _gpsLat = details.latitude;
+      _gpsLon = details.longitude;
+      _staticMapUrl = details.staticMapUrl;
+      _addressController.text = details.formattedAddress;
+    });
+  }
 
   InputDecoration _modernFieldDecoration(
     BuildContext context, {
@@ -85,6 +118,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
     super.initState();
     final e = widget.existing;
     _label = e?.label ?? LocationLabel.home;
+    _locationPreset = e?.locationPreset ?? LocationPreset.beirut;
     _addressController.text = e?.address ?? '';
     _notesController.text = e?.notes ?? '';
     _isDefault = e?.isDefault ?? false;
@@ -113,35 +147,57 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
           .read(locationGetterProvider)
           .getLocationWithFallback();
       if (!mounted) return;
-      if (data?.latitude != null && data?.longitude != null) {
-        setState(() {
-          _gpsLat = data!.latitude;
-          _gpsLon = data.longitude;
-          _gpsLoading = false;
-        });
-      } else {
+      if (data?.latitude == null || data?.longitude == null) {
         setState(() => _gpsLoading = false);
         AppSnackBar.show(
           context,
           message: 'Could not get your location. Try again.',
           variant: AppSnackBarVariant.error,
         );
+        return;
       }
+      final details = await ref
+          .read(locationServiceProvider)
+          .reverseGeocode(data!.latitude!, data.longitude!);
+      if (!mounted) return;
+      _applyPlaceDetails(details);
+      setState(() => _gpsLoading = false);
     } catch (e) {
       if (!mounted) return;
       setState(() => _gpsLoading = false);
-      final msg = e is LocationGetterException
-          ? e.message
-          : 'Could not get your location. Try again.';
       AppSnackBar.show(
         context,
-        message: msg,
+        message: _locationServiceErrorMessage(e),
         variant: AppSnackBarVariant.error,
       );
     }
   }
 
+  Future<void> _openAddressSearch() async {
+    if (_isSubmitting) return;
+    final details = await openPickupLocationAddressSearch(context);
+    if (!mounted || details == null) return;
+    _applyPlaceDetails(details);
+  }
+
   Future<void> _submit() async {
+    setState(() => _showFieldErrors = true);
+    if (!_hasGpsCoords) {
+      AppSnackBar.show(
+        context,
+        message: 'Set a pickup spot using GPS or address search.',
+        variant: AppSnackBarVariant.error,
+      );
+      return;
+    }
+    if (_addressController.text.trim().isEmpty) {
+      AppSnackBar.show(
+        context,
+        message: 'Address could not be resolved. Try GPS or search again.',
+        variant: AppSnackBarVariant.error,
+      );
+      return;
+    }
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isSubmitting = true);
     final notesText = _notesController.text.trim();
@@ -157,7 +213,7 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
       lat: lat,
       lon: lon,
       isDefault: _isDefault,
-      locationPreset: LocationPreset.beirut,
+      locationPreset: _locationPreset,
     );
     try {
       await widget.onSubmit(location);
@@ -188,6 +244,8 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final pageBg = colors.surfaceContainerHigh.withValues(alpha: 0.65);
+    final menuRadius = BorderRadius.circular(context.borderRadiusMedium);
     final ctaRadius = BorderRadius.circular(context.borderRadiusLarge - 4);
     final ctaHeight = context.spaceLarge + 18;
 
@@ -209,13 +267,45 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
               const PickupLocationFormHeader(),
               SizedBox(height: context.spaceMedium),
               const PickupLocationFormSectionLabel(title: 'Location'),
-              PickupLocationDeviceCoordinatesSection(
-                isLoading: _gpsLoading,
+              PickupLocationAddressCaptureSection(
+                isGpsLoading: _gpsLoading,
                 hasCoordinates: _hasGpsCoords,
                 showUpdateCoordinatesHint:
                     widget.isEditing && _entityHadCoordinates,
                 requestEnabled: !_isSubmitting,
                 onRequestLocation: _fetchGps,
+                onSearchAddress: _openAddressSearch,
+                resolvedAddress: _addressController.text.trim().isEmpty
+                    ? null
+                    : _addressController.text.trim(),
+                staticMapUrl: _mapPreviewUrl,
+              ),
+              SizedBox(height: context.spaceMedium),
+              const PickupLocationFormSectionLabel(
+                title: LocationPresetDisplay.fieldTitle,
+              ),
+              CarsForSaleStyleDropdownField<LocationPreset>(
+                fieldsResetKey: widget.existing?.id,
+                fieldSuffix: 'location_preset',
+                value: _locationPreset,
+                onChanged: (v) {
+                  if (v != null) {
+                    setState(() => _locationPreset = v);
+                  }
+                },
+                hintText: 'Choose area',
+                validationMessage: 'Choose an area',
+                showRequiredErrors: _showFieldErrors,
+                pageBg: pageBg,
+                scheme: colors,
+                menuRadius: menuRadius,
+                items: [
+                  for (final preset in LocationPreset.values)
+                    DropdownMenuItem(
+                      value: preset,
+                      child: Text(preset.label),
+                    ),
+                ],
               ),
               SizedBox(height: context.spaceMedium),
               const PickupLocationFormSectionLabel(title: 'Label'),
@@ -224,7 +314,8 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
                   for (final e in LocationLabel.values)
                     ButtonSegment<LocationLabel>(
                       value: e,
-                      label: Text(pickupLabelDisplay(e)),
+                      icon: Icon(e.chipPresentation.keys.single),
+                      label: Text(e.chipPresentation.values.single),
                     ),
                 ],
                 selected: {_label},
@@ -269,27 +360,6 @@ class _PickupLocationFormState extends ConsumerState<PickupLocationForm> {
               ),
               SizedBox(height: context.spaceMedium),
               const PickupLocationFormSectionLabel(title: 'Details'),
-              TextFormField(
-                controller: _addressController,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: _modernFieldDecoration(
-                  context,
-                  labelText: 'Address',
-                  hintText: 'Street, building, area',
-                  maxLines: 2,
-                ),
-                maxLines: 2,
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Enter the address where buyers can meet you.';
-                  }
-                  if (value.trim().length < 4) {
-                    return 'Use a bit more detail so the spot is clear.';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: context.spaceMedium),
               TextFormField(
                 controller: _notesController,
                 textCapitalization: TextCapitalization.sentences,

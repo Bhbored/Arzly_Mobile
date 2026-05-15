@@ -12,9 +12,7 @@ LocationGetter locationGetter(Ref ref) {
 }
 
 class LocationGetter {
-  LocationGetter({Logger? logger}) : _log = logger ?? Logger();
-
-  final Logger _log;
+  final _log = Logger();
 
   Future<LocationData> getCurrentLocation() async {
     final location = Location();
