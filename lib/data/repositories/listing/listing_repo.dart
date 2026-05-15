@@ -4,6 +4,7 @@ import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/core/network/dio_instances/listing/listing_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
+import 'package:arzly/core/storage/secure_storage/secure_storage_android.dart';
 import 'package:arzly/core/utils/http_method.dart';
 import 'package:arzly/data/dtos/request/listing/listing_add_request.dart';
 import 'package:arzly/data/dtos/request/listing/listing_update_request.dart';
@@ -32,10 +33,12 @@ ListingRepo listingRepo(Ref ref) {
   final executor = ref.read(executorProvider(client.dio));
   final categoryRepo = ref.read(categoryRepoProvider);
   final subCategoryRepo = ref.read(subCategoryRepoProvider);
+  final secureStorageAndroid = ref.read(secureStorageAndroidProvider);
   return ListingRepo(
     executor: executor,
     categoryRepo: categoryRepo,
     subCategoryRepo: subCategoryRepo,
+    secureStorageAndroid: secureStorageAndroid,
   );
 }
 
@@ -44,13 +47,27 @@ class ListingRepo {
   final CategoryRepo categoryRepo;
   final SubCategoryRepo subCategoryRepo;
   final _logger = Logger();
+  final SecureStorageAndroid secureStorageAndroid;
   ListingRepo({
     required this.executor,
     required this.categoryRepo,
     required this.subCategoryRepo,
+    required this.secureStorageAndroid,
   });
 
   //helpers
+
+  Future<String?> getUserId() async {
+    final userId = await secureStorageAndroid.getValue('firebaseId');
+    if (userId == null) {
+      throw ApiException(
+        userMessage: ApiErrors.unauthorized,
+        error: 'User ID not found',
+        originalError: null,
+      );
+    }
+    return userId;
+  }
 
   dynamic _parseListingDetails(String categoryName, dynamic listingDetails) {
     if (listingDetails == null || listingDetails is! Map<String, dynamic>) {
@@ -140,17 +157,15 @@ class ListingRepo {
       for (final subCategory in subCategories) subCategory.name: subCategory,
     };
 
-    final sections = <({String subcategoryName, List<ListingResponse> listings})>[];
+    final sections =
+        <({String subcategoryName, List<ListingResponse> listings})>[];
     for (final name in initialHomeSubcategoryNames) {
       final subCategory = subCategoryByName[name];
       if (subCategory == null) continue;
       final sectionListings = listings
           .where((listing) => listing.subcategoryId == subCategory.id)
           .toList();
-      sections.add((
-        subcategoryName: name,
-        listings: sectionListings,
-      ));
+      sections.add((subcategoryName: name, listings: sectionListings));
     }
     return sections;
   }
@@ -292,7 +307,7 @@ class ListingRepo {
   }
 
   Future<List<ListingResponse>> getByUserId() async {
-    final userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/user-listings',
@@ -332,13 +347,13 @@ class ListingRepo {
   }
 
   Future<void> addListing(ListingAddRequest addRequest) async {
-    final userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/create',
         method: HttpMethod.post,
         data: addRequest.toJson(),
-        headers: {'firebaseId': userId}, //currently mock firebaseid
+        headers: {'firebaseId': userId},
       ),
     );
 
@@ -356,13 +371,13 @@ class ListingRepo {
   Future<ListingResponse> updateListing(
     ListingUpdateRequest updateRequest,
   ) async {
-    final userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/Update',
         method: HttpMethod.put,
         data: updateRequest.toJson(),
-        headers: {'firebaseId': userId}, //currently mock firebaseid
+        headers: {'firebaseId': userId},
       ),
     );
 

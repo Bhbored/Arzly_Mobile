@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:arzly/core/constants/api_errors.dart';
+import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/core/network/dio_instances/image_uploader/image_uploader_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
+import 'package:arzly/core/storage/secure_storage/secure_storage_android.dart';
 import 'package:arzly/core/utils/http_method.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
@@ -13,16 +16,33 @@ part 'image_upload_service.g.dart';
 ImageUploadHelper imageUploadHelper(Ref ref) {
   final client = ref.read(imageUploaderClientProvider);
   final executor = ref.read(executorProvider(client.dio));
-  return ImageUploadHelper(dio: client.dio, executor: executor);
+  final secureStorageAndroid = ref.read(secureStorageAndroidProvider);
+  return ImageUploadHelper(
+    dio: client.dio,
+    executor: executor,
+    secureStorageAndroid: secureStorageAndroid,
+  );
 }
 
 class ImageUploadHelper {
   final Dio dio;
   final ApiExecutor executor;
-  ImageUploadHelper({required this.dio, required this.executor});
+  final SecureStorageAndroid secureStorageAndroid;
+  ImageUploadHelper({
+    required this.dio,
+    required this.executor,
+    required this.secureStorageAndroid,
+  });
   final _logger = Logger();
-  final userId = 'firebase-uid-123';
   Future<String?> uploadImage(File file) async {
+    final userId = await secureStorageAndroid.getValue('firebaseId');
+    if (userId == null) {
+      throw ApiException(
+        userMessage: ApiErrors.unauthorized,
+        error: 'User ID not found',
+        originalError: null,
+      );
+    }
     final formData = FormData.fromMap({
       'file': await MultipartFile.fromFile(file.path),
     });
@@ -52,6 +72,14 @@ class ImageUploadHelper {
   }
 
   Future<List<String>> uploadImages(List<File> files) async {
+    final userId = await secureStorageAndroid.getValue('firebaseId');
+    if (userId == null) {
+      throw ApiException(
+        userMessage: ApiErrors.unauthorized,
+        error: 'User ID not found',
+        originalError: null,
+      );
+    }
     final formData = FormData.fromMap({
       'files': files.map((f) => MultipartFile.fromFileSync(f.path)).toList(),
     });

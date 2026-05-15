@@ -55,4 +55,4 @@ final class PickupLocationRepoProvider
 }
 
 String _$pickupLocationRepoHash() =>
-    r'a6876d3788d1a710f4103a465664fd684aed5535';
+    r'c22cc985a777a55d70c9fd62d9f81ec4ace13817';

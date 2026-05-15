@@ -3,6 +3,7 @@ import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/core/network/dio_instances/pickup_location/pickup_location_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
 import 'package:arzly/core/network/request/api_request.dart';
+import 'package:arzly/core/storage/secure_storage/secure_storage_android.dart';
 import 'package:arzly/core/utils/http_method.dart';
 import 'package:arzly/data/dtos/request/pickup_location/pickup_location_add_request.dart';
 import 'package:arzly/data/dtos/request/pickup_location/pickup_location_update_request.dart';
@@ -16,17 +17,35 @@ part 'pickup_location_repo.g.dart';
 PickupLocationRepo pickupLocationRepo(Ref ref) {
   final client = ref.read(pickupLocationClientProvider);
   final executor = ref.read(executorProvider(client.dio));
-  return PickupLocationRepo(executor: executor);
+  final secureStorageAndroid = ref.read(secureStorageAndroidProvider);
+  return PickupLocationRepo(
+    executor: executor,
+    secureStorageAndroid: secureStorageAndroid,
+  );
 }
 
 class PickupLocationRepo {
   final ApiExecutor executor;
   final _logger = Logger();
-
-  PickupLocationRepo({required this.executor});
+  final SecureStorageAndroid secureStorageAndroid;
+  PickupLocationRepo({
+    required this.executor,
+    required this.secureStorageAndroid,
+  });
+  Future<String?> getUserId() async {
+    final userId = await secureStorageAndroid.getValue('firebaseId');
+    if (userId == null) {
+      throw ApiException(
+        userMessage: ApiErrors.unauthorized,
+        error: 'User ID not found',
+        originalError: null,
+      );
+    }
+    return userId;
+  }
 
   Future<List<PickupLocationResponse>> getUserLocationsAsync() async {
-    const userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/user-locations',
@@ -61,7 +80,7 @@ class PickupLocationRepo {
   }
 
   Future<void> addPickupLocation(PickupLocationAddRequest request) async {
-    const userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/Create',
@@ -85,7 +104,7 @@ class PickupLocationRepo {
   Future<PickupLocationResponse> updatePickupLocation(
     PickupLocationUpdateRequest request,
   ) async {
-    const userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/Update/${request.id}',
@@ -118,7 +137,7 @@ class PickupLocationRepo {
   }
 
   Future<bool> deletePickupLocation(String id) async {
-    const userId = 'firebase-uid-123';
+    final userId = await getUserId();
     final response = await executor.execute(
       ApiRequest(
         path: '/delete/$id',
