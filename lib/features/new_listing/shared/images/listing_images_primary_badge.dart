@@ -20,7 +20,7 @@ class ListingImagesPrimaryBadge extends StatelessWidget {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: scheme.primary,
-        borderRadius: BorderRadius.circular(999),
+        borderRadius: BorderRadius.circular(5),
         boxShadow: [
           BoxShadow(
             color: scheme.primary.withValues(alpha: 0.28),

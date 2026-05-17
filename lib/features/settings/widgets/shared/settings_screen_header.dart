@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class SettingsScreenHeader extends StatelessWidget {
   final VoidCallback onEditPressed;
 
-  const SettingsScreenHeader({
-    super.key,
-    required this.onEditPressed,
-  });
+  const SettingsScreenHeader({super.key, required this.onEditPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +15,11 @@ class SettingsScreenHeader extends StatelessWidget {
           radius: 40,
           backgroundColor: colors.secondaryContainer,
           child: Text(
-            'JD',
+            'BH',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: colors.onSecondaryContainer,
-                  fontWeight: FontWeight.w700,
-                ),
+              color: colors.onSecondaryContainer,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ),
         const SizedBox(width: 14),
@@ -31,10 +28,10 @@ class SettingsScreenHeader extends StatelessWidget {
             children: [
               Flexible(
                 child: Text(
-                  'Jane Doe',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                  'Bourhan',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -43,10 +40,7 @@ class SettingsScreenHeader extends StatelessWidget {
               IconButton(
                 onPressed: onEditPressed,
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(
-                  minWidth: 40,
-                  minHeight: 40,
-                ),
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                 visualDensity: VisualDensity.compact,
                 icon: Icon(Icons.edit_outlined, color: colors.primary),
                 tooltip: 'Edit',

@@ -28,6 +28,11 @@ extension AppSizes on BuildContext {
   double get borderRadiusMedium => 12.0;
   double get borderRadiusLarge => 24.0;
 
+  double get mainBottomNavHeight => screenHeight * 0.14;
+
+  double get scrollPaddingAboveMainNav =>
+      mainBottomNavHeight + spaceMedium;
+
   double carsForSaleDropdownMenuMaxHeight({
     required int itemCount,
     double itemHeight = kMinInteractiveDimension,

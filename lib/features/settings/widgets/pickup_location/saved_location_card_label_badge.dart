@@ -19,13 +19,9 @@ class SavedLocationCardLabelBadge extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: colors.primaryContainer.withValues(alpha: 0.85),
-          borderRadius: BorderRadius.circular(context.borderRadiusMedium - 2),
+          borderRadius: BorderRadius.circular(context.borderRadiusLarge),
         ),
-        child: Icon(
-          label.icon,
-          size: 20,
-          color: colors.onPrimaryContainer,
-        ),
+        child: Icon(label.icon, size: 20, color: colors.onPrimaryContainer),
       ),
     );
   }

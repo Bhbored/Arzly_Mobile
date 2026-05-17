@@ -1,6 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/data/providers/listings/listing_provider.dart';
+import 'package:arzly/data/providers/listings/user_lisitings/user_listings_provider.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_vehicles_details/temp_vehicles_details_holder.dart';
 import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
@@ -57,7 +57,9 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
     _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      ref.read(tempListingDraftHolderProvider.notifier).reset(
+      ref
+          .read(tempListingDraftHolderProvider.notifier)
+          .reset(
             categoryId: widget.category.id,
             subcategoryId: widget.subcategory.id,
           );
@@ -98,9 +100,8 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
       _requireStep1FieldErrors = true;
     });
     final veh = ref.read(tempVehiclesDetailsHolderProvider);
-    final pickersOk = veh.carBrand != null &&
-        veh.carModel != null &&
-        veh.condition != null;
+    final pickersOk =
+        veh.carBrand != null && veh.carModel != null && veh.condition != null;
     final formOk = _step1FormKey.currentState?.validate() ?? false;
     if (!pickersOk || !formOk) return;
 
@@ -136,7 +137,9 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
   Future<void> _addListing() async {
     setState(() => _isSubmitting = true);
     try {
-      final uploaded = await ref.read(tempImagesHolderProvider.notifier).upload();
+      final uploaded = await ref
+          .read(tempImagesHolderProvider.notifier)
+          .upload();
       final base = buildListingFromTempDrafts(
         ref,
         category: widget.category,
@@ -147,7 +150,7 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
         primaryImageUrl: uploaded.primaryImageUrl,
         imagesUrl: uploaded.imagesUrl,
       );
-      await ref.read(listingsProvider.notifier).add(listing);
+      await ref.read(userListingsProvider.notifier).submitNewListing(listing);
       if (!mounted) return;
       await ref.read(tempImagesHolderProvider.notifier).clear();
       if (!mounted) return;
@@ -240,9 +243,7 @@ class _CarsForSaleScreenState extends ConsumerState<CarsForSaleScreen> {
                           ),
                           child: Text(
                             'Next',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge
+                            style: Theme.of(context).textTheme.labelLarge
                                 ?.copyWith(
                                   fontWeight: FontWeight.w700,
                                   color: scheme.onPrimary,

@@ -1,6 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/data/providers/listings/listing_provider.dart';
+import 'package:arzly/data/providers/listings/user_lisitings/user_listings_provider.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_real_estate_draft/temp_real_estate_draft_holder.dart';
 import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
@@ -134,7 +134,7 @@ class _HousesForRentScreenState extends ConsumerState<HousesForRentScreen> {
         primaryImageUrl: uploaded.primaryImageUrl,
         imagesUrl: uploaded.imagesUrl,
       );
-      await ref.read(listingsProvider.notifier).add(listing);
+      await ref.read(userListingsProvider.notifier).submitNewListing(listing);
       if (!mounted) return;
       await ref.read(tempImagesHolderProvider.notifier).clear();
       if (!mounted) return;

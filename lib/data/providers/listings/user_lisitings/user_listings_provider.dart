@@ -1,20 +1,18 @@
-import 'dart:async';
-
 import 'package:arzly/data/repositories/listing/listing_repo.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
 import 'package:arzly/domain/mappers/listing_mapper.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'listing_provider.g.dart';
+part 'user_listings_provider.g.dart';
 
-Duration? noListingProviderRetry(int _, Object _) => null;
+Duration? noUserListingsRetry(int _, Object _) => null;
 
-@Riverpod(retry: noListingProviderRetry, keepAlive: true)
-class Listings extends _$Listings {
+@Riverpod(retry: noUserListingsRetry, keepAlive: true)
+class UserListingsNotifier extends _$UserListingsNotifier {
   ListingRepo get _repo => ref.read(listingRepoProvider);
 
   @override
-  FutureOr<List<Listing>> build() async => _load();
+  FutureOr<List<Listing>> build() async => await _load();
 
   Future<List<Listing>> _load() async {
     final listings = await _repo.getByUserId();
@@ -28,7 +26,7 @@ class Listings extends _$Listings {
     }
   }
 
-  Future<void> add(Listing listing) async {
+  Future<void> submitNewListing(Listing listing) async {
     await _repo.addListing(listing.toAddRequest());
     await refresh();
   }

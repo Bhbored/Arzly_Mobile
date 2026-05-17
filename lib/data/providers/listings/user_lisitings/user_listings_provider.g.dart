@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'listing_provider.dart';
+part of 'user_listings_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,33 +9,34 @@ part of 'listing_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(Listings)
-final listingsProvider = ListingsProvider._();
+@ProviderFor(UserListingsNotifier)
+final userListingsProvider = UserListingsNotifierProvider._();
 
-final class ListingsProvider
-    extends $AsyncNotifierProvider<Listings, List<Listing>> {
-  ListingsProvider._()
+final class UserListingsNotifierProvider
+    extends $AsyncNotifierProvider<UserListingsNotifier, List<Listing>> {
+  UserListingsNotifierProvider._()
     : super(
         from: null,
         argument: null,
-        retry: noListingProviderRetry,
-        name: r'listingsProvider',
+        retry: noUserListingsRetry,
+        name: r'userListingsProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$listingsHash();
+  String debugGetCreateSourceHash() => _$userListingsNotifierHash();
 
   @$internal
   @override
-  Listings create() => Listings();
+  UserListingsNotifier create() => UserListingsNotifier();
 }
 
-String _$listingsHash() => r'ce546ae77ea0ca72c9961cc2d187c52dc9c023d1';
+String _$userListingsNotifierHash() =>
+    r'16a413ef6c4cac1af71e11c004489c3cba8321e9';
 
-abstract class _$Listings extends $AsyncNotifier<List<Listing>> {
+abstract class _$UserListingsNotifier extends $AsyncNotifier<List<Listing>> {
   FutureOr<List<Listing>> build();
   @$mustCallSuper
   @override

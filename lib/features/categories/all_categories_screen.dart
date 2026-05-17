@@ -25,22 +25,25 @@ class AllCategoriesScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leadingWidth: 56,
-        leading: mode == CategoryPickerMode.read
+        leading: mode == CategoryPickerMode.write
             ? IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.arrow_back_ios_new_rounded),
+                icon: Icon(Icons.close_rounded, color: colors.onSurface),
               )
             : IconButton(
                 onPressed: () => Navigator.of(context).pop(),
-                icon: Icon(Icons.close_rounded, color: colors.onSurface),
+                icon: const Icon(Icons.arrow_back_ios_new_rounded),
               ),
         titleSpacing: 0,
         centerTitle: false,
-        title: mode == CategoryPickerMode.read
-            ? Align(
+        title: mode == CategoryPickerMode.write
+            ? const SizedBox.shrink()
+            : Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'All Categories',
+                  mode == CategoryPickerMode.select
+                      ? 'Choose category'
+                      : 'All Categories',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w700,
                         color: colors.onSurface,
@@ -49,8 +52,7 @@ class AllCategoriesScreen extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-              )
-            : const SizedBox.shrink(),
+              ),
       ),
       body: AllCategoriesList(
         categories: categories,

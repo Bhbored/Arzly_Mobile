@@ -1,6 +1,6 @@
 import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/data/providers/category/category_provider.dart';
-import 'package:arzly/data/providers/listings/initial_listings_provider.dart';
+import 'package:arzly/data/providers/listings/initial_listings/initial_listings_provider.dart';
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider.dart';
 import 'package:arzly/features/home/widgets/subcategory_listing_row.dart';

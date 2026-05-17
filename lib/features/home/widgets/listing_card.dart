@@ -1,4 +1,5 @@
 import 'package:arzly/core/constants/app_sizes.dart';
+import 'package:arzly/core/enums/listing_owned/motors/vehicle_condition.dart';
 import 'package:arzly/core/utils/real_estate_display_helper.dart';
 import 'package:arzly/core/utils/time_ago_helper.dart';
 import 'package:arzly/domain/entities/listing/listing.dart';
@@ -19,7 +20,6 @@ class ListingCard extends StatelessWidget {
     final imageUrl =
         listing.primaryImageUrl ??
         (listing.imagesUrl!.isNotEmpty ? listing.imagesUrl?.first : null);
-    final isFavorite = _isFavorite(listing);
     final realEstateDetails = listing.listingDetails is RealEstateDetails
         ? listing.listingDetails as RealEstateDetails
         : null;
@@ -35,7 +35,7 @@ class ListingCard extends StatelessWidget {
           color: Theme.of(
             context,
           ).colorScheme.outlineVariant.withValues(alpha: 0.6),
-          width: 2,
+          width: 1,
         ),
       ),
       clipBehavior: Clip.antiAlias,
@@ -84,35 +84,7 @@ class ListingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: _onFavoritePressed,
-                      borderRadius: BorderRadius.circular(999),
-                      child: Container(
-                        padding: const EdgeInsets.all(7),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.3),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.35),
-                            width: 1,
-                          ),
-                        ),
-                        child: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          size: 17,
-                          color: isFavorite
-                              ? const Color(0xFFFF4D6D)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+
                 Positioned(
                   bottom: 10,
                   left: 10,
@@ -174,10 +146,13 @@ class ListingCard extends StatelessWidget {
                     SizedBox(height: context.spaceSmall),
                   ],
                   if (vehiclesDetails?.year != null &&
-                      vehiclesDetails?.kilometers != null) ...[
+                      (vehiclesDetails?.kilometers != null ||
+                          vehiclesDetails?.condition ==
+                              VehicleCondition.new_)) ...[
                     VehiclesInfoRow(
                       year: vehiclesDetails!.year!,
-                      kilometers: vehiclesDetails.kilometers!,
+                      kilometers: vehiclesDetails.kilometers,
+                      condition: vehiclesDetails.condition,
                     ),
                     SizedBox(height: context.spaceSmall),
                   ],
@@ -186,7 +161,7 @@ class ListingCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
                       fontWeight: FontWeight.w500,
                     ),
@@ -206,12 +181,6 @@ class ListingCard extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void _onFavoritePressed() {}
-
-  bool _isFavorite(Listing listing) {
-    return false;
   }
 
   Widget _buildImageFallback(BuildContext context) {

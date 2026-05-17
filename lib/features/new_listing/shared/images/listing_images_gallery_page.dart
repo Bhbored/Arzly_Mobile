@@ -106,11 +106,35 @@ class _ListingImagesGalleryPageState extends State<ListingImagesGalleryPage> {
           child: isPrimary
               ? FilledButton.tonal(
                   onPressed: _close,
-                  child: const Text('Done'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: scheme.primary,
+                    foregroundColor: scheme.onPrimary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Text(
+                    'Done',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: scheme.onPrimary,
+                    ),
+                  ),
                 )
               : FilledButton(
+                  style: FilledButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   onPressed: _setCurrentAsPrimary,
-                  child: const Text('Set as cover photo'),
+                  child: Text(
+                    'Set as cover photo',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: scheme.onPrimary,
+                    ),
+                  ),
                 ),
         ),
       ),

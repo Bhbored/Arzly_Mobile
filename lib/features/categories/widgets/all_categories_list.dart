@@ -40,6 +40,10 @@ class AllCategoriesList extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(16),
               onTap: () {
+                if (mode == CategoryPickerMode.select) {
+                  Navigator.of(context).pop(category);
+                  return;
+                }
                 pushSubcategoryForMode(
                   context,
                   category: category,

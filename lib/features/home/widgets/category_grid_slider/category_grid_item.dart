@@ -37,16 +37,17 @@ class CategoryGridItem extends StatelessWidget {
                 child: imageUrl != null && imageUrl.isNotEmpty
                     ? ConstrainedBox(
                         constraints: const BoxConstraints(
-                          maxWidth: 52,
-                          maxHeight: 52,
+                          maxWidth: 70,
+                          maxHeight: 70,
                         ),
                         child: CachedNetworkImage(
+                          imageBuilder: (context, imageProvider) =>
+                              Image(image: imageProvider, fit: BoxFit.cover),
                           imageUrl: imageUrl,
                           fit: BoxFit.contain,
                           fadeInDuration: const Duration(milliseconds: 250),
-                          placeholder: (context, url) => const ColoredBox(
-                            color: Colors.transparent,
-                          ),
+                          placeholder: (context, url) =>
+                              const ColoredBox(color: Colors.transparent),
                           errorWidget: (context, url, error) =>
                               _fallbackIcon(context),
                         ),

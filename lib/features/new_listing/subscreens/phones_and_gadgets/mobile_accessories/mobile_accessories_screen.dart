@@ -1,6 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/data/providers/listings/listing_provider.dart';
+import 'package:arzly/data/providers/listings/user_lisitings/user_listings_provider.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_phones_gadgets_draft/temp_phones_gadgets_draft_holder.dart';
 import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
@@ -33,7 +33,8 @@ class MobileAccessoriesScreen extends ConsumerStatefulWidget {
       _MobileAccessoriesScreenState();
 }
 
-class _MobileAccessoriesScreenState extends ConsumerState<MobileAccessoriesScreen> {
+class _MobileAccessoriesScreenState
+    extends ConsumerState<MobileAccessoriesScreen> {
   final GlobalKey<FormState> _step1FormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _step2FormKey = GlobalKey<FormState>();
   late final PageController _pageController;
@@ -50,7 +51,9 @@ class _MobileAccessoriesScreenState extends ConsumerState<MobileAccessoriesScree
     _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      ref.read(tempListingDraftHolderProvider.notifier).reset(
+      ref
+          .read(tempListingDraftHolderProvider.notifier)
+          .reset(
             categoryId: widget.category.id,
             subcategoryId: widget.subcategory.id,
           );
@@ -77,7 +80,8 @@ class _MobileAccessoriesScreenState extends ConsumerState<MobileAccessoriesScree
       _requireStep1FieldErrors = true;
     });
     final d = ref.read(tempPhonesGadgetsDraftHolderProvider);
-    final enumsOk = d.accessoryBrand != null &&
+    final enumsOk =
+        d.accessoryBrand != null &&
         d.accessoryItemType != null &&
         d.phoneCondition != null;
     final formOk = _step1FormKey.currentState?.validate() ?? false;
@@ -126,7 +130,7 @@ class _MobileAccessoriesScreenState extends ConsumerState<MobileAccessoriesScree
         primaryImageUrl: uploaded.primaryImageUrl,
         imagesUrl: uploaded.imagesUrl,
       );
-      await ref.read(listingsProvider.notifier).add(listing);
+      await ref.read(userListingsProvider.notifier).submitNewListing(listing);
       if (!mounted) return;
       await ref.read(tempImagesHolderProvider.notifier).clear();
       if (!mounted) return;

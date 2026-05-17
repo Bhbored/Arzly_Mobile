@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:arzly/core/constants/api_errors.dart';
+import 'package:arzly/core/enums/location_preset.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
 import 'package:arzly/core/network/dio_instances/listing/listing_dio_instance.dart';
 import 'package:arzly/core/network/executor/api_executor.dart';
@@ -399,6 +400,61 @@ class ListingRepo {
       },
       failure: (error, statusCode) {
         _logger.e('Failed to create listing: ${error.userMessage}');
+        throw error;
+      },
+    );
+  }
+
+  Future<List<ListingResponse>> fetchByCategory(
+    String categoryId,
+    String? searchString,
+    LocationPreset? preset,
+    String? order,
+    String? orderByPrice,
+    double? minPrice,
+    double? maxPrice,
+  ) async {
+    final response = await executor.execute(
+      ApiRequest(
+        path: '/category-listing/$categoryId',
+        method: HttpMethod.get,
+        headers: {
+          'pageSize': 10,
+          'currentPage': 0,
+          'searchString': searchString,
+          'preset': preset,
+          'order': order,
+          'orderByPrice': orderByPrice,
+          'minPrice': minPrice,
+          'maxPrice': maxPrice,
+        },
+      ),
+    );
+
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          final rawList = data as List<dynamic>;
+          final listings = rawList
+              .map((json) => ListingResponse.fromJson(json))
+              .toList();
+          _logger.i(
+            'Fetched ${listings.length} listings for category: $categoryId',
+          );
+          return assignDetailsToListings(listings);
+        } catch (e) {
+          _logger.e('Parse error: $e');
+          throw ApiException(
+            userMessage: ApiErrors.badResponse,
+            error: 'Failed to parse listing data',
+            originalError: e,
+          );
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e(
+          'Failed to fetch listings for category: $categoryId: ${error.userMessage}',
+        );
         throw error;
       },
     );

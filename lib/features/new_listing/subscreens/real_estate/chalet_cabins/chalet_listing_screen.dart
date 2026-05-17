@@ -1,6 +1,6 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/core/exceptions/api_exception.dart';
-import 'package:arzly/data/providers/listings/listing_provider.dart';
+import 'package:arzly/data/providers/listings/user_lisitings/user_listings_provider.dart';
 import 'package:arzly/data/providers/new_listing/temp_listing_draft/temp_listing_draft_holder.dart';
 import 'package:arzly/data/providers/new_listing/temp_real_estate_draft/temp_real_estate_draft_holder.dart';
 import 'package:arzly/data/providers/temp_images_holder/temp_images_holder.dart';
@@ -52,7 +52,9 @@ class _ChaletListingScreenState extends ConsumerState<ChaletListingScreen> {
     _pageController = PageController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-      ref.read(tempListingDraftHolderProvider.notifier).reset(
+      ref
+          .read(tempListingDraftHolderProvider.notifier)
+          .reset(
             categoryId: widget.category.id,
             subcategoryId: widget.subcategory.id,
           );
@@ -83,7 +85,8 @@ class _ChaletListingScreenState extends ConsumerState<ChaletListingScreen> {
         re.size != null &&
         re.size! > 0 &&
         re.size! <= HousesForSaleSizeM2InputFormatter.maxM2;
-    final enumsOk = re.ownership != null &&
+    final enumsOk =
+        re.ownership != null &&
         re.chaletType != null &&
         re.bedrooms != null &&
         re.floor != null &&
@@ -136,7 +139,7 @@ class _ChaletListingScreenState extends ConsumerState<ChaletListingScreen> {
         primaryImageUrl: uploaded.primaryImageUrl,
         imagesUrl: uploaded.imagesUrl,
       );
-      await ref.read(listingsProvider.notifier).add(listing);
+      await ref.read(userListingsProvider.notifier).submitNewListing(listing);
       if (!mounted) return;
       await ref.read(tempImagesHolderProvider.notifier).clear();
       if (!mounted) return;
