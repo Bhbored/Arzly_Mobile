@@ -18,11 +18,8 @@ class ListingBrowseListSkeleton extends StatelessWidget {
     return Skeletonizer(
       child: ListView.separated(
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.fromLTRB(
-          context.paddingSmall,
-          context.spaceSmall,
-          context.paddingSmall,
-          context.bottomPadding + context.spaceMedium,
+        padding: EdgeInsets.only(
+          bottom: context.bottomPadding + context.spaceMedium,
         ),
         itemCount: itemCount,
         separatorBuilder: (_, _) => SizedBox(height: context.spaceSmall),

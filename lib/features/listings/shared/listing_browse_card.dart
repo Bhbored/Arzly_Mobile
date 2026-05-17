@@ -40,7 +40,7 @@ class ListingBrowseCard extends StatelessWidget {
     final hasStats = listingBrowseCardHasStats(listing, categoryName);
 
     return Material(
-      color: colors.surface,
+      color: colors.surfaceContainerLowest,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: radius,

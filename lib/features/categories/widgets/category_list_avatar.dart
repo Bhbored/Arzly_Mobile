@@ -34,11 +34,10 @@ class CategoryListAvatar extends StatelessWidget {
                     ),
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fitWidth,
                       fadeInDuration: const Duration(milliseconds: 250),
-                      placeholder: (context, url) => const ColoredBox(
-                        color: Colors.transparent,
-                      ),
+                      placeholder: (context, url) =>
+                          const ColoredBox(color: Colors.transparent),
                       errorWidget: (context, url, error) =>
                           _fallbackIcon(context),
                     ),

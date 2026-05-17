@@ -5,9 +5,11 @@ import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/features/categories/all_categories_screen.dart';
 import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/categories/widgets/category_list_avatar.dart';
-import 'package:arzly/features/listings/shared/listing_browse_filter.dart';
+import 'package:arzly/core/utils/listing_browse_filter.dart';
 import 'package:arzly/features/listings/shared/listing_filter_apply_result.dart';
+import 'package:arzly/features/listings/shared/listing_filter_location_picker_screen.dart';
 import 'package:arzly/features/listings/shared/listing_filter_order_section.dart';
+import 'package:arzly/features/listings/shared/listing_location_filter_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -50,10 +52,7 @@ Future<ListingFilterApplyResult?> openListingFilterPage(
   ListingBrowseFilter initialFilter = ListingBrowseFilter.empty,
 }) {
   return Navigator.of(context).push<ListingFilterApplyResult?>(
-    createListingFilterRoute(
-      category: category,
-      initialFilter: initialFilter,
-    ),
+    createListingFilterRoute(category: category, initialFilter: initialFilter),
   );
 }
 
@@ -133,34 +132,9 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
   }
 
   Future<void> _openLocationPicker() async {
-    final selected = await showModalBottomSheet<LocationPreset?>(
-      context: context,
-      showDragHandle: true,
-      builder: (context) {
-        final colors = Theme.of(context).colorScheme;
-        return SafeArea(
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              ListTile(
-                title: const Text('All country'),
-                trailing: _locationPreset == null
-                    ? Icon(Icons.check_rounded, color: colors.primary)
-                    : null,
-                onTap: () => Navigator.of(context).pop(null),
-              ),
-              for (final preset in LocationPreset.values)
-                ListTile(
-                  title: Text(preset.label),
-                  trailing: _locationPreset == preset
-                      ? Icon(Icons.check_rounded, color: colors.primary)
-                      : null,
-                  onTap: () => Navigator.of(context).pop(preset),
-                ),
-            ],
-          ),
-        );
-      },
+    final selected = await openListingFilterLocationPicker(
+      context,
+      selectedPreset: _locationPreset,
     );
 
     if (!mounted) return;
@@ -212,17 +186,20 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                 children: [
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close_rounded),
+                    icon: Icon(
+                      Icons.close_rounded,
+                      size: context.screenHeight * 0.04,
+                    ),
                   ),
                   const Spacer(),
                   TextButton(
                     onPressed: _clearAll,
                     child: Text(
                       'Clear all',
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: colors.primary,
-                          ),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colors.primary,
+                      ),
                     ),
                   ),
                 ],
@@ -239,23 +216,22 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                 children: [
                   Text(
                     'Filters',
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w800,
-                          color: colors.onSurface,
-                        ),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onSurface,
+                    ),
                   ),
-                  SizedBox(height: context.spaceMedium),
                   Divider(
                     height: 1,
                     color: colors.outlineVariant.withValues(alpha: 0.45),
                   ),
-                  SizedBox(height: context.spaceMedium),
+                  SizedBox(height: context.spaceSmall),
                   Text(
                     'Category',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: colors.onSurfaceVariant,
-                        ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onSurfaceVariant,
+                    ),
                   ),
                   SizedBox(height: context.spaceSmall),
                   _FilterNavigationRow(
@@ -267,15 +243,14 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                         Expanded(
                           child: Text(
                             _category.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
+                            style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
                         Text(
                           'Change',
-                          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          style: Theme.of(context).textTheme.labelLarge
+                              ?.copyWith(
                                 color: colors.primary,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -291,10 +266,10 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                   SizedBox(height: context.spaceMedium),
                   Text(
                     'Location',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: colors.onSurfaceVariant,
-                        ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onSurfaceVariant,
+                    ),
                   ),
                   SizedBox(height: context.spaceSmall),
                   _FilterNavigationRow(
@@ -303,10 +278,9 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                       children: [
                         Expanded(
                           child: Text(
-                            _locationPreset?.label ?? 'All country',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
+                            _locationPreset?.label ??
+                                ListingLocationFilterLabels.allAreas,
+                            style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -334,15 +308,14 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                     title: 'Price',
                     selectedValue: _orderByPrice,
                     options: ListingBrowseOrders.priceOptions,
-                    onChanged: (value) =>
-                        setState(() => _orderByPrice = value),
+                    onChanged: (value) => setState(() => _orderByPrice = value),
                   ),
                   SizedBox(height: context.spaceMedium),
                   Text(
                     'Price range',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(height: context.spaceSmall),
                   Row(
@@ -381,7 +354,12 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                     value: _negotiableOnly,
                     onChanged: (value) =>
                         setState(() => _negotiableOnly = value),
-                    title: const Text('Negotiable price only'),
+                    title: Text(
+                      'Negotiable price only',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     contentPadding: EdgeInsets.zero,
                   ),
                 ],
@@ -399,7 +377,18 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                 child: FilledButton(
                   onPressed: () =>
                       Navigator.of(context).pop(_buildApplyResult()),
-                  child: const Text('Apply'),
+                  style: FilledButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Text(
+                    'Apply',
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colors.onPrimary,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -411,10 +400,7 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
 }
 
 class _FilterNavigationRow extends StatelessWidget {
-  const _FilterNavigationRow({
-    required this.onTap,
-    required this.child,
-  });
+  const _FilterNavigationRow({required this.onTap, required this.child});
 
   final VoidCallback onTap;
   final Widget child;

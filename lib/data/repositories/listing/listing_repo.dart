@@ -418,11 +418,11 @@ class ListingRepo {
       ApiRequest(
         path: '/category-listing/$categoryId',
         method: HttpMethod.get,
+        data: jsonEncode(preset?.name),
         headers: {
           'pageSize': 10,
           'currentPage': 0,
           'searchString': searchString,
-          'preset': preset,
           'order': order,
           'orderByPrice': orderByPrice,
           'minPrice': minPrice,

@@ -1,12 +1,12 @@
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/core/utils/listing_browse_filter.dart';
 
-class ListingFilterApplyResult {
-  const ListingFilterApplyResult({
-    required this.filter,
+class ListingBrowseSearchResult {
+  const ListingBrowseSearchResult({
     required this.category,
+    required this.filter,
   });
 
-  final ListingBrowseFilter filter;
   final Category category;
+  final ListingBrowseFilter filter;
 }

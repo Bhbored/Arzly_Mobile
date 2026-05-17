@@ -49,13 +49,23 @@ class ListingBrowseFilter {
   static const empty = ListingBrowseFilter();
 
   bool get hasActiveFilters =>
-      searchString != null ||
+      (searchString != null && searchString!.trim().isNotEmpty) ||
       locationPreset != null ||
       minPrice != null ||
       maxPrice != null ||
       negotiableOnly ||
       order != ListingBrowseOrders.defaultOrder ||
       orderByPrice != ListingBrowseOrders.defaultOrder;
+
+  bool isSameAs(ListingBrowseFilter other) {
+    return order == other.order &&
+        orderByPrice == other.orderByPrice &&
+        searchString == other.searchString &&
+        locationPreset == other.locationPreset &&
+        minPrice == other.minPrice &&
+        maxPrice == other.maxPrice &&
+        negotiableOnly == other.negotiableOnly;
+  }
 
   ListingBrowseFilter copyWith({
     String? order,

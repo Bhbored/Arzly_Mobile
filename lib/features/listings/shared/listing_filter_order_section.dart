@@ -1,5 +1,5 @@
 import 'package:arzly/core/constants/app_sizes.dart';
-import 'package:arzly/features/listings/shared/listing_browse_filter.dart';
+import 'package:arzly/core/utils/listing_browse_filter.dart';
 import 'package:flutter/material.dart';
 
 class ListingFilterOrderSection extends StatelessWidget {
@@ -25,10 +25,10 @@ class ListingFilterOrderSection extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-                color: colors.onSurfaceVariant,
-              ),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: colors.onSurfaceVariant,
+          ),
         ),
         SizedBox(height: context.spaceSmall * 0.5),
         ...options.map(
