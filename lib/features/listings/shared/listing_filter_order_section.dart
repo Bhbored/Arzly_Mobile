@@ -30,6 +30,7 @@ class ListingFilterOrderSection extends StatelessWidget {
             color: colors.onSurfaceVariant,
           ),
         ),
+        Divider(color: colors.outlineVariant.withValues(alpha: 0.45)),
         SizedBox(height: context.spaceSmall * 0.5),
         ...options.map(
           (option) => ListTile(

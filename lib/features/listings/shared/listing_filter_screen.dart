@@ -291,12 +291,7 @@ class _ListingFilterScreenState extends ConsumerState<ListingFilterScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: context.spaceMedium),
-                  Divider(
-                    height: 1,
-                    color: colors.outlineVariant.withValues(alpha: 0.45),
-                  ),
-                  SizedBox(height: context.spaceMedium),
+                  SizedBox(height: context.spaceLarge),
                   ListingFilterOrderSection(
                     title: 'Date posted',
                     selectedValue: _order,
