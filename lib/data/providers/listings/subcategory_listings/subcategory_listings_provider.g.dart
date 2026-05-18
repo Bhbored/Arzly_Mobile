@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category_listings_provider.dart';
+part of 'subcategory_listings_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,39 +9,39 @@ part of 'category_listings_provider.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(CategoryListingsNotifier)
-final categoryListingsProvider = CategoryListingsNotifierFamily._();
+@ProviderFor(SubcategoryListingsNotifier)
+final subcategoryListingsProvider = SubcategoryListingsNotifierFamily._();
 
-final class CategoryListingsNotifierProvider
-    extends $AsyncNotifierProvider<CategoryListingsNotifier, List<Listing>> {
-  CategoryListingsNotifierProvider._({
-    required CategoryListingsNotifierFamily super.from,
-    required String super.argument,
+final class SubcategoryListingsNotifierProvider
+    extends $AsyncNotifierProvider<SubcategoryListingsNotifier, List<Listing>> {
+  SubcategoryListingsNotifierProvider._({
+    required SubcategoryListingsNotifierFamily super.from,
+    required SubcategoryListingKey super.argument,
   }) : super(
          retry: noListingProviderRetry,
-         name: r'categoryListingsProvider',
+         name: r'subcategoryListingsProvider',
          isAutoDispose: true,
          dependencies: null,
          $allTransitiveDependencies: null,
        );
 
   @override
-  String debugGetCreateSourceHash() => _$categoryListingsNotifierHash();
+  String debugGetCreateSourceHash() => _$subcategoryListingsNotifierHash();
 
   @override
   String toString() {
-    return r'categoryListingsProvider'
+    return r'subcategoryListingsProvider'
         ''
         '($argument)';
   }
 
   @$internal
   @override
-  CategoryListingsNotifier create() => CategoryListingsNotifier();
+  SubcategoryListingsNotifier create() => SubcategoryListingsNotifier();
 
   @override
   bool operator ==(Object other) {
-    return other is CategoryListingsNotifierProvider &&
+    return other is SubcategoryListingsNotifierProvider &&
         other.argument == argument;
   }
 
@@ -51,40 +51,40 @@ final class CategoryListingsNotifierProvider
   }
 }
 
-String _$categoryListingsNotifierHash() =>
-    r'e32b37c67859976fbd6fe5c16a172cd4944b1551';
+String _$subcategoryListingsNotifierHash() =>
+    r'92166507b115d7d1810595986b0123a4503e6b22';
 
-final class CategoryListingsNotifierFamily extends $Family
+final class SubcategoryListingsNotifierFamily extends $Family
     with
         $ClassFamilyOverride<
-          CategoryListingsNotifier,
+          SubcategoryListingsNotifier,
           AsyncValue<List<Listing>>,
           List<Listing>,
           FutureOr<List<Listing>>,
-          String
+          SubcategoryListingKey
         > {
-  CategoryListingsNotifierFamily._()
+  SubcategoryListingsNotifierFamily._()
     : super(
         retry: noListingProviderRetry,
-        name: r'categoryListingsProvider',
+        name: r'subcategoryListingsProvider',
         dependencies: null,
         $allTransitiveDependencies: null,
         isAutoDispose: true,
       );
 
-  CategoryListingsNotifierProvider call(String categoryId) =>
-      CategoryListingsNotifierProvider._(argument: categoryId, from: this);
+  SubcategoryListingsNotifierProvider call(SubcategoryListingKey arg) =>
+      SubcategoryListingsNotifierProvider._(argument: arg, from: this);
 
   @override
-  String toString() => r'categoryListingsProvider';
+  String toString() => r'subcategoryListingsProvider';
 }
 
-abstract class _$CategoryListingsNotifier
+abstract class _$SubcategoryListingsNotifier
     extends $AsyncNotifier<List<Listing>> {
-  late final _$args = ref.$arg as String;
-  String get categoryId => _$args;
+  late final _$args = ref.$arg as SubcategoryListingKey;
+  SubcategoryListingKey get arg => _$args;
 
-  FutureOr<List<Listing>> build(String categoryId);
+  FutureOr<List<Listing>> build(SubcategoryListingKey arg);
   @$mustCallSuper
   @override
   void runBuild() {

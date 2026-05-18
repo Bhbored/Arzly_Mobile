@@ -4,9 +4,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CategoryGridItem extends StatelessWidget {
-  final Category category;
+  const CategoryGridItem({
+    super.key,
+    required this.category,
+    required this.onTap,
+  });
 
-  const CategoryGridItem({super.key, required this.category});
+  final Category category;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,10 @@ class CategoryGridItem extends StatelessWidget {
     final avatarInnerBg = colors.secondaryContainer.withValues(alpha: 0.45);
     final avatarBorder = colors.primary.withValues(alpha: 0.5);
 
-    return Column(
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(context.borderRadiusMedium),
+      child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -77,6 +85,7 @@ class CategoryGridItem extends StatelessWidget {
           ),
         ),
       ],
+      ),
     );
   }
 

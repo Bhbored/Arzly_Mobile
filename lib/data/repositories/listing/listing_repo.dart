@@ -459,4 +459,63 @@ class ListingRepo {
       },
     );
   }
+
+  Future<List<ListingResponse>> fetchBySubcategory(
+    String categoryId,
+    String subcategoryId,
+    String? searchString,
+    LocationPreset? preset,
+    dynamic details,
+    String? order,
+    String? orderByPrice,
+    double? minPrice,
+    double? maxPrice,
+  ) async {
+    final response = await executor.execute(
+      ApiRequest(
+        path: '/subcategory-listing/$subcategoryId',
+        method: HttpMethod.get,
+        data: jsonEncode(details),
+        headers: {
+          'pageSize': 10,
+          'currentPage': 0,
+          'catgeoroyId': categoryId,
+          'preset': preset?.name ?? '',
+          'searchString': searchString,
+          'order': order,
+          'orderByPrice': orderByPrice,
+          'minPrice': minPrice,
+          'maxPrice': maxPrice,
+        },
+      ),
+    );
+
+    return response.when(
+      success: (data, statusCode, meta) {
+        try {
+          final rawList = data as List<dynamic>;
+          final listings = rawList
+              .map((json) => ListingResponse.fromJson(json))
+              .toList();
+          _logger.i(
+            'Fetched ${listings.length} listings for subcategory: $subcategoryId',
+          );
+          return assignDetailsToListings(listings);
+        } catch (e) {
+          _logger.e('Parse error: $e');
+          throw ApiException(
+            userMessage: ApiErrors.badResponse,
+            error: 'Failed to parse listing data',
+            originalError: e,
+          );
+        }
+      },
+      failure: (error, statusCode) {
+        _logger.e(
+          'Failed to fetch listings for subcategory: $subcategoryId: ${error.userMessage}',
+        );
+        throw error;
+      },
+    );
+  }
 }

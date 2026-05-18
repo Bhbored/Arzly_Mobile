@@ -1,6 +1,7 @@
 import 'package:arzly/core/constants/app_sizes.dart';
 import 'package:arzly/domain/entities/category/category.dart';
 import 'package:arzly/features/categories/all_categories_screen.dart';
+import 'package:arzly/features/categories/category_pick_navigation.dart';
 import 'package:arzly/features/categories/category_picker.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider/category_grid_item.dart';
 import 'package:arzly/features/home/widgets/category_grid_slider/category_grid_slider_header.dart';
@@ -49,7 +50,14 @@ class CategoryGridSlider extends StatelessWidget {
                   final category = categories[index];
                   return SizedBox(
                     width: itemWidth,
-                    child: CategoryGridItem(category: category),
+                    child: CategoryGridItem(
+                      category: category,
+                      onTap: () => pushSubcategoryForMode(
+                        context,
+                        category: category,
+                        mode: CategoryPickerMode.read,
+                      ),
+                    ),
                   );
                 },
                 separatorBuilder: (_, _) => const SizedBox(width: gap),

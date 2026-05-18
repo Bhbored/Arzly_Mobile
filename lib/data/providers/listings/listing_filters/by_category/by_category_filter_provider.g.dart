@@ -18,7 +18,7 @@ final class ByCategoryFilterNotifierProvider
     required ByCategoryFilterNotifierFamily super.from,
     required String super.argument,
   }) : super(
-         retry: null,
+         retry: noListingProviderRetry,
          name: r'byCategoryFilterProvider',
          isAutoDispose: true,
          dependencies: null,
@@ -60,7 +60,7 @@ final class ByCategoryFilterNotifierProvider
 }
 
 String _$byCategoryFilterNotifierHash() =>
-    r'dfe3d77bf03e8699ca05b16b445a8b87905d68f6';
+    r'd7df6d2ea9e52755a1b8b6d90431249ed5d89d28';
 
 final class ByCategoryFilterNotifierFamily extends $Family
     with
@@ -73,7 +73,7 @@ final class ByCategoryFilterNotifierFamily extends $Family
         > {
   ByCategoryFilterNotifierFamily._()
     : super(
-        retry: null,
+        retry: noListingProviderRetry,
         name: r'byCategoryFilterProvider',
         dependencies: null,
         $allTransitiveDependencies: null,

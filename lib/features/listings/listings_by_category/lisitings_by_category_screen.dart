@@ -11,6 +11,7 @@ import 'package:arzly/features/listings/listings_by_category/listing_browse_sear
 import 'package:arzly/features/listings/listings_by_category/listings_browse_search_screen.dart';
 import 'package:arzly/features/listings/listings_by_category/widgets/listings_browse_top_section.dart';
 import 'package:arzly/features/listings/shared/listing_filter_apply_result.dart';
+import 'package:arzly/features/listings/shared/listing_filter_location_picker_screen.dart';
 import 'package:arzly/features/listings/shared/listing_filter_screen.dart';
 import 'package:arzly/features/listings/shared/listing_location_filter_labels.dart';
 import 'package:arzly/features/shared/skeletons/listing_browse_list_skeleton.dart';
@@ -109,6 +110,25 @@ class _ListingsByCategoryScreenState
     await _handleFilterResult(result);
   }
 
+  Future<void> _openLocationPicker() async {
+    final preset = await openListingFilterLocationPicker(
+      context,
+      selectedPreset: _filter.locationPreset,
+    );
+
+    if (!mounted) return;
+
+    final filter = _filter.copyWith(
+      locationPreset: preset,
+      clearLocationPreset: preset == null,
+    );
+
+    if (filter.isSameAs(_filter)) return;
+
+    _filterNotifier.apply(filter);
+    await ref.read(categoryListingsProvider(_category.id).notifier).reload();
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -146,7 +166,7 @@ class _ListingsByCategoryScreenState
               onSearchTap: _openSearch,
               onSearchClear: _clearSearch,
               onFiltersPressed: _openFilter,
-              onLocationPressed: _openFilter,
+              onLocationPressed: _openLocationPicker,
               locationLabel: _filter.locationPreset?.label ??
                   ListingLocationFilterLabels.allAreas,
               showFilterBadge: _filter.hasActiveFilters,
